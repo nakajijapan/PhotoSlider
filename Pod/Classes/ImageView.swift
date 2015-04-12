@@ -11,7 +11,6 @@ class ImageView: UIView, UIScrollViewDelegate {
 
     var imageView:UIImageView!
     var scrollView:UIScrollView!
-    //var delegate:
     
     override init(frame: CGRect) {
         super.init(frame: frame)
