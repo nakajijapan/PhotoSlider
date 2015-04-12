@@ -43,6 +43,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        var insets = collectionView.contentInset
+        insets.top = -20
+        collectionView.contentInset = insets
+
         return cell
     }
     
