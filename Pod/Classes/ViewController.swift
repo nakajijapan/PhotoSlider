@@ -34,10 +34,10 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         self.view.backgroundColor = UIColor.clearColor()
         self.view.userInteractionEnabled = true
 
-        var bgView = UIView(frame: self.view.bounds)
-        bgView.backgroundColor = UIColor.blackColor()
-        bgView.alpha = 0.7;
-        self.view.addSubview(bgView)
+        var backgroundView = UIView(frame: self.view.bounds)
+        backgroundView.backgroundColor = UIColor.blackColor()
+        backgroundView.alpha = 0.8;
+        self.view.addSubview(backgroundView)
 
         // layout
         let layout = UICollectionViewFlowLayout()
