@@ -36,14 +36,14 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
 
         var backgroundView = UIView(frame: self.view.bounds)
         backgroundView.backgroundColor = UIColor.blackColor()
-        backgroundView.alpha = 0.8;
+        backgroundView.alpha = 0.8
         self.view.addSubview(backgroundView)
 
         // layout
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        layout.minimumInteritemSpacing = 0;
-        layout.minimumLineSpacing = 0;
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
 
         //collectionView
         self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
