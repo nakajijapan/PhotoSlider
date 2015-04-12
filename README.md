@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
 [![Platform](https://img.shields.io/cocoapods/p/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
 
+PhotoSlider can a simple photo slider and delete slider with swiping.
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
