@@ -15,7 +15,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
 
     public var index:Int = 0
     public init(imageURLs:Array<String>) {
-        super.init()
+        super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
     }
 
@@ -63,13 +63,11 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         let indexPath = NSIndexPath(forItem: self.index, inSection: 0)
         self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
     }
-
-    override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-
+    
+    public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.dismissViewControllerAnimated(true) { () -> Void in
             self.view.removeFromSuperview()
         }
-
     }
 
     // MARK: - UICollectionViewDataSource
@@ -84,7 +82,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as CollectionViewCell
+        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! CollectionViewCell
         cell.backgroundColor = UIColor.clearColor()
 
         if self.imageURLs != nil {
@@ -100,6 +98,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     }
 
     // MARK: - UIScrollViewDelegate
+
     var scrollPreviewPoint = CGPointZero;
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.scrollPreviewPoint = scrollView.contentOffset
@@ -154,7 +153,6 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
             contentOffset.y = self.scrollPreviewPoint.y
             scrollView.contentOffset = contentOffset
         }
-
 
     }
 
