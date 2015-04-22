@@ -11,5 +11,4 @@ end
 target 'PhotoSliderDemoTests', :exclusive => true do
   pod "PhotoSlider", :path => "../"
   pod 'SDWebImage'
-  pod 'FBSnapshotTestCase'
 end

@@ -1,5 +1,4 @@
 PODS:
-  - FBSnapshotTestCase (1.6)
   - PhotoSlider (0.1.0):
     - SDWebImage
   - SDWebImage (3.7.2):
@@ -7,7 +6,6 @@ PODS:
   - SDWebImage/Core (3.7.2)
 
 DEPENDENCIES:
-  - FBSnapshotTestCase
   - PhotoSlider (from `../`)
   - SDWebImage
 
@@ -16,8 +14,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  FBSnapshotTestCase: 9d5fe43b29ae3a0ed8fc829477971b281038f748
   PhotoSlider: 86567d75a8917a0e7f5acbd7edab3634db1c1916
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
 
-COCOAPODS: 0.36.3
+COCOAPODS: 0.36.4

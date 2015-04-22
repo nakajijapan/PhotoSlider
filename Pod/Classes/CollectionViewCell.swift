@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CollectionViewCell: UICollectionViewCell {
+public class CollectionViewCell: UICollectionViewCell {
 
     var imageView: PhotoSlider.ImageView!
 
@@ -17,7 +17,7 @@ class CollectionViewCell: UICollectionViewCell {
         self.addSubview(self.imageView)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.imageView = PhotoSlider.ImageView(frame: self.bounds)
         self.addSubview(self.imageView)

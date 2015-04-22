@@ -37,9 +37,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("cell01") as UITableViewCell
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("cell01") as! UITableViewCell
         
-        var collectionView = cell.viewWithTag(1) as UICollectionView
+        var collectionView = cell.viewWithTag(1) as! UICollectionView
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -61,9 +61,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) as UICollectionViewCell
+        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) as! UICollectionViewCell
         
-        var imageView = cell.viewWithTag(1) as UIImageView
+        var imageView = cell.viewWithTag(1) as! UIImageView
         imageView.sd_setImageWithURL(NSURL(string: self.images[indexPath.row])!)
         
         return cell
