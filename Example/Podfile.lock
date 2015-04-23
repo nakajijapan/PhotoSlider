@@ -1,5 +1,5 @@
 PODS:
-  - PhotoSlider (0.1.0):
+  - PhotoSlider (0.1.1):
     - SDWebImage
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
