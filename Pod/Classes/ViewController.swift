@@ -12,12 +12,15 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
 
     var collectionView: UICollectionView!
     var imageURLs:Array<String>?
+    var pageControl:UIPageControl!
+    
 
     public var index:Int = 0
     public init(imageURLs:Array<String>) {
         super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
     }
+    public var visiblePageControl = true
 
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -45,7 +48,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
 
-        //collectionView
+        // collectionView
         self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
         self.collectionView.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         self.collectionView.pagingEnabled = true
@@ -56,7 +59,15 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         self.collectionView.showsHorizontalScrollIndicator = true
         self.collectionView.alwaysBounceVertical = true
         self.view.addSubview(self.collectionView)
-
+        
+        // pagecontrol
+        if visiblePageControl {
+            self.pageControl = UIPageControl(frame: CGRectMake(0.0, CGRectGetHeight(self.view.frame) - 44, CGRectGetWidth(self.view.frame), 22))
+            self.pageControl.numberOfPages = imageURLs!.count
+            self.pageControl.currentPage = 0
+            self.pageControl.userInteractionEnabled = false
+            self.view.addSubview(self.pageControl)
+        }
     }
 
     override public func viewWillAppear(animated: Bool) {
@@ -154,6 +165,13 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
             scrollView.contentOffset = contentOffset
         }
 
+        // paging
+        if visiblePageControl {
+            if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
+                self.pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+            }
+        }
+        
     }
 
 }
