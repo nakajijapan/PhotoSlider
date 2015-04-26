@@ -8,6 +8,9 @@
 PhotoSlider can a simple photo slider and delete slider with swiping.
 
 
+<img src="./demo.gif" width="300" />
+
+
 ## Installation
 
 PhotoSlider is available through [CocoaPods](http://cocoapods.org). To install
