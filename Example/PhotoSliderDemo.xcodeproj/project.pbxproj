@@ -17,7 +17,6 @@
 		DC20F4731ADA871D009A4C64 /* PhotoSliderDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F4721ADA871D009A4C64 /* PhotoSliderDemoTests.swift */; };
 		DC740B191AEC6B2F00079D30 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC740B161AEC6B2F00079D30 /* LICENSE */; };
 		DC740B1A1AEC6B2F00079D30 /* PhotoSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */; };
-		DC740B1B1AEC6B2F00079D30 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = DC740B181AEC6B2F00079D30 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -364,7 +363,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC740B1B1AEC6B2F00079D30 /* README.md in Sources */,
 				DC20F45F1ADA871D009A4C64 /* ViewController.swift in Sources */,
 				DC20F45D1ADA871D009A4C64 /* AppDelegate.swift in Sources */,
 			);
