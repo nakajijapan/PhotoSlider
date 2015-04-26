@@ -98,7 +98,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
 
         if self.imageURLs != nil {
             let imageURL = NSURL(string: self.imageURLs![indexPath.row])!
-            cell.imageView.imageView.sd_setImageWithURL(imageURL)
+            cell.loadImage(imageURL)
         }
 
         return cell
