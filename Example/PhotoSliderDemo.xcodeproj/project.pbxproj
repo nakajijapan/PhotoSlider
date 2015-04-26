@@ -15,6 +15,9 @@
 		DC20F4641ADA871D009A4C64 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4631ADA871D009A4C64 /* Images.xcassets */; };
 		DC20F4671ADA871D009A4C64 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4651ADA871D009A4C64 /* LaunchScreen.xib */; };
 		DC20F4731ADA871D009A4C64 /* PhotoSliderDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F4721ADA871D009A4C64 /* PhotoSliderDemoTests.swift */; };
+		DC740B191AEC6B2F00079D30 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC740B161AEC6B2F00079D30 /* LICENSE */; };
+		DC740B1A1AEC6B2F00079D30 /* PhotoSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */; };
+		DC740B1B1AEC6B2F00079D30 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = DC740B181AEC6B2F00079D30 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +48,9 @@
 		DC20F4711ADA871D009A4C64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC20F4721ADA871D009A4C64 /* PhotoSliderDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSliderDemoTests.swift; sourceTree = "<group>"; };
 		DC20F4801ADA9657009A4C64 /* PhotoSliderDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoSliderDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		DC740B161AEC6B2F00079D30 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PhotoSlider.podspec; path = ../PhotoSlider.podspec; sourceTree = "<group>"; };
+		DC740B181AEC6B2F00079D30 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +96,7 @@
 		DC20F44E1ADA871D009A4C64 = {
 			isa = PBXGroup;
 			children = (
+				DC740B151AEC6A0900079D30 /* Podspec Metadata */,
 				DC20F4591ADA871D009A4C64 /* PhotoSliderDemo */,
 				DC20F46F1ADA871D009A4C64 /* PhotoSliderDemoTests */,
 				DC20F4581ADA871D009A4C64 /* Products */,
@@ -144,6 +151,16 @@
 				DC20F4711ADA871D009A4C64 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC740B151AEC6A0900079D30 /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				DC740B161AEC6B2F00079D30 /* LICENSE */,
+				DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */,
+				DC740B181AEC6B2F00079D30 /* README.md */,
+			);
+			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,7 +251,9 @@
 			files = (
 				DC20F4621ADA871D009A4C64 /* Main.storyboard in Resources */,
 				DC20F4671ADA871D009A4C64 /* LaunchScreen.xib in Resources */,
+				DC740B191AEC6B2F00079D30 /* LICENSE in Resources */,
 				DC20F4641ADA871D009A4C64 /* Images.xcassets in Resources */,
+				DC740B1A1AEC6B2F00079D30 /* PhotoSlider.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +364,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC740B1B1AEC6B2F00079D30 /* README.md in Sources */,
 				DC20F45F1ADA871D009A4C64 /* ViewController.swift in Sources */,
 				DC20F45D1ADA871D009A4C64 /* AppDelegate.swift in Sources */,
 			);
