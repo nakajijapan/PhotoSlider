@@ -22,6 +22,23 @@ it, simply add the following line to your Podfile:
 pod "PhotoSlider"
 ```
 
+## Use
+
+```swift
+
+func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+
+    var slider = PhotoSlider.ViewController(imageURLs: self.images)
+    slider.modalPresentationStyle = .OverCurrentContext
+    slider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+    slider.index = indexPath.row
+    self.presentViewController(slider, animated: true, completion: nil)
+
+}
+
+```
+
+
 ## Author
 
 nakajijapan, pp.kupepo.gattyanmo@gmail.com
