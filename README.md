@@ -8,7 +8,7 @@
 PhotoSlider can a simple photo slider and delete slider with swiping.
 
 
-<img src="./demo.gif" width="300" />
+<img src="https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/demo.gif" width="300" />
 
 
 ## Installation
