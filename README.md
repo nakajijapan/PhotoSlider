@@ -7,11 +7,6 @@
 
 PhotoSlider can a simple photo slider and delete slider with swiping.
 
-## Usage
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
 
 ## Installation
 
@@ -22,7 +17,9 @@ it, simply add the following line to your Podfile:
 pod "PhotoSlider"
 ```
 
-## Use
+## Usage
+
+
 
 ```swift
 
@@ -38,6 +35,8 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
 
 ```
 
+## Requirements
+Xcode 6 is required.
 
 ## Author
 
