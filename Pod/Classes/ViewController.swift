@@ -13,6 +13,11 @@ import SDWebImage
     optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
 }
 
+enum PhotoSliderControllerScrollMode:Int {
+    case None = 0, Vertical, Horizontal
+}
+
+
 
 public class ViewController:UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
@@ -151,20 +156,46 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
 
     public func scrollViewDidScroll(scrollView: UIScrollView) {
 
+        let offsetX = scrollView.contentOffset.x - self.scrollPreviewPoint.x
+        let offsetY = scrollView.contentOffset.y - self.scrollPreviewPoint.y
+        
+        if offsetY > offsetX {
+            let alpha = 1.0 - (scrollView.contentOffset.y / (scrollView.frame.size.height / 2.0))
+            self.backgroundView.alpha = alpha
+            
+            var contentOffset = scrollView.contentOffset
+            contentOffset.x = self.scrollPreviewPoint.x
+            scrollView.contentOffset = contentOffset
+        } else {
+            var contentOffset = scrollView.contentOffset
+            contentOffset.y = self.scrollPreviewPoint.y
+            scrollView.contentOffset = contentOffset
+        }
+        
+        // paging
+        if self.visiblePageControl {
+            if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
+                self.pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+            }
+        }
+  
+    }
+    
+    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+
         let screenHeight = UIScreen.mainScreen().bounds.size.height
         let screenWidth = UIScreen.mainScreen().bounds.size.width
+        let velocity = scrollView.panGestureRecognizer.velocityInView(scrollView)
 
+        if velocity.y < -500 {
+            self.collectionView.frame = scrollView.frame;
 
-        if scrollView.contentOffset.y > 100 {
-
-            self.collectionView.frame = scrollView.frame
-            
             if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
                 self.delegate!.photoSliderControllerWillDismiss!(self)
             }
             
             UIView.animateWithDuration(
-                0.5,
+                0.4,
                 delay: 0,
                 options: UIViewAnimationOptions.CurveEaseOut,
                 animations: { () -> Void in
@@ -174,21 +205,20 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
                     self.view.alpha = 0.0
                 },
                 completion: {(result) -> Void in
-                    self.dismissViewController()
+                    self.dissmissViewControllerAnimated(false)
                 }
             )
-            return
 
-        } else if scrollView.contentOffset.y < -100 {
-
-            self.collectionView.frame = scrollView.frame
             
+        } else if velocity.y > 500 {
+            self.collectionView.frame = scrollView.frame;
+
             if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
                 self.delegate!.photoSliderControllerWillDismiss!(self)
             }
-            
+
             UIView.animateWithDuration(
-                0.5,
+                0.4,
                 delay: 0,
                 options: UIViewAnimationOptions.CurveEaseOut,
                 animations: { () -> Void in
@@ -198,35 +228,11 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
                     self.view.alpha = 0.0
                 },
                 completion: {(result) -> Void in
-                    self.dismissViewController()
+                    self.dissmissViewControllerAnimated(false)
                 }
             )
             
-            return
         }
-
-        var offsetX = fabs(scrollView.contentOffset.x - self.scrollPreviewPoint.x)
-        var offsetY = fabs(scrollView.contentOffset.y - self.scrollPreviewPoint.y)
-        if offsetY > offsetX {
-            var contentOffset = scrollView.contentOffset
-            contentOffset.x = self.scrollPreviewPoint.x
-            scrollView.contentOffset = contentOffset
-            
-            let alpha:CGFloat = 1.0 - (scrollView.contentOffset.y * 2.0 / scrollView.frame.size.height / 2.0)
-            self.backgroundView.alpha = alpha
-        } else {
-            var contentOffset = scrollView.contentOffset
-            contentOffset.y = self.scrollPreviewPoint.y
-            scrollView.contentOffset = contentOffset
-        }
-
-        // paging
-        if visiblePageControl {
-            if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
-                self.pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-            }
-        }
-        
     }
 
     // MARK: - Button Actions
@@ -235,13 +241,13 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
             self.delegate!.photoSliderControllerWillDismiss!(self)
         }
-        self.dismissViewController()
+        self.dissmissViewControllerAnimated(true)
     }
     
     // MARK: - Private Methods
     
-    func dismissViewController() {
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+    func dissmissViewControllerAnimated(animated:Bool) {
+        self.dismissViewControllerAnimated(animated, completion: { () -> Void in
             
             if self.delegate!.respondsToSelector("photoSliderControllerDidDismiss:") {
                 self.delegate!.photoSliderControllerDidDismiss!(self)
