@@ -212,6 +212,7 @@
 		DC20F44F1ADA871D009A4C64 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = net.nakajijapan;
 				TargetAttributes = {

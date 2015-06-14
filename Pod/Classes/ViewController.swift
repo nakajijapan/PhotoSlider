@@ -13,7 +13,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     var collectionView: UICollectionView!
     var imageURLs:Array<String>?
     var pageControl:UIPageControl!
-    
+    var backgroundView:UIView!
 
     public var index:Int = 0
     public init(imageURLs:Array<String>) {
@@ -37,11 +37,18 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         self.view.backgroundColor = UIColor.clearColor()
         self.view.userInteractionEnabled = true
 
-        var backgroundView = UIView(frame: self.view.bounds)
-        backgroundView.backgroundColor = UIColor.blackColor()
-        backgroundView.alpha = 0.8
-        self.view.addSubview(backgroundView)
-
+        self.backgroundView = UIView(frame: self.view.bounds)
+        self.backgroundView.backgroundColor = UIColor.blackColor()
+        
+        if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 {
+            self.view.addSubview(self.backgroundView)
+        } else {
+            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+            let effectView = UIVisualEffectView(effect: blurEffect)
+            self.view.addSubview(effectView)
+            effectView.addSubview(self.backgroundView)
+        }
+        
         // layout
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
@@ -159,6 +166,9 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
             var contentOffset = scrollView.contentOffset
             contentOffset.x = self.scrollPreviewPoint.x
             scrollView.contentOffset = contentOffset
+            
+            let alpha:CGFloat = 1.0 - (scrollView.contentOffset.y * 2.0 / scrollView.frame.size.height / 2.0)
+            self.backgroundView.alpha = alpha
         } else {
             var contentOffset = scrollView.contentOffset
             contentOffset.y = self.scrollPreviewPoint.y
