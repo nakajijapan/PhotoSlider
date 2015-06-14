@@ -209,7 +209,11 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     // MARK: - Private Methods
 
     func resourceBundle() -> NSBundle {
-        var bundlePath = NSBundle.mainBundle().pathForResource("PhotoSlider", ofType: "bundle")
+        var bundlePath = NSBundle.mainBundle().pathForResource(
+            "PhotoSlider",
+            ofType: "bundle",
+            inDirectory: "Frameworks/PhotoSlider.framework"
+        )
         var bundle = NSBundle(path: bundlePath!)
         return bundle!
     }
