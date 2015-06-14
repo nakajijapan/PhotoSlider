@@ -11,6 +11,5 @@ before_install:
 install:
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 script:
-#- set -o pipefail && xcodebuild clean build -workspace Example/PhotoSliderDemo.xcworkspace -scheme PhotoSliderDemo -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
-- set -o pipefail && xcodebuild clean -workspace Example/PhotoSliderDemo.xcworkspace -scheme PhotoSliderDemo -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+- set -o pipefail && xcodebuild test -workspace Example/PhotoSliderDemo.xcworkspace -scheme PhotoSliderDemo -destination-timeout 1 -sdk iphonesimulator -configuration Debug -destination 'name=iPhone 6'
 - pod lib lint --quick
