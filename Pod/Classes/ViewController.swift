@@ -156,9 +156,9 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
 
     public func scrollViewDidScroll(scrollView: UIScrollView) {
 
-        let offsetX = scrollView.contentOffset.x - self.scrollPreviewPoint.x
-        let offsetY = scrollView.contentOffset.y - self.scrollPreviewPoint.y
-        
+        let offsetX = fabs(scrollView.contentOffset.x - self.scrollPreviewPoint.x)
+        let offsetY = fabs(scrollView.contentOffset.y - self.scrollPreviewPoint.y)
+
         if self.scrollMode == .None {
             if (offsetY > offsetX) {
                 self.scrollMode = .Vertical;
@@ -168,7 +168,8 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         }
         
         if self.scrollMode == .Vertical {
-            let alpha = 1.0 - ((scrollView.contentOffset.y * 2.0) / (scrollView.frame.size.height / 2.0))
+
+            let alpha = 1.0 - (fabs(scrollView.contentOffset.y * 2.0) / (scrollView.frame.size.height / 2.0))
             self.backgroundView.alpha = alpha
             
             var contentOffset = scrollView.contentOffset
