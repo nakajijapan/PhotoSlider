@@ -14,13 +14,16 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     var imageURLs:Array<String>?
     var pageControl:UIPageControl!
     var backgroundView:UIView!
+    var closeButton:UIButton!
 
+    public var visiblePageControl = true
+    public var visibleCloseButton = true
     public var index:Int = 0
+    
     public init(imageURLs:Array<String>) {
         super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
     }
-    public var visiblePageControl = true
 
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -74,6 +77,19 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
             self.pageControl.currentPage = 0
             self.pageControl.userInteractionEnabled = false
             self.view.addSubview(self.pageControl)
+        }
+        
+        
+        if self.visibleCloseButton {
+            self.closeButton = UIButton(frame: CGRect(
+                x: CGRectGetWidth(self.view.frame) - 32.0 - 8.0, y: 8.0,
+                width: 32.0, height: 32.0)
+            )
+            var imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
+            self.closeButton.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
+            self.closeButton.addTarget(self, action: "closeButtonDidTap:", forControlEvents: UIControlEvents.TouchUpInside)
+            self.closeButton.imageView?.contentMode = UIViewContentMode.Center;
+            self.view.addSubview(self.closeButton)
         }
     }
 
@@ -184,4 +200,22 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         
     }
 
+    // MARK: - Button Actions
+
+    func closeButtonDidTap(sender:UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - Private Methods
+
+    func resourceBundle() -> NSBundle {
+        var bundlePath = NSBundle.mainBundle().pathForResource(
+            "PhotoSlider",
+            ofType: "bundle",
+            inDirectory: "Frameworks/PhotoSlider.framework"
+        )
+        var bundle = NSBundle(path: bundlePath!)
+        return bundle!
+    }
+    
 }
