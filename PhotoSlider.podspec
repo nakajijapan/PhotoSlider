@@ -12,7 +12,6 @@ Pod::Spec.new do |s|
   s.version          = "0.2.1"
   s.summary          = "PhotoSlider can a simple photo slider and delete slider with swiping."
   s.homepage         = "https://github.com/nakajijapan/PhotoSlider"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "nakajijapan" => "pp.kupepo.gattyanmo@gmail.com" }
   s.source           = { :git => "https://github.com/nakajijapan/PhotoSlider.git", :tag => s.version.to_s }
@@ -25,8 +24,6 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'PhotoSlider' => ['Pod/Assets/*.png']
   }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   #s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'SDWebImage'
 end
