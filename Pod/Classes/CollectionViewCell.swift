@@ -40,7 +40,7 @@ public class CollectionViewCell: UICollectionViewCell {
             options: .CacheMemoryOnly,
             progress: { (receivedSize, expectedSize) -> Void in
                 let progress = Float(receivedSize) / Float(expectedSize)
-                println("progress = \(progress)")
+                //println("progress = \(progress)")
                 self.progressView.animateCurveToProgress(progress)
         }) { (image, error, cacheType, ImageView) -> Void in
             self.progressView.hidden = true

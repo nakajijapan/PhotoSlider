@@ -23,7 +23,30 @@ public class ProgressView: UIView {
     }
     
     public override func drawRect(rect: CGRect) {
+        self.createInitialProgressLayer()
         self.createProgressLayer()
+    }
+    
+    func createInitialProgressLayer() {
+        let startAngle = -M_PI_2
+        let endAngle = M_PI_2 * 2 + M_PI_2
+        let centerPoint = CGPointMake(CGRectGetWidth(self.frame) / 2.0, CGRectGetHeight(self.frame) / 2.0)
+        
+        self.progressLayer = CAShapeLayer()
+        self.progressLayer.path = UIBezierPath(
+            arcCenter: centerPoint,
+            radius: 20.0,
+            startAngle: CGFloat(startAngle),
+            endAngle: CGFloat(endAngle),
+            clockwise: true
+        ).CGPath
+        self.progressLayer.backgroundColor = UIColor.clearColor().CGColor
+        self.progressLayer.fillColor = UIColor.clearColor().CGColor
+        self.progressLayer.strokeColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2).CGColor
+        self.progressLayer.lineWidth = 4.0
+        self.progressLayer.strokeStart = 0.0
+        self.progressLayer.strokeEnd = 1.0
+        self.layer.addSublayer(self.progressLayer)
     }
     
     func createProgressLayer() {
