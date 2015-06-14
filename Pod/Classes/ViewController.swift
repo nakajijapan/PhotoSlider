@@ -8,6 +8,12 @@
 import UIKit
 import SDWebImage
 
+@objc public protocol PhotoSliderDelegate:NSObjectProtocol {
+    optional func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController)
+    optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
+}
+
+
 public class ViewController:UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     var collectionView: UICollectionView!
@@ -16,6 +22,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     var backgroundView:UIView!
     var closeButton:UIButton!
 
+    public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
     public var visibleCloseButton = true
     public var index:Int = 0
@@ -91,6 +98,10 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
             self.closeButton.imageView?.contentMode = UIViewContentMode.Center;
             self.view.addSubview(self.closeButton)
         }
+        
+        if self.respondsToSelector("setNeedsStatusBarAppearanceUpdate") {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
     override public func viewWillAppear(animated: Bool) {
@@ -147,30 +158,48 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         if scrollView.contentOffset.y > 100 {
 
             self.collectionView.frame = scrollView.frame
+            
+            if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
+                self.delegate!.photoSliderControllerWillDismiss!(self)
+            }
+            
             UIView.animateWithDuration(
                 0.5,
                 delay: 0,
                 options: UIViewAnimationOptions.CurveEaseOut,
                 animations: { () -> Void in
                     self.collectionView.frame = CGRectMake(0, -screenHeight, screenWidth, screenHeight)
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.backgroundView.alpha = 0.0
+                    self.closeButton.alpha = 0.0
+                    self.view.alpha = 0.0
                 },
-                completion: nil
+                completion: {(result) -> Void in
+                    self.dismissViewController()
+                }
             )
             return
 
         } else if scrollView.contentOffset.y < -100 {
 
             self.collectionView.frame = scrollView.frame
+            
+            if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
+                self.delegate!.photoSliderControllerWillDismiss!(self)
+            }
+            
             UIView.animateWithDuration(
                 0.5,
                 delay: 0,
                 options: UIViewAnimationOptions.CurveEaseOut,
                 animations: { () -> Void in
                     self.collectionView.frame = CGRectMake(0, screenHeight, screenWidth, screenHeight)
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.backgroundView.alpha = 0.0
+                    self.closeButton.alpha = 0.0
+                    self.view.alpha = 0.0
                 },
-                completion: nil
+                completion: {(result) -> Void in
+                    self.dismissViewController()
+                }
             )
             
             return
@@ -203,10 +232,23 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     // MARK: - Button Actions
 
     func closeButtonDidTap(sender:UIButton) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
+            self.delegate!.photoSliderControllerWillDismiss!(self)
+        }
+        self.dismissViewController()
     }
     
     // MARK: - Private Methods
+    
+    func dismissViewController() {
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            
+            if self.delegate!.respondsToSelector("photoSliderControllerDidDismiss:") {
+                self.delegate!.photoSliderControllerDidDismiss!(self)
+            }
+
+        })
+    }
 
     func resourceBundle() -> NSBundle {
         var bundlePath = NSBundle.mainBundle().pathForResource(

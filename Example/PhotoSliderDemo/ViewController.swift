@@ -9,12 +9,12 @@
 import UIKit
 import PhotoSlider
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate {
     
     @IBOutlet var tableView:UITableView!
     
     var collectionView:UICollectionView!
-    
+
     var images = [
         "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg",
         "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg",
@@ -25,6 +25,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image007.jpg",
         "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image008.jpg",
     ]
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
     
     // MARK: - UITableViewDataSource
     
@@ -80,11 +84,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var slider = PhotoSlider.ViewController(imageURLs: self.images)
         slider.modalPresentationStyle = .OverCurrentContext
         slider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        slider.delegate = self
         slider.index = indexPath.row
-        self.presentViewController(slider, animated: true) { () -> Void in
-            // none
-        }
+
+        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+        self.presentViewController(slider, animated: true, completion: nil)
     }
+    
+    // MARK: - PhotoSliderDelegate
+
+    func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
+        UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
+    }
+
 }
 
 
