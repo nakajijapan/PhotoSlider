@@ -59,6 +59,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         } else {
             let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
             let effectView = UIVisualEffectView(effect: blurEffect)
+            effectView.frame = self.view.bounds
             self.view.addSubview(effectView)
             effectView.addSubview(self.backgroundView)
         }
@@ -167,7 +168,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         }
         
         if self.scrollMode == .Vertical {
-            let alpha = 1.0 - (scrollView.contentOffset.y / (scrollView.frame.size.height / 2.0))
+            let alpha = 1.0 - ((scrollView.contentOffset.y * 2.0) / (scrollView.frame.size.height / 2.0))
             self.backgroundView.alpha = alpha
             
             var contentOffset = scrollView.contentOffset
