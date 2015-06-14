@@ -17,8 +17,6 @@ enum PhotoSliderControllerScrollMode:Int {
     case None = 0, Vertical, Horizontal
 }
 
-
-
 public class ViewController:UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     var collectionView: UICollectionView!
@@ -26,6 +24,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     var pageControl:UIPageControl!
     var backgroundView:UIView!
     var closeButton:UIButton!
+    var scrollMode:PhotoSliderControllerScrollMode = .None
 
     public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
@@ -159,14 +158,22 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         let offsetX = scrollView.contentOffset.x - self.scrollPreviewPoint.x
         let offsetY = scrollView.contentOffset.y - self.scrollPreviewPoint.y
         
-        if offsetY > offsetX {
+        if self.scrollMode == .None {
+            if (offsetY > offsetX) {
+                self.scrollMode = .Vertical;
+            } else {
+                self.scrollMode = .Horizontal;
+            }
+        }
+        
+        if self.scrollMode == .Vertical {
             let alpha = 1.0 - (scrollView.contentOffset.y / (scrollView.frame.size.height / 2.0))
             self.backgroundView.alpha = alpha
             
             var contentOffset = scrollView.contentOffset
             contentOffset.x = self.scrollPreviewPoint.x
             scrollView.contentOffset = contentOffset
-        } else {
+        } else if self.scrollMode == .Horizontal {
             var contentOffset = scrollView.contentOffset
             contentOffset.y = self.scrollPreviewPoint.y
             scrollView.contentOffset = contentOffset
@@ -183,56 +190,65 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 
-        let screenHeight = UIScreen.mainScreen().bounds.size.height
-        let screenWidth = UIScreen.mainScreen().bounds.size.width
-        let velocity = scrollView.panGestureRecognizer.velocityInView(scrollView)
+        if self.scrollMode == .Vertical {
 
-        if velocity.y < -500 {
-            self.collectionView.frame = scrollView.frame;
-
-            if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
-                self.delegate!.photoSliderControllerWillDismiss!(self)
-            }
+            let screenHeight = UIScreen.mainScreen().bounds.size.height
+            let screenWidth = UIScreen.mainScreen().bounds.size.width
+            let velocity = scrollView.panGestureRecognizer.velocityInView(scrollView)
             
-            UIView.animateWithDuration(
-                0.4,
-                delay: 0,
-                options: UIViewAnimationOptions.CurveEaseOut,
-                animations: { () -> Void in
-                    self.collectionView.frame = CGRectMake(0, -screenHeight, screenWidth, screenHeight)
-                    self.backgroundView.alpha = 0.0
-                    self.closeButton.alpha = 0.0
-                    self.view.alpha = 0.0
-                },
-                completion: {(result) -> Void in
-                    self.dissmissViewControllerAnimated(false)
+            if velocity.y < -500 {
+                self.collectionView.frame = scrollView.frame;
+                
+                if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
+                    self.delegate!.photoSliderControllerWillDismiss!(self)
                 }
-            )
-
-            
-        } else if velocity.y > 500 {
-            self.collectionView.frame = scrollView.frame;
-
-            if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
-                self.delegate!.photoSliderControllerWillDismiss!(self)
+                
+                UIView.animateWithDuration(
+                    0.4,
+                    delay: 0,
+                    options: UIViewAnimationOptions.CurveEaseOut,
+                    animations: { () -> Void in
+                        self.collectionView.frame = CGRectMake(0, -screenHeight, screenWidth, screenHeight)
+                        self.backgroundView.alpha = 0.0
+                        self.closeButton.alpha = 0.0
+                        self.view.alpha = 0.0
+                    },
+                    completion: {(result) -> Void in
+                        self.dissmissViewControllerAnimated(false)
+                    }
+                )
+                
+                
+            } else if velocity.y > 500 {
+                self.collectionView.frame = scrollView.frame;
+                
+                if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
+                    self.delegate!.photoSliderControllerWillDismiss!(self)
+                }
+                
+                UIView.animateWithDuration(
+                    0.4,
+                    delay: 0,
+                    options: UIViewAnimationOptions.CurveEaseOut,
+                    animations: { () -> Void in
+                        self.collectionView.frame = CGRectMake(0, screenHeight, screenWidth, screenHeight)
+                        self.backgroundView.alpha = 0.0
+                        self.closeButton.alpha = 0.0
+                        self.view.alpha = 0.0
+                    },
+                    completion: {(result) -> Void in
+                        self.dissmissViewControllerAnimated(false)
+                    }
+                )
+                
             }
-
-            UIView.animateWithDuration(
-                0.4,
-                delay: 0,
-                options: UIViewAnimationOptions.CurveEaseOut,
-                animations: { () -> Void in
-                    self.collectionView.frame = CGRectMake(0, screenHeight, screenWidth, screenHeight)
-                    self.backgroundView.alpha = 0.0
-                    self.closeButton.alpha = 0.0
-                    self.view.alpha = 0.0
-                },
-                completion: {(result) -> Void in
-                    self.dissmissViewControllerAnimated(false)
-                }
-            )
             
         }
+
+    }
+    
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        self.scrollMode = .None
     }
 
     // MARK: - Button Actions
