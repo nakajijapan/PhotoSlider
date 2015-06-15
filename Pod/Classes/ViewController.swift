@@ -97,7 +97,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
                 x: CGRectGetWidth(self.view.frame) - 32.0 - 8.0, y: 8.0,
                 width: 32.0, height: 32.0)
             )
-            var imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
+            let imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
             self.closeButton.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
             self.closeButton.addTarget(self, action: "closeButtonDidTap:", forControlEvents: UIControlEvents.TouchUpInside)
             self.closeButton.imageView?.contentMode = UIViewContentMode.Center;
@@ -114,7 +114,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
     }
     
-    public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.dismissViewControllerAnimated(true) { () -> Void in
             self.view.removeFromSuperview()
         }
@@ -132,7 +132,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! CollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! CollectionViewCell
         cell.backgroundColor = UIColor.clearColor()
 
         if self.imageURLs != nil {
@@ -275,12 +275,12 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     }
 
     func resourceBundle() -> NSBundle {
-        var bundlePath = NSBundle.mainBundle().pathForResource(
+        let bundlePath = NSBundle.mainBundle().pathForResource(
             "PhotoSlider",
             ofType: "bundle",
             inDirectory: "Frameworks/PhotoSlider.framework"
         )
-        var bundle = NSBundle(path: bundlePath!)
+        let bundle = NSBundle(path: bundlePath!)
         return bundle!
     }
     
