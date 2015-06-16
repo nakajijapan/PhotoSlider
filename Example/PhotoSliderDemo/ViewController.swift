@@ -47,11 +47,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        var insets = collectionView.contentInset
-        insets.top = -20
-        collectionView.contentInset = insets
-
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return UIScreen.mainScreen().bounds.size.width
+        }
+        
+        return 0.0;
     }
     
     // MARK: - UICollectionViewDataSource
@@ -74,7 +78,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width:UIScreen.mainScreen().bounds.size.width, height:UIScreen.mainScreen().bounds.size.width)
+        return CGSize(width:collectionView.bounds.size.width, height:collectionView.bounds.size.width)
     }
     
     // MARK: - UICollectionViewDelegate
