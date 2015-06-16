@@ -34,6 +34,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
     public init(imageURLs:Array<String>) {
         super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
+        self.accessibilityLabel = "PhotoSliderViewController"
     }
 
     required public init(coder aDecoder: NSCoder) {
@@ -80,6 +81,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         self.collectionView.backgroundColor = UIColor.clearColor()
         self.collectionView.showsHorizontalScrollIndicator = true
         self.collectionView.alwaysBounceVertical = true
+        self.collectionView.accessibilityLabel = "PhotoSliderCollectionView"
         self.view.addSubview(self.collectionView)
         
         // pagecontrol
