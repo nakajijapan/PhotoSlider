@@ -10,19 +10,27 @@
 		965C495DE0B350CAA38C7A20 /* Pods_PhotoSliderDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D8B794C512AAA0D057DE04F8 /* Pods_PhotoSliderDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DC0358011B2D550600B80D21 /* Pods_PhotoSliderDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */; };
-		DC0358021B2D551200B80D21 /* Pods_PhotoSliderDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; };
+		DC0358021B2D551200B80D21 /* Pods_PhotoSliderDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DC20F45D1ADA871D009A4C64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F45C1ADA871D009A4C64 /* AppDelegate.swift */; };
 		DC20F45F1ADA871D009A4C64 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F45E1ADA871D009A4C64 /* ViewController.swift */; };
 		DC20F4621ADA871D009A4C64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4601ADA871D009A4C64 /* Main.storyboard */; };
 		DC20F4641ADA871D009A4C64 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4631ADA871D009A4C64 /* Images.xcassets */; };
 		DC20F4671ADA871D009A4C64 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4651ADA871D009A4C64 /* LaunchScreen.xib */; };
 		DC20F4731ADA871D009A4C64 /* PhotoSliderDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F4721ADA871D009A4C64 /* PhotoSliderDemoTests.swift */; };
+		DC554F351B2FE4C000F04F70 /* PhotoSliderDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC554F341B2FE4C000F04F70 /* PhotoSliderDemoUITests.swift */; };
 		DC740B191AEC6B2F00079D30 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC740B161AEC6B2F00079D30 /* LICENSE */; };
 		DC740B1A1AEC6B2F00079D30 /* PhotoSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		DC20F46D1ADA871D009A4C64 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC20F44F1ADA871D009A4C64 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC20F4561ADA871D009A4C64;
+			remoteInfo = PhotoSliderDemo;
+		};
+		DC554F371B2FE4C000F04F70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DC20F44F1ADA871D009A4C64 /* Project object */;
 			proxyType = 1;
@@ -49,6 +57,9 @@
 		DC20F4711ADA871D009A4C64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC20F4721ADA871D009A4C64 /* PhotoSliderDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSliderDemoTests.swift; sourceTree = "<group>"; };
 		DC20F4801ADA9657009A4C64 /* PhotoSliderDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoSliderDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		DC554F321B2FE4C000F04F70 /* PhotoSliderDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoSliderDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC554F341B2FE4C000F04F70 /* PhotoSliderDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSliderDemoUITests.swift; sourceTree = "<group>"; };
+		DC554F361B2FE4C000F04F70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC740B161AEC6B2F00079D30 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PhotoSlider.podspec; path = ../PhotoSlider.podspec; sourceTree = "<group>"; };
 		DC740B181AEC6B2F00079D30 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -70,6 +81,13 @@
 			files = (
 				965C495DE0B350CAA38C7A20 /* Pods_PhotoSliderDemoTests.framework in Frameworks */,
 				DC0358011B2D550600B80D21 /* Pods_PhotoSliderDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC554F2F1B2FE4C000F04F70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +120,7 @@
 				DC740B151AEC6A0900079D30 /* Podspec Metadata */,
 				DC20F4591ADA871D009A4C64 /* PhotoSliderDemo */,
 				DC20F46F1ADA871D009A4C64 /* PhotoSliderDemoTests */,
+				DC554F331B2FE4C000F04F70 /* PhotoSliderDemoUITests */,
 				DC20F4581ADA871D009A4C64 /* Products */,
 				9BF74163E5DA4094004C64A0 /* Pods */,
 				66A3BAA23076667DA79DC70A /* Frameworks */,
@@ -113,6 +132,7 @@
 			children = (
 				DC20F4571ADA871D009A4C64 /* PhotoSliderDemo.app */,
 				DC20F46C1ADA871D009A4C64 /* PhotoSliderDemoTests.xctest */,
+				DC554F321B2FE4C000F04F70 /* PhotoSliderDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -154,6 +174,15 @@
 				DC20F4711ADA871D009A4C64 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC554F331B2FE4C000F04F70 /* PhotoSliderDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DC554F341B2FE4C000F04F70 /* PhotoSliderDemoUITests.swift */,
+				DC554F361B2FE4C000F04F70 /* Info.plist */,
+			);
+			path = PhotoSliderDemoUITests;
 			sourceTree = "<group>";
 		};
 		DC740B151AEC6A0900079D30 /* Podspec Metadata */ = {
@@ -210,6 +239,24 @@
 			productReference = DC20F46C1ADA871D009A4C64 /* PhotoSliderDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		DC554F311B2FE4C000F04F70 /* PhotoSliderDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC554F391B2FE4C000F04F70 /* Build configuration list for PBXNativeTarget "PhotoSliderDemoUITests" */;
+			buildPhases = (
+				DC554F2E1B2FE4C000F04F70 /* Sources */,
+				DC554F2F1B2FE4C000F04F70 /* Frameworks */,
+				DC554F301B2FE4C000F04F70 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DC554F381B2FE4C000F04F70 /* PBXTargetDependency */,
+			);
+			name = PhotoSliderDemoUITests;
+			productName = PhotoSliderDemoUITests;
+			productReference = DC554F321B2FE4C000F04F70 /* PhotoSliderDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -217,7 +264,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = net.nakajijapan;
 				TargetAttributes = {
 					DC20F4561ADA871D009A4C64 = {
@@ -225,6 +272,10 @@
 					};
 					DC20F46B1ADA871D009A4C64 = {
 						CreatedOnToolsVersion = 6.2;
+						TestTargetID = DC20F4561ADA871D009A4C64;
+					};
+					DC554F311B2FE4C000F04F70 = {
+						CreatedOnToolsVersion = 7.0;
 						TestTargetID = DC20F4561ADA871D009A4C64;
 					};
 				};
@@ -244,6 +295,7 @@
 			targets = (
 				DC20F4561ADA871D009A4C64 /* PhotoSliderDemo */,
 				DC20F46B1ADA871D009A4C64 /* PhotoSliderDemoTests */,
+				DC554F311B2FE4C000F04F70 /* PhotoSliderDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -262,6 +314,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DC20F46A1ADA871D009A4C64 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC554F301B2FE4C000F04F70 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -381,6 +440,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC554F2E1B2FE4C000F04F70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC554F351B2FE4C000F04F70 /* PhotoSliderDemoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -388,6 +455,11 @@
 			isa = PBXTargetDependency;
 			target = DC20F4561ADA871D009A4C64 /* PhotoSliderDemo */;
 			targetProxy = DC20F46D1ADA871D009A4C64 /* PBXContainerItemProxy */;
+		};
+		DC554F381B2FE4C000F04F70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC20F4561ADA871D009A4C64 /* PhotoSliderDemo */;
+			targetProxy = DC554F371B2FE4C000F04F70 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -431,6 +503,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -496,6 +569,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = PhotoSliderDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.nakajijapan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSliderDemo/PhotoSliderDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -510,6 +584,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = PhotoSliderDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.nakajijapan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSliderDemo/PhotoSliderDemo-Bridging-Header.h";
 			};
@@ -530,6 +605,7 @@
 				);
 				INFOPLIST_FILE = PhotoSliderDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.nakajijapan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoSliderDemo.app/PhotoSliderDemo";
 			};
@@ -546,8 +622,39 @@
 				);
 				INFOPLIST_FILE = PhotoSliderDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.nakajijapan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoSliderDemo.app/PhotoSliderDemo";
+			};
+			name = Release;
+		};
+		DC554F3A1B2FE4C000F04F70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PhotoSliderDemoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSliderDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = PhotoSliderDemo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		DC554F3B1B2FE4C000F04F70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PhotoSliderDemoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSliderDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = PhotoSliderDemo;
+				USES_XCTRUNNER = YES;
 			};
 			name = Release;
 		};
@@ -577,6 +684,15 @@
 			buildConfigurations = (
 				DC20F47A1ADA871D009A4C64 /* Debug */,
 				DC20F47B1ADA871D009A4C64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC554F391B2FE4C000F04F70 /* Build configuration list for PBXNativeTarget "PhotoSliderDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC554F3A1B2FE4C000F04F70 /* Debug */,
+				DC554F3B1B2FE4C000F04F70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
