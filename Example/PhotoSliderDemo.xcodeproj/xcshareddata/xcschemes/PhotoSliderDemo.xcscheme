@@ -52,6 +52,16 @@
                ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DC554F311B2FE4C000F04F70"
+               BuildableName = "PhotoSliderDemoUITests.xctest"
+               BlueprintName = "PhotoSliderDemoUITests"
+               ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
