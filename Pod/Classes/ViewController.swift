@@ -93,21 +93,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             
             var imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
             self.scrollView.addSubview(imageView)
-            
-            //progressView.hidden = false
-            imageView.imageView.sd_setImageWithURL(NSURL(string: imageURL)!,
-                placeholderImage: nil,
-                options: SDWebImageOptions.CacheMemoryOnly,
-                progress: { (receivedSize, expectedSize) -> Void in
-                    let progress = Float(receivedSize) / Float(expectedSize)
-                    println("progress = \(progress)")
-                    //self.progressView.animateCurveToProgress(progress)
-
-            }, completed: { (image, error, cacheType, url) -> Void in
-                //self.progressView.hidden = true
-
-            })
-            
+            imageView.loadImage(NSURL(string: imageURL)!)
             frame.origin.x += width
         }
         

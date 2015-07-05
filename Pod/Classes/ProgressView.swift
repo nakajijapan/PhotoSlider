@@ -68,6 +68,11 @@ public class ProgressView: UIView {
     }
     
     func animateCurveToProgress(progress: Float) {
+        
+        if self.progressLayer == nil {
+            return
+        }
+        
         var animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = NSNumber(float: Float(self.progressLayer.strokeEnd))
         animation.toValue = NSNumber(float: progress)
