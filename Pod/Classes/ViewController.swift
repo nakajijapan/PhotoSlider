@@ -25,6 +25,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     var backgroundView:UIView!
     var closeButton:UIButton!
     var scrollMode:PhotoSliderControllerScrollMode = .None
+    var scrollInitalized = false
 
     public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
@@ -111,8 +112,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         
         self.scrollView.contentOffset = CGPointMake(0, height)
         
-        println("scrollview \(self.scrollView.frame)")
-        
         // pagecontrol
         if self.visiblePageControl {
             self.pageControl = UIPageControl(frame: CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - 44, CGRectGetWidth(self.view.bounds), 22))
@@ -121,7 +120,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             self.pageControl.userInteractionEnabled = false
             self.view.addSubview(self.pageControl)
         }
-        
         
         if self.visibleCloseButton {
             self.closeButton = UIButton(frame: CGRect(
@@ -140,10 +138,9 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         }
     }
 
-    
     override public func viewWillAppear(animated: Bool) {
-        let indexPath = NSIndexPath(forItem: self.index, inSection: 0)
-        //self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
+        self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width * CGFloat(self.index), self.scrollView.bounds.height)
+        self.scrollInitalized = true
     }
     
     public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -160,7 +157,12 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     }
 
     public func scrollViewDidScroll(scrollView: UIScrollView) {
-
+        
+        if scrollInitalized == false {
+            self.generateCurrentPage()
+            return
+        }
+        
         let offsetX = fabs(scrollView.contentOffset.x - self.scrollPreviewPoint.x)
         let offsetY = fabs(scrollView.contentOffset.y - self.scrollPreviewPoint.y)
 
@@ -173,7 +175,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         }
         
         if self.scrollMode == .Vertical {
-
             let offsetHeight = fabs(scrollView.frame.size.height - scrollView.contentOffset.y)
             let alpha = 1.0 - (fabs(offsetHeight) / (scrollView.frame.size.height / 2.0))
             
@@ -188,7 +189,11 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             scrollView.contentOffset = contentOffset
         }
         
-        // paging
+        self.generateCurrentPage()
+  
+    }
+    
+    func generateCurrentPage() {
         if self.visiblePageControl {
             if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
                 if self.pageControl != nil {
@@ -196,7 +201,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
                 }
             }
         }
-  
     }
 
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
