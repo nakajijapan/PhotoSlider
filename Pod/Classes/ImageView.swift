@@ -30,6 +30,7 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.scrollView.maximumZoomScale = 3.0
         self.scrollView.bounces = true
         self.scrollView.delegate  = self
+        //self.scrollView.backgroundColor = UIColor.greenColor()
         
         self.backgroundColor = UIColor.clearColor()
         

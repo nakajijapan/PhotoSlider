@@ -17,9 +17,9 @@ enum PhotoSliderControllerScrollMode:Int {
     case None = 0, Vertical, Horizontal
 }
 
-public class ViewController:UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+public class ViewController:UIViewController, UIScrollViewDelegate {
 
-    var collectionView: UICollectionView!
+    var scrollView: UIScrollView!
     var imageURLs:Array<String>?
     var pageControl:UIPageControl!
     var backgroundView:UIView!
@@ -64,27 +64,58 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
             effectView.addSubview(self.backgroundView)
         }
         
-        // layout
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        
+        // scrollview setting for Item
+        self.scrollView = UIScrollView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height))
+        self.scrollView.pagingEnabled = true
+        self.scrollView.showsHorizontalScrollIndicator = false
+        self.scrollView.showsVerticalScrollIndicator = false
+        self.scrollView.delegate = self
+        self.scrollView.clipsToBounds = false
+        self.scrollView.alwaysBounceHorizontal = true
+        self.scrollView.alwaysBounceVertical = true
+        self.scrollView.scrollEnabled = true
+        self.view.addSubview(self.scrollView)
+        
+        self.scrollView.contentSize = CGSizeMake(
+            CGRectGetWidth(self.view.bounds) * CGFloat(self.imageURLs!.count),
+            CGRectGetHeight(self.view.bounds) * 3.0
+        )
 
-        // collectionView
-        self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
-        self.collectionView.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        self.collectionView.pagingEnabled = true
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.collectionView.bounces = true
-        self.collectionView.backgroundColor = UIColor.clearColor()
-        self.collectionView.showsHorizontalScrollIndicator = true
-        self.collectionView.alwaysBounceVertical = true
-        self.view.addSubview(self.collectionView)
+
+        let width = CGRectGetWidth(self.view.bounds)
+        let height = CGRectGetHeight(self.view.bounds)
+        var frame = self.view.bounds
+        frame.origin.y = height
+        for imageURL in self.imageURLs! {
+            
+            var imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
+            self.scrollView.addSubview(imageView)
+            
+            //progressView.hidden = false
+            imageView.imageView.sd_setImageWithURL(NSURL(string: imageURL)!,
+                placeholderImage: nil,
+                options: SDWebImageOptions.CacheMemoryOnly,
+                progress: { (receivedSize, expectedSize) -> Void in
+                    let progress = Float(receivedSize) / Float(expectedSize)
+                    println("progress = \(progress)")
+                    //self.progressView.animateCurveToProgress(progress)
+
+            }, completed: { (image, error, cacheType, url) -> Void in
+                //self.progressView.hidden = true
+
+            })
+            
+            frame.origin.x += width
+        }
+        
+        self.scrollView.contentOffset = CGPointMake(0, height)
+        
+        println("scrollview \(self.scrollView.frame)")
         
         // pagecontrol
-        if visiblePageControl {
-            self.pageControl = UIPageControl(frame: CGRectMake(0.0, CGRectGetHeight(self.view.frame) - 44, CGRectGetWidth(self.view.frame), 22))
+        if self.visiblePageControl {
+            self.pageControl = UIPageControl(frame: CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - 44, CGRectGetWidth(self.view.bounds), 22))
             self.pageControl.numberOfPages = imageURLs!.count
             self.pageControl.currentPage = 0
             self.pageControl.userInteractionEnabled = false
@@ -109,9 +140,10 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         }
     }
 
+    
     override public func viewWillAppear(animated: Bool) {
         let indexPath = NSIndexPath(forItem: self.index, inSection: 0)
-        self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
+        //self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
     }
     
     public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -119,34 +151,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
             self.view.removeFromSuperview()
         }
     }
-
-    // MARK: - UICollectionViewDataSource
-
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.imageURLs!.count
-    }
-
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! CollectionViewCell
-        cell.backgroundColor = UIColor.clearColor()
-
-        if self.imageURLs != nil {
-            let imageURL = NSURL(string: self.imageURLs![indexPath.row])!
-            cell.loadImage(imageURL)
-        }
-
-        return cell
-    }
-
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return self.view.bounds.size
-    }
-
+  
     // MARK: - UIScrollViewDelegate
 
     var scrollPreviewPoint = CGPointZero;
@@ -169,7 +174,9 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         
         if self.scrollMode == .Vertical {
 
-            let alpha = 1.0 - (fabs(scrollView.contentOffset.y * 2.0) / (scrollView.frame.size.height / 2.0))
+            let offsetHeight = fabs(scrollView.frame.size.height - scrollView.contentOffset.y)
+            let alpha = 1.0 - (fabs(offsetHeight) / (scrollView.frame.size.height / 2.0))
+            
             self.backgroundView.alpha = alpha
             
             var contentOffset = scrollView.contentOffset
@@ -184,22 +191,24 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
         // paging
         if self.visiblePageControl {
             if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
-                self.pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+                if self.pageControl != nil {
+                    self.pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+                }
             }
         }
   
     }
-    
+
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-
+        
         if self.scrollMode == .Vertical {
-
+            
             let screenHeight = UIScreen.mainScreen().bounds.size.height
             let screenWidth = UIScreen.mainScreen().bounds.size.width
             let velocity = scrollView.panGestureRecognizer.velocityInView(scrollView)
             
             if velocity.y < -500 {
-                self.collectionView.frame = scrollView.frame;
+                self.scrollView.frame = scrollView.frame;
                 
                 if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
                     self.delegate!.photoSliderControllerWillDismiss!(self)
@@ -210,7 +219,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
                     delay: 0,
                     options: UIViewAnimationOptions.CurveEaseOut,
                     animations: { () -> Void in
-                        self.collectionView.frame = CGRectMake(0, -screenHeight, screenWidth, screenHeight)
+                        self.scrollView.frame = CGRectMake(0, -screenHeight, screenWidth, screenHeight)
                         self.backgroundView.alpha = 0.0
                         self.closeButton.alpha = 0.0
                         self.view.alpha = 0.0
@@ -222,7 +231,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
                 
                 
             } else if velocity.y > 500 {
-                self.collectionView.frame = scrollView.frame;
+                self.scrollView.frame = scrollView.frame;
                 
                 if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
                     self.delegate!.photoSliderControllerWillDismiss!(self)
@@ -233,7 +242,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
                     delay: 0,
                     options: UIViewAnimationOptions.CurveEaseOut,
                     animations: { () -> Void in
-                        self.collectionView.frame = CGRectMake(0, screenHeight, screenWidth, screenHeight)
+                        self.scrollView.frame = CGRectMake(0, screenHeight, screenWidth, screenHeight)
                         self.backgroundView.alpha = 0.0
                         self.closeButton.alpha = 0.0
                         self.view.alpha = 0.0
@@ -246,7 +255,7 @@ public class ViewController:UIViewController, UICollectionViewDataSource, UIColl
             }
             
         }
-
+        
     }
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
