@@ -26,6 +26,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     var closeButton:UIButton!
     var scrollMode:PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
+    var closeAnimating = false
 
     public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
@@ -155,9 +156,9 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.scrollPreviewPoint = scrollView.contentOffset
     }
-
+    
     public func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+
         if scrollInitalized == false {
             self.generateCurrentPage()
             return
@@ -183,6 +184,15 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             var contentOffset = scrollView.contentOffset
             contentOffset.x = self.scrollPreviewPoint.x
             scrollView.contentOffset = contentOffset
+            
+            let screenHeight = UIScreen.mainScreen().bounds.size.height
+
+            if self.scrollView.contentOffset.y > screenHeight * 1.4 {
+                self.closePhotoSlider(true)
+            } else if self.scrollView.contentOffset.y < screenHeight * 0.6  {
+                self.closePhotoSlider(false)
+            }
+            
         } else if self.scrollMode == .Horizontal {
             var contentOffset = scrollView.contentOffset
             contentOffset.y = self.scrollPreviewPoint.y
@@ -211,57 +221,56 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             let screenWidth = UIScreen.mainScreen().bounds.size.width
             let velocity = scrollView.panGestureRecognizer.velocityInView(scrollView)
             
-            if velocity.y < -500 {
+             if velocity.y < -500 {
                 self.scrollView.frame = scrollView.frame;
-                
-                if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
-                    self.delegate!.photoSliderControllerWillDismiss!(self)
-                }
-                
-                UIView.animateWithDuration(
-                    0.4,
-                    delay: 0,
-                    options: UIViewAnimationOptions.CurveEaseOut,
-                    animations: { () -> Void in
-                        self.scrollView.frame = CGRectMake(0, -screenHeight, screenWidth, screenHeight)
-                        self.backgroundView.alpha = 0.0
-                        self.closeButton.alpha = 0.0
-                        self.view.alpha = 0.0
-                    },
-                    completion: {(result) -> Void in
-                        self.dissmissViewControllerAnimated(false)
-                    }
-                )
-                
-                
+                self.closePhotoSlider(true)
             } else if velocity.y > 500 {
                 self.scrollView.frame = scrollView.frame;
-                
-                if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
-                    self.delegate!.photoSliderControllerWillDismiss!(self)
-                }
-                
-                UIView.animateWithDuration(
-                    0.4,
-                    delay: 0,
-                    options: UIViewAnimationOptions.CurveEaseOut,
-                    animations: { () -> Void in
-                        self.scrollView.frame = CGRectMake(0, screenHeight, screenWidth, screenHeight)
-                        self.backgroundView.alpha = 0.0
-                        self.closeButton.alpha = 0.0
-                        self.view.alpha = 0.0
-                    },
-                    completion: {(result) -> Void in
-                        self.dissmissViewControllerAnimated(false)
-                    }
-                )
-                
+                self.closePhotoSlider(false)
             }
             
         }
         
     }
     
+    func closePhotoSlider(up:Bool) {
+        
+        if self.closeAnimating == true {
+            return
+        }
+        self.closeAnimating = true
+        
+        let screenHeight = UIScreen.mainScreen().bounds.size.height
+        let screenWidth = UIScreen.mainScreen().bounds.size.width
+        var movedHeight = CGFloat(0)
+        
+        if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
+            self.delegate!.photoSliderControllerWillDismiss!(self)
+        }
+        
+        if up {
+            movedHeight = -screenHeight
+        } else {
+            movedHeight = screenHeight
+        }
+        
+        UIView.animateWithDuration(
+            0.4,
+            delay: 0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: { () -> Void in
+                self.scrollView.frame = CGRectMake(0, movedHeight, screenWidth, screenHeight)
+                self.backgroundView.alpha = 0.0
+                self.closeButton.alpha = 0.0
+                self.view.alpha = 0.0
+            },
+            completion: {(result) -> Void in
+                self.dissmissViewControllerAnimated(false)
+                self.closeAnimating = false
+            }
+        )
+    }
+
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         self.scrollMode = .None
     }
