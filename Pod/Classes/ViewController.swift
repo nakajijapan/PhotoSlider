@@ -20,7 +20,7 @@ enum PhotoSliderControllerScrollMode:Int {
 public class ViewController:UIViewController, UIScrollViewDelegate {
 
     var scrollView: UIScrollView!
-    var imageURLs:Array<String>?
+    var imageURLs:Array<NSURL>?
     var pageControl:UIPageControl!
     var backgroundView:UIView!
     var closeButton:UIButton!
@@ -33,7 +33,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     public var visibleCloseButton = true
     public var index:Int = 0
     
-    public init(imageURLs:Array<String>) {
+    public init(imageURLs:Array<NSURL>) {
         super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
     }
@@ -93,7 +93,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             
             var imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
             self.scrollView.addSubview(imageView)
-            imageView.loadImage(NSURL(string: imageURL)!)
+            imageView.loadImage(imageURL)
             frame.origin.x += width
         }
         

@@ -15,15 +15,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var collectionView:UICollectionView!
 
-    var images = [
-        "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg",
-        "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg",
-        "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image003.jpg",
-        "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image004.jpg",
-        "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image005.jpg",
-        "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image006.jpg",
-        "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image007.jpg",
-        "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image008.jpg",
+    var imageURLs = [
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image003.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image004.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image005.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image006.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image007.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image008.jpg")!,
     ]
     
     override func prefersStatusBarHidden() -> Bool {
@@ -65,14 +65,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
+        return self.imageURLs.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) as! UICollectionViewCell
         
         var imageView = cell.viewWithTag(1) as! UIImageView
-        imageView.sd_setImageWithURL(NSURL(string: self.images[indexPath.row])!)
+        imageView.sd_setImageWithURL(self.imageURLs[indexPath.row])
         
         return cell
     }
@@ -85,7 +85,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var slider = PhotoSlider.ViewController(imageURLs: self.images)
+        var slider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
         slider.modalPresentationStyle = .OverCurrentContext
         slider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         slider.delegate = self
