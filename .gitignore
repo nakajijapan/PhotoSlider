@@ -32,3 +32,4 @@ DerivedData
 #
 Pods/
 Example/Podfile.lock
+Carthage/Build
