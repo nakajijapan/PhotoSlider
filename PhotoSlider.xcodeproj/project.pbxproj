@@ -17,6 +17,7 @@
 		DC20F4731ADA871D009A4C64 /* PhotoSliderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F4721ADA871D009A4C64 /* PhotoSliderTests.swift */; };
 		DC740B191AEC6B2F00079D30 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC740B161AEC6B2F00079D30 /* LICENSE */; };
 		DC740B1A1AEC6B2F00079D30 /* PhotoSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */; };
+		F9B9B76C472D07A8AA45CBB8 /* Pods_PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSlider.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,9 +48,10 @@
 		DC20F4711ADA871D009A4C64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC20F4721ADA871D009A4C64 /* PhotoSliderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSliderTests.swift; sourceTree = "<group>"; };
 		DC20F4801ADA9657009A4C64 /* PhotoSlider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoSlider-Bridging-Header.h"; sourceTree = "<group>"; };
-		DC740B161AEC6B2F00079D30 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PhotoSlider.podspec; path = ../PhotoSlider.podspec; sourceTree = "<group>"; };
-		DC740B181AEC6B2F00079D30 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		DC3FE89F1B568F5A0087A279 /* Pods_PhotoSliderTests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_PhotoSliderTests.framework; path = "Pods/../build/Debug-iphoneos/Pods_PhotoSliderTests.framework"; sourceTree = "<group>"; };
+		DC740B161AEC6B2F00079D30 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = LICENSE; sourceTree = "<group>"; };
+		DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PhotoSlider.podspec; path = PhotoSlider.podspec; sourceTree = "<group>"; };
+		DC740B181AEC6B2F00079D30 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9B9B76C472D07A8AA45CBB8 /* Pods_PhotoSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +78,7 @@
 		66A3BAA23076667DA79DC70A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DC3FE89F1B568F5A0087A279 /* Pods_PhotoSliderTests.framework */,
 				191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSlider.framework */,
 				689274A363491ABEA8D3598A /* Pods_PhotoSliderTests.framework */,
 			);
@@ -490,6 +494,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = PhotoSlider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -504,6 +512,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = PhotoSlider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
