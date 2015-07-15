@@ -7,18 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		965C495DE0B350CAA38C7A20 /* Pods_PhotoSliderDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D8B794C512AAA0D057DE04F8 /* Pods_PhotoSliderDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		DC0358011B2D550600B80D21 /* Pods_PhotoSliderDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */; };
-		DC0358021B2D551200B80D21 /* Pods_PhotoSliderDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		965C495DE0B350CAA38C7A20 /* Pods_PhotoSliderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DC0358011B2D550600B80D21 /* Pods_PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSlider.framework */; };
 		DC20F45D1ADA871D009A4C64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F45C1ADA871D009A4C64 /* AppDelegate.swift */; };
 		DC20F45F1ADA871D009A4C64 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F45E1ADA871D009A4C64 /* ViewController.swift */; };
 		DC20F4621ADA871D009A4C64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4601ADA871D009A4C64 /* Main.storyboard */; };
 		DC20F4641ADA871D009A4C64 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4631ADA871D009A4C64 /* Images.xcassets */; };
 		DC20F4671ADA871D009A4C64 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4651ADA871D009A4C64 /* LaunchScreen.xib */; };
-		DC20F4731ADA871D009A4C64 /* PhotoSliderDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F4721ADA871D009A4C64 /* PhotoSliderDemoTests.swift */; };
+		DC20F4731ADA871D009A4C64 /* PhotoSliderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F4721ADA871D009A4C64 /* PhotoSliderTests.swift */; };
 		DC740B191AEC6B2F00079D30 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC740B161AEC6B2F00079D30 /* LICENSE */; };
 		DC740B1A1AEC6B2F00079D30 /* PhotoSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */; };
+		F9B9B76C472D07A8AA45CBB8 /* Pods_PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSlider.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,31 +26,32 @@
 			containerPortal = DC20F44F1ADA871D009A4C64 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = DC20F4561ADA871D009A4C64;
-			remoteInfo = PhotoSliderDemo;
+			remoteInfo = PhotoSlider;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhotoSliderDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		41089CB75B56F12DC715DE50 /* Pods-PhotoSliderDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSliderDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSliderDemoTests/Pods-PhotoSliderDemoTests.release.xcconfig"; sourceTree = "<group>"; };
-		48954EE5BD7E332C65202083 /* Pods-PhotoSliderDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSliderDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSliderDemoTests/Pods-PhotoSliderDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
-		689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhotoSliderDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAA14BFE259FFFFA34A7158C /* Pods-PhotoSliderDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSliderDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSliderDemo/Pods-PhotoSliderDemo.release.xcconfig"; sourceTree = "<group>"; };
-		CF4EE87704D26443EB7CA776 /* Pods-PhotoSliderDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSliderDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSliderDemo/Pods-PhotoSliderDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		DC20F4571ADA871D009A4C64 /* PhotoSliderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSliderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhotoSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		41089CB75B56F12DC715DE50 /* Pods-PhotoSliderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSliderTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSliderTests/Pods-PhotoSliderTests.release.xcconfig"; sourceTree = "<group>"; };
+		48954EE5BD7E332C65202083 /* Pods-PhotoSliderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSliderTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSliderTests/Pods-PhotoSliderTests.debug.xcconfig"; sourceTree = "<group>"; };
+		689274A363491ABEA8D3598A /* Pods_PhotoSliderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhotoSliderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAA14BFE259FFFFA34A7158C /* Pods-PhotoSlider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSlider.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSlider/Pods-PhotoSlider.release.xcconfig"; sourceTree = "<group>"; };
+		CF4EE87704D26443EB7CA776 /* Pods-PhotoSlider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSlider.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSlider/Pods-PhotoSlider.debug.xcconfig"; sourceTree = "<group>"; };
+		DC20F4571ADA871D009A4C64 /* PhotoSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC20F45B1ADA871D009A4C64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC20F45C1ADA871D009A4C64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC20F45E1ADA871D009A4C64 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DC20F4611ADA871D009A4C64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC20F4631ADA871D009A4C64 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DC20F4661ADA871D009A4C64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		DC20F46C1ADA871D009A4C64 /* PhotoSliderDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoSliderDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC20F46C1ADA871D009A4C64 /* PhotoSliderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoSliderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC20F4711ADA871D009A4C64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DC20F4721ADA871D009A4C64 /* PhotoSliderDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSliderDemoTests.swift; sourceTree = "<group>"; };
-		DC20F4801ADA9657009A4C64 /* PhotoSliderDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoSliderDemo-Bridging-Header.h"; sourceTree = "<group>"; };
-		DC740B161AEC6B2F00079D30 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PhotoSlider.podspec; path = ../PhotoSlider.podspec; sourceTree = "<group>"; };
-		DC740B181AEC6B2F00079D30 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		DC20F4721ADA871D009A4C64 /* PhotoSliderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSliderTests.swift; sourceTree = "<group>"; };
+		DC20F4801ADA9657009A4C64 /* PhotoSlider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoSlider-Bridging-Header.h"; sourceTree = "<group>"; };
+		DC3FE89F1B568F5A0087A279 /* Pods_PhotoSliderTests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_PhotoSliderTests.framework; path = "Pods/../build/Debug-iphoneos/Pods_PhotoSliderTests.framework"; sourceTree = "<group>"; };
+		DC740B161AEC6B2F00079D30 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = LICENSE; sourceTree = "<group>"; };
+		DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PhotoSlider.podspec; path = PhotoSlider.podspec; sourceTree = "<group>"; };
+		DC740B181AEC6B2F00079D30 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,8 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8B794C512AAA0D057DE04F8 /* Pods_PhotoSliderDemo.framework in Frameworks */,
-				DC0358021B2D551200B80D21 /* Pods_PhotoSliderDemoTests.framework in Frameworks */,
+				F9B9B76C472D07A8AA45CBB8 /* Pods_PhotoSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,8 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				965C495DE0B350CAA38C7A20 /* Pods_PhotoSliderDemoTests.framework in Frameworks */,
-				DC0358011B2D550600B80D21 /* Pods_PhotoSliderDemo.framework in Frameworks */,
+				965C495DE0B350CAA38C7A20 /* Pods_PhotoSliderTests.framework in Frameworks */,
+				DC0358011B2D550600B80D21 /* Pods_PhotoSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,8 +78,9 @@
 		66A3BAA23076667DA79DC70A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */,
-				689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */,
+				DC3FE89F1B568F5A0087A279 /* Pods_PhotoSliderTests.framework */,
+				191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSlider.framework */,
+				689274A363491ABEA8D3598A /* Pods_PhotoSliderTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -88,10 +88,10 @@
 		9BF74163E5DA4094004C64A0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CF4EE87704D26443EB7CA776 /* Pods-PhotoSliderDemo.debug.xcconfig */,
-				CAA14BFE259FFFFA34A7158C /* Pods-PhotoSliderDemo.release.xcconfig */,
-				48954EE5BD7E332C65202083 /* Pods-PhotoSliderDemoTests.debug.xcconfig */,
-				41089CB75B56F12DC715DE50 /* Pods-PhotoSliderDemoTests.release.xcconfig */,
+				CF4EE87704D26443EB7CA776 /* Pods-PhotoSlider.debug.xcconfig */,
+				CAA14BFE259FFFFA34A7158C /* Pods-PhotoSlider.release.xcconfig */,
+				48954EE5BD7E332C65202083 /* Pods-PhotoSliderTests.debug.xcconfig */,
+				41089CB75B56F12DC715DE50 /* Pods-PhotoSliderTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -100,8 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				DC740B151AEC6A0900079D30 /* Podspec Metadata */,
-				DC20F4591ADA871D009A4C64 /* PhotoSliderDemo */,
-				DC20F46F1ADA871D009A4C64 /* PhotoSliderDemoTests */,
+				DC20F4591ADA871D009A4C64 /* PhotoSlider */,
+				DC20F46F1ADA871D009A4C64 /* PhotoSliderTests */,
 				DC20F4581ADA871D009A4C64 /* Products */,
 				9BF74163E5DA4094004C64A0 /* Pods */,
 				66A3BAA23076667DA79DC70A /* Frameworks */,
@@ -111,13 +111,13 @@
 		DC20F4581ADA871D009A4C64 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DC20F4571ADA871D009A4C64 /* PhotoSliderDemo.app */,
-				DC20F46C1ADA871D009A4C64 /* PhotoSliderDemoTests.xctest */,
+				DC20F4571ADA871D009A4C64 /* PhotoSlider.app */,
+				DC20F46C1ADA871D009A4C64 /* PhotoSliderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DC20F4591ADA871D009A4C64 /* PhotoSliderDemo */ = {
+		DC20F4591ADA871D009A4C64 /* PhotoSlider */ = {
 			isa = PBXGroup;
 			children = (
 				DC20F45C1ADA871D009A4C64 /* AppDelegate.swift */,
@@ -127,25 +127,25 @@
 				DC20F4651ADA871D009A4C64 /* LaunchScreen.xib */,
 				DC20F45A1ADA871D009A4C64 /* Supporting Files */,
 			);
-			path = PhotoSliderDemo;
+			path = PhotoSlider;
 			sourceTree = "<group>";
 		};
 		DC20F45A1ADA871D009A4C64 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				DC20F45B1ADA871D009A4C64 /* Info.plist */,
-				DC20F4801ADA9657009A4C64 /* PhotoSliderDemo-Bridging-Header.h */,
+				DC20F4801ADA9657009A4C64 /* PhotoSlider-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DC20F46F1ADA871D009A4C64 /* PhotoSliderDemoTests */ = {
+		DC20F46F1ADA871D009A4C64 /* PhotoSliderTests */ = {
 			isa = PBXGroup;
 			children = (
-				DC20F4721ADA871D009A4C64 /* PhotoSliderDemoTests.swift */,
+				DC20F4721ADA871D009A4C64 /* PhotoSliderTests.swift */,
 				DC20F4701ADA871D009A4C64 /* Supporting Files */,
 			);
-			path = PhotoSliderDemoTests;
+			path = PhotoSliderTests;
 			sourceTree = "<group>";
 		};
 		DC20F4701ADA871D009A4C64 /* Supporting Files */ = {
@@ -169,9 +169,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DC20F4561ADA871D009A4C64 /* PhotoSliderDemo */ = {
+		DC20F4561ADA871D009A4C64 /* PhotoSlider */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DC20F4761ADA871D009A4C64 /* Build configuration list for PBXNativeTarget "PhotoSliderDemo" */;
+			buildConfigurationList = DC20F4761ADA871D009A4C64 /* Build configuration list for PBXNativeTarget "PhotoSlider" */;
 			buildPhases = (
 				C09C446FE462AFCDBA7FD924 /* Check Pods Manifest.lock */,
 				DC20F4531ADA871D009A4C64 /* Sources */,
@@ -184,14 +184,14 @@
 			);
 			dependencies = (
 			);
-			name = PhotoSliderDemo;
-			productName = PhotoSliderDemo;
-			productReference = DC20F4571ADA871D009A4C64 /* PhotoSliderDemo.app */;
+			name = PhotoSlider;
+			productName = PhotoSlider;
+			productReference = DC20F4571ADA871D009A4C64 /* PhotoSlider.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DC20F46B1ADA871D009A4C64 /* PhotoSliderDemoTests */ = {
+		DC20F46B1ADA871D009A4C64 /* PhotoSliderTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DC20F4791ADA871D009A4C64 /* Build configuration list for PBXNativeTarget "PhotoSliderDemoTests" */;
+			buildConfigurationList = DC20F4791ADA871D009A4C64 /* Build configuration list for PBXNativeTarget "PhotoSliderTests" */;
 			buildPhases = (
 				7D1196F87634C1D409F3D0CA /* Check Pods Manifest.lock */,
 				DC20F4681ADA871D009A4C64 /* Sources */,
@@ -205,9 +205,9 @@
 			dependencies = (
 				DC20F46E1ADA871D009A4C64 /* PBXTargetDependency */,
 			);
-			name = PhotoSliderDemoTests;
-			productName = PhotoSliderDemoTests;
-			productReference = DC20F46C1ADA871D009A4C64 /* PhotoSliderDemoTests.xctest */;
+			name = PhotoSliderTests;
+			productName = PhotoSliderTests;
+			productReference = DC20F46C1ADA871D009A4C64 /* PhotoSliderTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -229,7 +229,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DC20F4521ADA871D009A4C64 /* Build configuration list for PBXProject "PhotoSliderDemo" */;
+			buildConfigurationList = DC20F4521ADA871D009A4C64 /* Build configuration list for PBXProject "PhotoSlider" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -242,8 +242,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DC20F4561ADA871D009A4C64 /* PhotoSliderDemo */,
-				DC20F46B1ADA871D009A4C64 /* PhotoSliderDemoTests */,
+				DC20F4561ADA871D009A4C64 /* PhotoSlider */,
+				DC20F46B1ADA871D009A4C64 /* PhotoSliderTests */,
 			);
 		};
 /* End PBXProject section */
@@ -283,7 +283,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoSliderDemo/Pods-PhotoSliderDemo-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoSlider/Pods-PhotoSlider-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		59CC92A4452E8AAC945F4669 /* Copy Pods Resources */ = {
@@ -298,7 +298,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoSliderDemo/Pods-PhotoSliderDemo-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoSlider/Pods-PhotoSlider-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6B2CA360EAE21A8576BA873D /* Copy Pods Resources */ = {
@@ -313,7 +313,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoSliderDemoTests/Pods-PhotoSliderDemoTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoSliderTests/Pods-PhotoSliderTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		750F900D03ABCA3B7E7C365C /* Embed Pods Frameworks */ = {
@@ -328,7 +328,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoSliderDemoTests/Pods-PhotoSliderDemoTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoSliderTests/Pods-PhotoSliderTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7D1196F87634C1D409F3D0CA /* Check Pods Manifest.lock */ = {
@@ -377,7 +377,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC20F4731ADA871D009A4C64 /* PhotoSliderDemoTests.swift in Sources */,
+				DC20F4731ADA871D009A4C64 /* PhotoSliderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +386,7 @@
 /* Begin PBXTargetDependency section */
 		DC20F46E1ADA871D009A4C64 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DC20F4561ADA871D009A4C64 /* PhotoSliderDemo */;
+			target = DC20F4561ADA871D009A4C64 /* PhotoSlider */;
 			targetProxy = DC20F46D1ADA871D009A4C64 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -490,34 +490,42 @@
 		};
 		DC20F4771ADA871D009A4C64 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CF4EE87704D26443EB7CA776 /* Pods-PhotoSliderDemo.debug.xcconfig */;
+			baseConfigurationReference = CF4EE87704D26443EB7CA776 /* Pods-PhotoSlider.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = PhotoSliderDemo/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				INFOPLIST_FILE = PhotoSlider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSliderDemo/PhotoSliderDemo-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSlider/PhotoSlider-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		DC20F4781ADA871D009A4C64 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CAA14BFE259FFFFA34A7158C /* Pods-PhotoSliderDemo.release.xcconfig */;
+			baseConfigurationReference = CAA14BFE259FFFFA34A7158C /* Pods-PhotoSlider.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = PhotoSliderDemo/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				INFOPLIST_FILE = PhotoSlider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSliderDemo/PhotoSliderDemo-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSlider/PhotoSlider-Bridging-Header.h";
 			};
 			name = Release;
 		};
 		DC20F47A1ADA871D009A4C64 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48954EE5BD7E332C65202083 /* Pods-PhotoSliderDemoTests.debug.xcconfig */;
+			baseConfigurationReference = 48954EE5BD7E332C65202083 /* Pods-PhotoSliderTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -528,33 +536,33 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = PhotoSliderDemoTests/Info.plist;
+				INFOPLIST_FILE = PhotoSliderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoSliderDemo.app/PhotoSliderDemo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoSlider.app/PhotoSlider";
 			};
 			name = Debug;
 		};
 		DC20F47B1ADA871D009A4C64 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 41089CB75B56F12DC715DE50 /* Pods-PhotoSliderDemoTests.release.xcconfig */;
+			baseConfigurationReference = 41089CB75B56F12DC715DE50 /* Pods-PhotoSliderTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = PhotoSliderDemoTests/Info.plist;
+				INFOPLIST_FILE = PhotoSliderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoSliderDemo.app/PhotoSliderDemo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoSlider.app/PhotoSlider";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DC20F4521ADA871D009A4C64 /* Build configuration list for PBXProject "PhotoSliderDemo" */ = {
+		DC20F4521ADA871D009A4C64 /* Build configuration list for PBXProject "PhotoSlider" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC20F4741ADA871D009A4C64 /* Debug */,
@@ -563,7 +571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DC20F4761ADA871D009A4C64 /* Build configuration list for PBXNativeTarget "PhotoSliderDemo" */ = {
+		DC20F4761ADA871D009A4C64 /* Build configuration list for PBXNativeTarget "PhotoSlider" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC20F4771ADA871D009A4C64 /* Debug */,
@@ -572,7 +580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DC20F4791ADA871D009A4C64 /* Build configuration list for PBXNativeTarget "PhotoSliderDemoTests" */ = {
+		DC20F4791ADA871D009A4C64 /* Build configuration list for PBXNativeTarget "PhotoSliderTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC20F47A1ADA871D009A4C64 /* Debug */,

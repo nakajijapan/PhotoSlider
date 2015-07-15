@@ -1,0 +1,3 @@
+[submodule "Carthage/Checkouts/SDWebImage"]
+	path = Carthage/Checkouts/SDWebImage
+	url = https://github.com/rs/SDWebImage.git

@@ -7,7 +7,7 @@
         <!--View Controller-->
         <scene sceneID="SNf-Yf-DWY">
             <objects>
-                <viewController id="3DJ-Hp-ouc" customClass="ViewController" customModule="PhotoSliderDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3DJ-Hp-ouc" customClass="ViewController" customModule="PhotoSlider" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lsQ-Y7-1IV"/>
                         <viewControllerLayoutGuide type="bottom" id="D7o-SR-fRa"/>
