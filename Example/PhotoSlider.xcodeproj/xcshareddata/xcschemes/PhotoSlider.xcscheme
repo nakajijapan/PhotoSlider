@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DC20F4561ADA871D009A4C64"
-               BuildableName = "PhotoSliderDemo.app"
-               BlueprintName = "PhotoSliderDemo"
-               ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+               BuildableName = "PhotoSlider.app"
+               BlueprintName = "PhotoSlider"
+               ReferencedContainer = "container:PhotoSlider.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DC20F46B1ADA871D009A4C64"
-               BuildableName = "PhotoSliderDemoTests.xctest"
-               BlueprintName = "PhotoSliderDemoTests"
-               ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+               BuildableName = "PhotoSliderTests.xctest"
+               BlueprintName = "PhotoSliderTests"
+               ReferencedContainer = "container:PhotoSlider.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DC20F46B1ADA871D009A4C64"
-               BuildableName = "PhotoSliderDemoTests.xctest"
-               BlueprintName = "PhotoSliderDemoTests"
-               ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+               BuildableName = "PhotoSliderTests.xctest"
+               BlueprintName = "PhotoSliderTests"
+               ReferencedContainer = "container:PhotoSlider.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC20F4561ADA871D009A4C64"
-            BuildableName = "PhotoSliderDemo.app"
-            BlueprintName = "PhotoSliderDemo"
-            ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+            BuildableName = "PhotoSlider.app"
+            BlueprintName = "PhotoSlider"
+            ReferencedContainer = "container:PhotoSlider.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC20F4561ADA871D009A4C64"
-            BuildableName = "PhotoSliderDemo.app"
-            BlueprintName = "PhotoSliderDemo"
-            ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+            BuildableName = "PhotoSlider.app"
+            BlueprintName = "PhotoSlider"
+            ReferencedContainer = "container:PhotoSlider.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC20F4561ADA871D009A4C64"
-            BuildableName = "PhotoSliderDemo.app"
-            BlueprintName = "PhotoSliderDemo"
-            ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+            BuildableName = "PhotoSlider.app"
+            BlueprintName = "PhotoSlider"
+            ReferencedContainer = "container:PhotoSlider.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

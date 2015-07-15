@@ -1,6 +1,6 @@
 //
-//  PhotoSliderDemoTests.swift
-//  PhotoSliderDemoTests
+//  PhotoSliderTests.swift
+//  PhotoSliderTests
 //
 //  Created by nakajijapan on 4/12/15.
 //  Copyright (c) 2015 net.nakajijapan. All rights reserved.
@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class PhotoSliderDemoTests: XCTestCase {
+class PhotoSliderTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
