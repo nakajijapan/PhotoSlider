@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "PhotoSlider"
-  s.version          = "0.3.6"
+  s.version          = "0.3.7"
   s.summary          = "PhotoSlider can a simple photo slider and delete slider with swiping."
   s.homepage         = "https://github.com/nakajijapan/PhotoSlider"
   s.license          = 'MIT'
