@@ -203,10 +203,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         
         if self.scrollMode == .Vertical {
             
-            let screenHeight = UIScreen.mainScreen().bounds.size.height
-            let screenWidth = UIScreen.mainScreen().bounds.size.width
             let velocity = scrollView.panGestureRecognizer.velocityInView(scrollView)
-            
              if velocity.y < -500 {
                 self.scrollView.frame = scrollView.frame;
                 self.closePhotoSlider(true)
