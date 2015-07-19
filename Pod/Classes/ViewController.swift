@@ -23,7 +23,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     var imageURLs:Array<NSURL>?
     var pageControl:UIPageControl!
     var backgroundView:UIView!
-    var closeButton:UIButton!
+    var closeButton:UIButton?
     var scrollMode:PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
@@ -114,10 +114,10 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
                 width: 32.0, height: 32.0)
             )
             var imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
-            self.closeButton.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
-            self.closeButton.addTarget(self, action: "closeButtonDidTap:", forControlEvents: UIControlEvents.TouchUpInside)
-            self.closeButton.imageView?.contentMode = UIViewContentMode.Center;
-            self.view.addSubview(self.closeButton)
+            self.closeButton!.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
+            self.closeButton!.addTarget(self, action: "closeButtonDidTap:", forControlEvents: UIControlEvents.TouchUpInside)
+            self.closeButton!.imageView?.contentMode = UIViewContentMode.Center;
+            self.view.addSubview(self.closeButton!)
         }
         
         if self.respondsToSelector("setNeedsStatusBarAppearanceUpdate") {
@@ -247,7 +247,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             animations: { () -> Void in
                 self.scrollView.frame = CGRectMake(0, movedHeight, screenWidth, screenHeight)
                 self.backgroundView.alpha = 0.0
-                self.closeButton.alpha = 0.0
+                self.closeButton?.alpha = 0.0
                 self.view.alpha = 0.0
             },
             completion: {(result) -> Void in
