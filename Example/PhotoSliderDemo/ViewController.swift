@@ -85,14 +85,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var slider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
-        slider.modalPresentationStyle = .OverCurrentContext
-        slider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-        slider.delegate = self
-        slider.index = indexPath.row
+        var photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
+        photoSlider.modalPresentationStyle = .OverCurrentContext
+        photoSlider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        photoSlider.delegate = self
+        photoSlider.index = indexPath.row
 
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
-        self.presentViewController(slider, animated: true, completion: nil)
+        self.presentViewController(photoSlider, animated: true, completion: nil)
     }
     
     // MARK: - PhotoSliderDelegate
