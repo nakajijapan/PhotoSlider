@@ -55,6 +55,15 @@ class ImageView: UIView, UIScrollViewDelegate {
         let doubleTabGesture = UITapGestureRecognizer(target: self, action: "didDoubleTap:")
         doubleTabGesture.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTabGesture)
+        
+        self.imageView.autoresizingMask =
+            UIViewAutoresizing.FlexibleWidth |
+            UIViewAutoresizing.FlexibleLeftMargin |
+            UIViewAutoresizing.FlexibleRightMargin |
+            UIViewAutoresizing.FlexibleTopMargin |
+            UIViewAutoresizing.FlexibleHeight |
+            UIViewAutoresizing.FlexibleBottomMargin
+        
     }
     
     func loadImage(imageURL: NSURL) {
