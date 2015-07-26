@@ -289,4 +289,17 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         return bundle!
     }
     
+    // MARK: - UIViewController
+   
+    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        println("size \(size) coordinator \(coordinator)")
+        
+        self.layoutScrollView()
+    }
+    
+    
+    func layoutScrollView() {
+        
+    }
+
 }
