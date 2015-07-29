@@ -23,6 +23,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     var imageURLs:Array<NSURL>?
     var pageControl:UIPageControl!
     var backgroundView:UIView!
+    var effectView:UIVisualEffectView!
     var closeButton:UIButton?
     var scrollMode:PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
@@ -61,11 +62,10 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 {
             self.view.addSubview(self.backgroundView)
         } else {
-            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-            let effectView = UIVisualEffectView(effect: blurEffect)
-            effectView.frame = self.view.bounds
-            self.view.addSubview(effectView)
-            effectView.addSubview(self.backgroundView)
+            self.effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
+            self.effectView.frame = self.view.bounds
+            self.view.addSubview(self.effectView)
+            self.effectView.addSubview(self.backgroundView)
         }
 
         // scrollview setting for Item
@@ -292,35 +292,41 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
    
     public override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
 
+        let contentViewBounds = self.view.bounds
+        
         // Close Button
         if self.visibleCloseButton {
-            self.closeButton!.frame = CGRect(x: self.view.bounds.size.width - 32.0 - 8.0, y: 8.0, width: 32.0, height: 32.0)
+            self.closeButton!.frame = CGRect(x: contentViewBounds.size.width - 32.0 - 8.0, y: 8.0, width: 32.0, height: 32.0)
         }
         
         // Background View
-        self.backgroundView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+        self.backgroundView.frame = contentViewBounds
+        if floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1 {
+            self.effectView.frame = contentViewBounds
+        }
+        
         
         // Scroll View
         self.scrollView.contentSize = CGSizeMake(
-            CGRectGetWidth(self.view.bounds) * CGFloat(self.imageURLs!.count),
-            CGRectGetHeight(self.view.bounds) * 3.0
+            contentViewBounds.width * CGFloat(self.imageURLs!.count),
+            contentViewBounds.height * 3.0
         )
-        self.scrollView.frame = self.view.bounds;
+        self.scrollView.frame = contentViewBounds;
         
         // ImageViews
-        var frame = CGRect(x: 0.0, y: self.view.bounds.size.height, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+        var frame = CGRect(x: 0.0, y: contentViewBounds.height, width: contentViewBounds.width, height: contentViewBounds.height)
         for i in 0..<self.scrollView.subviews.count {
             var imageView = self.scrollView.subviews[i] as! PhotoSlider.ImageView
             imageView.frame = frame
-            frame.origin.x += self.view.bounds.size.width
-            imageView.scrollView.frame = self.view.bounds
+            frame.origin.x += contentViewBounds.size.width
+            imageView.scrollView.frame = contentViewBounds
         }
         
-        self.scrollView.contentOffset = CGPointMake(0, self.view.bounds.size.height)
+        self.scrollView.contentOffset = CGPointMake(0.0, contentViewBounds.height)
         
         // Page Control
         if self.visiblePageControl {
-            self.pageControl.frame = CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - 44, CGRectGetWidth(self.view.bounds), 22)
+            self.pageControl.frame = CGRectMake(0.0, contentViewBounds.height - 44, contentViewBounds.width, 22)
         }
         
     }
