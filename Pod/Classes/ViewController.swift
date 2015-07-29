@@ -57,8 +57,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.backgroundView = UIView(frame: self.view.bounds)
         self.backgroundView.backgroundColor = UIColor.blackColor()
 
-
-        
         if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 {
             self.view.addSubview(self.backgroundView)
         } else {
@@ -107,23 +105,23 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             self.view.addSubview(self.pageControl)
         }
         
+        // Close Button
         if self.visibleCloseButton {
-            self.closeButton = UIButton(frame: CGRect(
-                x: CGRectGetWidth(self.view.frame) - 32.0 - 8.0, y: 8.0,
-                width: 32.0, height: 32.0)
-            )
+            self.closeButton = UIButton(frame: CGRectZero)
             var imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
             self.closeButton!.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
             self.closeButton!.addTarget(self, action: "closeButtonDidTap:", forControlEvents: UIControlEvents.TouchUpInside)
             self.closeButton!.imageView?.contentMode = UIViewContentMode.Center;
             self.view.addSubview(self.closeButton!)
+            self.layoutCloseButton()
+
         }
         
         if self.respondsToSelector("setNeedsStatusBarAppearanceUpdate") {
             self.setNeedsStatusBarAppearanceUpdate()
         }
     }
-
+    
     override public func viewWillAppear(animated: Bool) {
         self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width * CGFloat(self.index), self.scrollView.bounds.height)
         self.scrollInitalized = true
@@ -133,6 +131,18 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.dismissViewControllerAnimated(true) { () -> Void in
             self.view.removeFromSuperview()
         }
+    }
+    
+    // MARK: - Constraints
+    
+    func layoutCloseButton() {
+        self.closeButton!.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        var views = ["closeButton": self.closeButton!]
+        var constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-22-[closeButton(32@32)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views)
+        var constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-22-|", options: NSLayoutFormatOptions(0), metrics: nil, views: views)
+        self.view.addConstraints(constraintVertical)
+        self.view.addConstraints(constraintHorizontal)
     }
   
     // MARK: - UIScrollViewDelegate
@@ -293,11 +303,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     public override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
 
         let contentViewBounds = self.view.bounds
-        
-        // Close Button
-        if self.visibleCloseButton {
-            self.closeButton!.frame = CGRect(x: contentViewBounds.size.width - 32.0 - 8.0, y: 8.0, width: 32.0, height: 32.0)
-        }
         
         // Background View
         self.backgroundView.frame = contentViewBounds
