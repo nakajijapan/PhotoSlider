@@ -96,13 +96,14 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         
         self.scrollView.contentOffset = CGPointMake(0, height)
         
-        // pagecontrol
+        // Page Control
         if self.visiblePageControl {
-            self.pageControl = UIPageControl(frame: CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - 44, CGRectGetWidth(self.view.bounds), 22))
+            self.pageControl = UIPageControl(frame: CGRectZero)
             self.pageControl.numberOfPages = imageURLs!.count
             self.pageControl.currentPage = 0
             self.pageControl.userInteractionEnabled = false
             self.view.addSubview(self.pageControl)
+            self.layoutPageControl()
         }
         
         // Close Button
@@ -143,6 +144,16 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         var constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-22-|", options: NSLayoutFormatOptions(0), metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintHorizontal)
+    }
+    
+    func layoutPageControl() {
+        self.pageControl!.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        var views = ["pageControl": self.pageControl!]
+        var constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]-22-|", options: NSLayoutFormatOptions(0), metrics: nil, views: views)
+        var constraintCenterX = NSLayoutConstraint.constraintsWithVisualFormat("H:|[pageControl]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        self.view.addConstraints(constraintVertical)
+        self.view.addConstraints(constraintCenterX)
     }
   
     // MARK: - UIScrollViewDelegate
@@ -310,7 +321,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             self.effectView.frame = contentViewBounds
         }
         
-        
         // Scroll View
         self.scrollView.contentSize = CGSizeMake(
             contentViewBounds.width * CGFloat(self.imageURLs!.count),
@@ -328,12 +338,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         }
         
         self.scrollView.contentOffset = CGPointMake(0.0, contentViewBounds.height)
-        
-        // Page Control
-        if self.visiblePageControl {
-            self.pageControl.frame = CGRectMake(0.0, contentViewBounds.height - 44, contentViewBounds.width, 22)
-        }
-        
+       
     }
     
 }
