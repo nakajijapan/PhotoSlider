@@ -55,6 +55,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
 
         self.backgroundView = UIView(frame: self.view.bounds)
         self.backgroundView.backgroundColor = UIColor.blackColor()
+
+
         
         if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 {
             self.view.addSubview(self.backgroundView)
@@ -65,8 +67,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             self.view.addSubview(effectView)
             effectView.addSubview(self.backgroundView)
         }
-        
-        
+
         // scrollview setting for Item
         self.scrollView = UIScrollView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height))
         self.scrollView.pagingEnabled = true
@@ -84,13 +85,11 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             CGRectGetHeight(self.view.bounds) * 3.0
         )
 
-
         let width = CGRectGetWidth(self.view.bounds)
         let height = CGRectGetHeight(self.view.bounds)
         var frame = self.view.bounds
         frame.origin.y = height
         for imageURL in self.imageURLs! {
-            
             var imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
             self.scrollView.addSubview(imageView)
             imageView.loadImage(imageURL)
@@ -291,15 +290,39 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     
     // MARK: - UIViewController
    
-    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        println("size \(size) coordinator \(coordinator)")
-        
-        self.layoutScrollView()
-    }
-    
-    
-    func layoutScrollView() {
-        
-    }
+    public override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
 
+        // Close Button
+        if self.visibleCloseButton {
+            self.closeButton!.frame = CGRect(x: self.view.bounds.size.width - 32.0 - 8.0, y: 8.0, width: 32.0, height: 32.0)
+        }
+        
+        // Background View
+        self.backgroundView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+        
+        // Scroll View
+        self.scrollView.contentSize = CGSizeMake(
+            CGRectGetWidth(self.view.bounds) * CGFloat(self.imageURLs!.count),
+            CGRectGetHeight(self.view.bounds) * 3.0
+        )
+        self.scrollView.frame = self.view.bounds;
+        
+        // ImageViews
+        var frame = CGRect(x: 0.0, y: self.view.bounds.size.height, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+        for i in 0..<self.scrollView.subviews.count {
+            var imageView = self.scrollView.subviews[i] as! PhotoSlider.ImageView
+            imageView.frame = frame
+            frame.origin.x += self.view.bounds.size.width
+            imageView.scrollView.frame = self.view.bounds
+        }
+        
+        self.scrollView.contentOffset = CGPointMake(0, self.view.bounds.size.height)
+        
+        // Page Control
+        if self.visiblePageControl {
+            self.pageControl.frame = CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - 44, CGRectGetWidth(self.view.bounds), 22)
+        }
+        
+    }
+    
 }
