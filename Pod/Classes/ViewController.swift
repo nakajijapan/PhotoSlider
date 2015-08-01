@@ -19,7 +19,7 @@ enum PhotoSliderControllerScrollMode:Int {
 
 public class ViewController:UIViewController, UIScrollViewDelegate {
 
-    var scrollView: UIScrollView!
+    var scrollView:UIScrollView!
     var imageURLs:Array<NSURL>?
     var pageControl:UIPageControl!
     var backgroundView:UIView!
@@ -28,12 +28,12 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     var scrollMode:PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
-    var currentPage:Int = 1
+    var currentPage = 0
 
     public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
     public var visibleCloseButton = true
-    public var index:Int = 0
+    public var index = 0
     
     public init(imageURLs:Array<NSURL>) {
         super.init(nibName: nil, bundle: nil)
@@ -214,7 +214,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     
     func generateCurrentPage() {
         self.currentPage = abs(Int(scrollView.contentOffset.x / scrollView.frame.size.width))
-        
+
         if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
             if self.visiblePageControl {
                 if self.pageControl != nil {
