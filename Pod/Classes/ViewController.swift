@@ -14,7 +14,7 @@ import SDWebImage
 }
 
 enum PhotoSliderControllerScrollMode:Int {
-    case None = 0, Vertical, Horizontal
+    case None = 0, Vertical, Horizontal, Rotating
 }
 
 public class ViewController:UIViewController, UIScrollViewDelegate {
@@ -28,6 +28,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     var scrollMode:PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
+    var currentPage:Int = 1
 
     public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
@@ -77,7 +78,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.scrollView.alwaysBounceVertical = true
         self.scrollView.scrollEnabled = true
         self.view.addSubview(self.scrollView)
-        
+
         self.scrollView.contentSize = CGSizeMake(
             CGRectGetWidth(self.view.bounds) * CGFloat(self.imageURLs!.count),
             CGRectGetHeight(self.view.bounds) * 3.0
@@ -115,7 +116,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             self.closeButton!.imageView?.contentMode = UIViewContentMode.Center;
             self.view.addSubview(self.closeButton!)
             self.layoutCloseButton()
-
         }
         
         if self.respondsToSelector("setNeedsStatusBarAppearanceUpdate") {
@@ -155,14 +155,14 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintCenterX)
     }
-  
+    
     // MARK: - UIScrollViewDelegate
 
     var scrollPreviewPoint = CGPointZero;
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.scrollPreviewPoint = scrollView.contentOffset
     }
-    
+
     public func scrollViewDidScroll(scrollView: UIScrollView) {
 
         if scrollInitalized == false {
@@ -170,9 +170,13 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             return
         }
         
+        if self.scrollMode == .Rotating {
+            return
+        }
+        
         let offsetX = fabs(scrollView.contentOffset.x - self.scrollPreviewPoint.x)
         let offsetY = fabs(scrollView.contentOffset.y - self.scrollPreviewPoint.y)
-
+        
         if self.scrollMode == .None {
             if (offsetY > offsetX) {
                 self.scrollMode = .Vertical;
@@ -192,7 +196,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             scrollView.contentOffset = contentOffset
             
             let screenHeight = UIScreen.mainScreen().bounds.size.height
-
+            
             if self.scrollView.contentOffset.y > screenHeight * 1.4 {
                 self.closePhotoSlider(true)
             } else if self.scrollView.contentOffset.y < screenHeight * 0.6  {
@@ -206,25 +210,26 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         }
         
         self.generateCurrentPage()
-  
     }
     
     func generateCurrentPage() {
-        if self.visiblePageControl {
-            if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
+        self.currentPage = abs(Int(scrollView.contentOffset.x / scrollView.frame.size.width))
+        
+        if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
+            if self.visiblePageControl {
                 if self.pageControl != nil {
-                    self.pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+                    self.pageControl.currentPage = self.currentPage
                 }
             }
         }
     }
-
+    
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
         if self.scrollMode == .Vertical {
             
             let velocity = scrollView.panGestureRecognizer.velocityInView(scrollView)
-             if velocity.y < -500 {
+            if velocity.y < -500 {
                 self.scrollView.frame = scrollView.frame;
                 self.closePhotoSlider(true)
             } else if velocity.y > 500 {
@@ -273,18 +278,20 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             }
         )
     }
-
+    
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         self.scrollMode = .None
     }
-
+    
     // MARK: - Button Actions
-
+    
     func closeButtonDidTap(sender:UIButton) {
+
         if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
             self.delegate!.photoSliderControllerWillDismiss!(self)
         }
         self.dissmissViewControllerAnimated(true)
+
     }
     
     // MARK: - Private Methods
@@ -295,10 +302,10 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             if self.delegate!.respondsToSelector("photoSliderControllerDidDismiss:") {
                 self.delegate!.photoSliderControllerDidDismiss!(self)
             }
-
+            
         })
     }
-
+    
     func resourceBundle() -> NSBundle {
         var bundlePath = NSBundle.mainBundle().pathForResource(
             "PhotoSlider",
@@ -309,11 +316,14 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         return bundle!
     }
     
-    // MARK: - UIViewController
-   
+    // MARK: - UITraitEnvironment
+    
     public override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
-
+        
+        self.scrollMode = .Rotating
+        
         let contentViewBounds = self.view.bounds
+        let height = contentViewBounds.height
         
         // Background View
         self.backgroundView.frame = contentViewBounds
@@ -332,13 +342,16 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         var frame = CGRect(x: 0.0, y: contentViewBounds.height, width: contentViewBounds.width, height: contentViewBounds.height)
         for i in 0..<self.scrollView.subviews.count {
             var imageView = self.scrollView.subviews[i] as! PhotoSlider.ImageView
+            
             imageView.frame = frame
             frame.origin.x += contentViewBounds.size.width
+            
             imageView.scrollView.frame = contentViewBounds
         }
         
-        self.scrollView.contentOffset = CGPointMake(0.0, contentViewBounds.height)
-       
+        self.scrollView.contentOffset = CGPointMake(CGFloat(self.currentPage) * contentViewBounds.width, height)
+        
+        self.scrollMode = .None
     }
     
 }
