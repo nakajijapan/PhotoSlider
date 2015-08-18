@@ -21,6 +21,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
 
     var scrollView:UIScrollView!
     var imageURLs:Array<NSURL>?
+    var pageControl:UIPageControl!
     var backgroundView:UIView!
     var effectView:UIVisualEffectView!
     var closeButton:UIButton?
@@ -35,6 +36,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     public var visibleCloseButton = true
     public var index = 0
     public var pageControl = UIPageControl()
+    public var backgroundViewColor = UIColor.blackColor()
     
     public init(imageURLs:Array<NSURL>) {
         super.init(nibName: nil, bundle: nil)
@@ -57,7 +59,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.view.userInteractionEnabled = true
 
         self.backgroundView = UIView(frame: self.view.bounds)
-        self.backgroundView.backgroundColor = UIColor.blackColor()
+        self.backgroundView.backgroundColor = backgroundViewColor
 
         if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 {
             self.view.addSubview(self.backgroundView)
