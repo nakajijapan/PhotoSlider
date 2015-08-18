@@ -252,8 +252,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         let screenWidth = UIScreen.mainScreen().bounds.size.width
         var movedHeight = CGFloat(0)
         
-        if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
-            self.delegate!.photoSliderControllerWillDismiss!(self)
+        if (self.delegate?.respondsToSelector("photoSliderControllerWillDismiss:") != nil) {
+            self.delegate?.photoSliderControllerWillDismiss!(self)
         }
         
         if up {
@@ -287,8 +287,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     
     func closeButtonDidTap(sender:UIButton) {
 
-        if self.delegate!.respondsToSelector("photoSliderControllerWillDismiss:") {
-            self.delegate!.photoSliderControllerWillDismiss!(self)
+        if (self.delegate?.respondsToSelector("photoSliderControllerWillDismiss:") != nil) {
+            self.delegate?.photoSliderControllerWillDismiss!(self)
         }
         self.dissmissViewControllerAnimated(true)
 
@@ -299,8 +299,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     func dissmissViewControllerAnimated(animated:Bool) {
         self.dismissViewControllerAnimated(animated, completion: { () -> Void in
             
-            if self.delegate!.respondsToSelector("photoSliderControllerDidDismiss:") {
-                self.delegate!.photoSliderControllerDidDismiss!(self)
+        if (self.delegate?.respondsToSelector("photoSliderControllerDidDismiss:") != nil) {
+                self.delegate?.photoSliderControllerDidDismiss!(self)
             }
             
         })
