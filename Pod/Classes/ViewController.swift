@@ -253,7 +253,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         var movedHeight = CGFloat(0)
         
         if (self.delegate?.respondsToSelector("photoSliderControllerWillDismiss:") != nil) {
-            self.delegate?.photoSliderControllerWillDismiss!(self)
+            self.delegate?.photoSliderControllerWillDismiss?(self)
         }
         
         if up {
@@ -288,7 +288,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     func closeButtonDidTap(sender:UIButton) {
 
         if (self.delegate?.respondsToSelector("photoSliderControllerWillDismiss:") != nil) {
-            self.delegate?.photoSliderControllerWillDismiss!(self)
+            self.delegate?.photoSliderControllerWillDismiss?(self)
         }
         self.dissmissViewControllerAnimated(true)
 
