@@ -28,13 +28,12 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     var scrollMode:PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
-    var currentPage = 0
     var imageViews = Array<PhotoSlider.ImageView>()
 
     public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
     public var visibleCloseButton = true
-    public var index = 0
+    public var currentPage = 0
     public var pageControl = UIPageControl()
     public var backgroundViewColor = UIColor.blackColor()
     
@@ -100,8 +99,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
             imageViews.append(imageView)
         }
         
-        self.scrollView.contentOffset = CGPointMake(0, height)
-        
         // Page Control
         if self.visiblePageControl {
             self.pageControl.frame = CGRectZero
@@ -129,7 +126,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     }
     
     override public func viewWillAppear(animated: Bool) {
-        self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width * CGFloat(self.index), self.scrollView.bounds.height)
+        self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width * CGFloat(self.currentPage), self.scrollView.bounds.height)
         self.scrollInitalized = true
     }
     
