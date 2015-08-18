@@ -300,7 +300,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.dismissViewControllerAnimated(animated, completion: { () -> Void in
             
         if (self.delegate?.respondsToSelector("photoSliderControllerDidDismiss:") != nil) {
-                self.delegate?.photoSliderControllerDidDismiss!(self)
+                self.delegate?.photoSliderControllerDidDismiss?(self)
             }
             
         })
