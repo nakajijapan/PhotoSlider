@@ -21,7 +21,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
 
     var scrollView:UIScrollView!
     var imageURLs:Array<NSURL>?
-    var pageControl:UIPageControl!
     var backgroundView:UIView!
     var effectView:UIVisualEffectView!
     var closeButton:UIButton?
@@ -34,6 +33,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     public var visiblePageControl = true
     public var visibleCloseButton = true
     public var index = 0
+    public var pageControl = UIPageControl()
     
     public init(imageURLs:Array<NSURL>) {
         super.init(nibName: nil, bundle: nil)
@@ -99,7 +99,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         
         // Page Control
         if self.visiblePageControl {
-            self.pageControl = UIPageControl(frame: CGRectZero)
+            self.pageControl.frame = CGRectZero
             self.pageControl.numberOfPages = imageURLs!.count
             self.pageControl.currentPage = 0
             self.pageControl.userInteractionEnabled = false
@@ -147,9 +147,9 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     }
     
     func layoutPageControl() {
-        self.pageControl!.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.pageControl.setTranslatesAutoresizingMaskIntoConstraints(false)
         
-        var views = ["pageControl": self.pageControl!]
+        var views = ["pageControl": self.pageControl]
         var constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]-22-|", options: NSLayoutFormatOptions(0), metrics: nil, views: views)
         var constraintCenterX = NSLayoutConstraint.constraintsWithVisualFormat("H:|[pageControl]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
@@ -217,9 +217,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
 
         if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
             if self.visiblePageControl {
-                if self.pageControl != nil {
-                    self.pageControl.currentPage = self.currentPage
-                }
+                self.pageControl.currentPage = self.currentPage
             }
         }
     }
