@@ -21,7 +21,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
 
     var scrollView:UIScrollView!
     var imageURLs:Array<NSURL>?
-    var pageControl:UIPageControl!
     var backgroundView:UIView!
     var effectView:UIVisualEffectView!
     var closeButton:UIButton?
