@@ -247,11 +247,10 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     func generateCurrentPage() {
         self.currentPage = abs(Int(scrollView.contentOffset.x / scrollView.frame.size.width))
 
-        if fmod(scrollView.contentOffset.x, scrollView.frame.size.width) == 0.0 {
-            if self.visiblePageControl {
-                self.pageControl.currentPage = self.currentPage
-            }
+        if self.visiblePageControl {
+            self.pageControl.currentPage = self.currentPage
         }
+
     }
     
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
