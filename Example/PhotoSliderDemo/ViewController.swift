@@ -27,6 +27,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image008.jpg")!,
     ]
     
+    var images = [
+        UIImage(named: "image001.jpg")!,
+        UIImage(named: "image002.jpg")!,
+        UIImage(named: "image003.jpg")!,
+        UIImage(named: "image004.jpg")!,
+        UIImage(named: "image005.jpg")!,
+        UIImage(named: "image006.jpg")!,
+        UIImage(named: "image007.jpg")!,
+        UIImage(named: "image008.jpg")!,
+    ]
+    
     override func prefersStatusBarHidden() -> Bool {
         return false
     }
@@ -104,6 +115,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         var photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
+        //var photoSlider = PhotoSlider.ViewController(images: self.images)
         photoSlider.modalPresentationStyle = .OverCurrentContext
         photoSlider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         photoSlider.delegate = self
