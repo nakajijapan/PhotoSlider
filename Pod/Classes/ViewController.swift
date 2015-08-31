@@ -13,14 +13,21 @@ import SDWebImage
     optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
 }
 
-enum PhotoSliderControllerScrollMode:Int {
+enum PhotoSliderControllerScrollMode:UInt {
     case None = 0, Vertical, Horizontal, Rotating
+}
+
+enum PhotoSliderControllerUsingImageType:UInt {
+    case None = 0, URL, Image
 }
 
 public class ViewController:UIViewController, UIScrollViewDelegate {
 
     var scrollView:UIScrollView!
+
     var imageURLs:Array<NSURL>?
+    var images:Array<UIImage>?
+    var usingImageType = PhotoSliderControllerUsingImageType.None
     var backgroundView:UIView!
     var effectView:UIVisualEffectView!
     var closeButton:UIButton?
@@ -39,8 +46,15 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     public init(imageURLs:Array<NSURL>) {
         super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
+        self.usingImageType = .URL
     }
 
+    public init(images:Array<UIImage>) {
+        super.init(nibName: nil, bundle: nil)
+        self.images = images
+        self.usingImageType = .Image
+    }
+    
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -81,7 +95,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.view.addSubview(self.scrollView)
 
         self.scrollView.contentSize = CGSizeMake(
-            CGRectGetWidth(self.view.bounds) * CGFloat(self.imageURLs!.count),
+            CGRectGetWidth(self.view.bounds) * CGFloat(self.imageResources()!.count),
             CGRectGetHeight(self.view.bounds) * 3.0
         )
 
@@ -89,10 +103,17 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         let height = CGRectGetHeight(self.view.bounds)
         var frame = self.view.bounds
         frame.origin.y = height
-        for imageURL in self.imageURLs! {
+        for imageResource in self.imageResources()! {
+            
             var imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
             self.scrollView.addSubview(imageView)
-            imageView.loadImage(imageURL)
+            
+            if imageResource.dynamicType === NSURL.self {
+                imageView.loadImage(imageResource as! NSURL)
+            } else {
+                imageView.imageView.image = imageResource as? UIImage
+            }
+            
             frame.origin.x += width
             
             imageViews.append(imageView)
@@ -101,7 +122,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         // Page Control
         if self.visiblePageControl {
             self.pageControl.frame = CGRectZero
-            self.pageControl.numberOfPages = imageURLs!.count
+            self.pageControl.numberOfPages = self.imageResources()!.count
             self.pageControl.currentPage = 0
             self.pageControl.userInteractionEnabled = false
             self.view.addSubview(self.pageControl)
@@ -342,7 +363,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         
         // Scroll View
         self.scrollView.contentSize = CGSizeMake(
-            contentViewBounds.width * CGFloat(self.imageURLs!.count),
+            contentViewBounds.width * CGFloat(self.imageResources()!.count),
             contentViewBounds.height * 3.0
         )
         self.scrollView.frame = contentViewBounds;
@@ -363,4 +384,16 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.scrollMode = .None
     }
     
+    
+    // MARK: - Private Method
+    func imageResources() -> Array<AnyObject>? {
+
+        if self.usingImageType == .URL {
+            return self.imageURLs
+        } else if self.usingImageType == .Image {
+            return self.images
+        }
+        
+        return nil
+    }
 }
