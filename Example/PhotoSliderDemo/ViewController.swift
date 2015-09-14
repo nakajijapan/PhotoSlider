@@ -9,7 +9,7 @@
 import UIKit
 import PhotoSlider
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate {
     
     @IBOutlet var tableView:UITableView!
 
@@ -114,13 +114,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+        /*
         var photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
         //var photoSlider = PhotoSlider.ViewController(images: self.images)
+        
         photoSlider.modalPresentationStyle = .OverCurrentContext
         photoSlider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        */
+
+        // Using transition
+        var photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
         photoSlider.delegate = self
         photoSlider.currentPage = indexPath.row
-
+        photoSlider.transitioningDelegate = self
+        
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
         self.presentViewController(photoSlider, animated: true, completion: nil)
     }
@@ -136,6 +143,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     internal override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         self.tableView.reloadData()
         
+    }
+    
+    
+    // MARK: UIViewControllerTransitioningDelegate
+
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PhotoSlider.ScaleupAnimationController(presented: false)
+    }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PhotoSlider.ScaleupAnimationController(presented: true)
     }
     
 }

@@ -143,6 +143,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         if self.respondsToSelector("setNeedsStatusBarAppearanceUpdate") {
             self.setNeedsStatusBarAppearanceUpdate()
         }
+
+        self.view.userInteractionEnabled = true
     }
     
     override public func viewWillAppear(animated: Bool) {
@@ -384,8 +386,18 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.scrollMode = .None
     }
     
+    // MARK: - UIViewControllerAnimatedTransitioning
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PhotoSlider.ScaleupAnimationController(presented: false)
+    }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PhotoSlider.ScaleupAnimationController(presented: true)
+    }
     
     // MARK: - Private Method
+
     func imageResources() -> Array<AnyObject>? {
 
         if self.usingImageType == .URL {
@@ -396,4 +408,5 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         
         return nil
     }
+
 }
