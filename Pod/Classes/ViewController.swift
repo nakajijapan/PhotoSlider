@@ -123,7 +123,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         if self.visiblePageControl {
             self.pageControl.frame = CGRectZero
             self.pageControl.numberOfPages = self.imageResources()!.count
-            self.pageControl.currentPage = 0
             self.pageControl.userInteractionEnabled = false
             self.view.addSubview(self.pageControl)
             self.layoutPageControl()
