@@ -73,7 +73,7 @@ public class ProgressView: UIView {
             return
         }
         
-        var animation = CABasicAnimation(keyPath: "strokeEnd")
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = NSNumber(float: Float(self.progressLayer.strokeEnd))
         animation.toValue = NSNumber(float: progress)
         animation.duration = 0.05

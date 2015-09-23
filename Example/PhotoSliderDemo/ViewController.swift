@@ -59,7 +59,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("cell01") as! UITableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell01")!
         
         self.collectionView = cell.viewWithTag(1) as! UICollectionView
         self.collectionView.delegate = self
@@ -92,9 +92,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) as! UICollectionViewCell
-        
-        var imageView = cell.viewWithTag(1) as! UIImageView
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) 
+        let imageView = cell.viewWithTag(1) as! UIImageView
         imageView.sd_setImageWithURL(self.imageURLs[indexPath.row])
         
         return cell
@@ -114,7 +113,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
+        let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
         //var photoSlider = PhotoSlider.ViewController(images: self.images)
         photoSlider.modalPresentationStyle = .OverCurrentContext
         photoSlider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
