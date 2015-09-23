@@ -1,14 +1,19 @@
 source 'https://github.com/CocoaPods/Specs.git'
-
-platform :ios, "8.0"
 use_frameworks!
 
-target 'PhotoSliderDemo', :exclusive => true do
+def shared_pods
   pod "PhotoSlider", :path => "../"
   pod 'SDWebImage'
 end
 
+target 'PhotoSliderDemo', :exclusive => true do
+  shared_pods
+end
+
 target 'PhotoSliderDemoTests', :exclusive => true do
-  pod "PhotoSlider", :path => "../"
-  pod 'SDWebImage'
+  shared_pods
+end
+
+target 'PhotoSliderDemoUITests', :exclusive => true do
+  shared_pods
 end
