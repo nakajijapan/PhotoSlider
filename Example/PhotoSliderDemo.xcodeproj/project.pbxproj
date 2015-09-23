@@ -21,9 +21,9 @@
 		DC917AC71BB29B7300031F84 /* PhotoSliderDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917AC61BB29B7300031F84 /* PhotoSliderDemoUITests.swift */; };
 		DC917AE71BB2ABAC00031F84 /* Pods_PhotoSliderDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */; };
 		DC917AE81BB2ABAC00031F84 /* Pods_PhotoSliderDemo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DC917AEA1BB2ABCD00031F84 /* Pods_PhotoSliderDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; };
+		DC917AEA1BB2ABCD00031F84 /* Pods_PhotoSliderDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DC917AEB1BB2ABCD00031F84 /* Pods_PhotoSliderDemoTests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DC917AEC1BB2ABD000031F84 /* Pods_PhotoSliderDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B4B364A5955F05C03F5A24 /* Pods_PhotoSliderDemoUITests.framework */; };
+		DC917AEC1BB2ABD000031F84 /* Pods_PhotoSliderDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B4B364A5955F05C03F5A24 /* Pods_PhotoSliderDemoUITests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DC917AED1BB2ABD000031F84 /* Pods_PhotoSliderDemoUITests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96B4B364A5955F05C03F5A24 /* Pods_PhotoSliderDemoUITests.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DCE8F5351B94A2EA00B2D224 /* image001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52D1B94A2EA00B2D224 /* image001.jpg */; };
 		DCE8F5361B94A2EA00B2D224 /* image002.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52E1B94A2EA00B2D224 /* image002.jpg */; };
