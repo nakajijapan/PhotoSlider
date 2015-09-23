@@ -92,6 +92,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.scrollView.alwaysBounceHorizontal = true
         self.scrollView.alwaysBounceVertical = true
         self.scrollView.scrollEnabled = true
+        self.scrollView.accessibilityLabel = "PhotoSliderScrollView"
         self.view.addSubview(self.scrollView)
 
         self.scrollView.contentSize = CGSizeMake(
