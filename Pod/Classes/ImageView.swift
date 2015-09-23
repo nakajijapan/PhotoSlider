@@ -56,13 +56,14 @@ class ImageView: UIView, UIScrollViewDelegate {
         doubleTabGesture.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTabGesture)
         
-        self.imageView.autoresizingMask =
-            UIViewAutoresizing.FlexibleWidth |
-            UIViewAutoresizing.FlexibleLeftMargin |
-            UIViewAutoresizing.FlexibleRightMargin |
-            UIViewAutoresizing.FlexibleTopMargin |
-            UIViewAutoresizing.FlexibleHeight |
-            UIViewAutoresizing.FlexibleBottomMargin
+        self.imageView.autoresizingMask = [
+            .FlexibleWidth,
+            .FlexibleLeftMargin,
+            .FlexibleRightMargin,
+            .FlexibleTopMargin,
+            .FlexibleHeight,
+            .FlexibleBottomMargin
+        ]
         
     }
     
