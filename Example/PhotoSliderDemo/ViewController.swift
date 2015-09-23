@@ -114,7 +114,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
-        //var photoSlider = PhotoSlider.ViewController(images: self.images)
+        //let photoSlider = PhotoSlider.ViewController(images: self.images)
+        //photoSlider.visibleCloseButton = false
+        //photoSlider.visiblePageControl = false
         photoSlider.modalPresentationStyle = .OverCurrentContext
         photoSlider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         photoSlider.delegate = self
