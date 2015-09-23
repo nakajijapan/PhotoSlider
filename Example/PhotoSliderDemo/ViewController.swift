@@ -149,11 +149,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: UIViewControllerTransitioningDelegate
 
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PhotoSlider.ScaleupAnimationController(presented: false)
+        return PhotoSlider.ScaleupAnimationController(presenting: false)
     }
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PhotoSlider.ScaleupAnimationController(presented: true)
+        return PhotoSlider.ScaleupAnimationController(presenting: true)
     }
     
 }

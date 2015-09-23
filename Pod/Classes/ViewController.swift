@@ -388,11 +388,11 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     // MARK: - UIViewControllerAnimatedTransitioning
     
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PhotoSlider.ScaleupAnimationController(presented: false)
+        return PhotoSlider.ScaleupAnimationController(present: false)
     }
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PhotoSlider.ScaleupAnimationController(presented: true)
+        return PhotoSlider.ScaleupAnimationController(present: true)
     }
     
     // MARK: - Private Method

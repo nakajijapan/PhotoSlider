@@ -11,11 +11,11 @@ import UIKit
 public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
     
-    var presented = true
+    var present = true
 
-    public init(presented: Bool) {
+    public init(present: Bool) {
         super.init()
-        self.presented = presented
+        self.present = present
     }
     
     public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
@@ -23,7 +23,7 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
     }
     
     public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        if self.presented {
+        if self.present {
             self.animatePresenting(transitionContext)
         } else {
             self.animateDismiss(transitionContext)
