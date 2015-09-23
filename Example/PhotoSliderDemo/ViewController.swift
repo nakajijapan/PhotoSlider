@@ -123,7 +123,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         */
 
         // Using transition
-        var photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
+        let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
         photoSlider.delegate = self
         photoSlider.currentPage = indexPath.row
         photoSlider.transitioningDelegate = self

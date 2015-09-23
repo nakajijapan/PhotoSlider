@@ -18,7 +18,7 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
         self.presented = presented
     }
     
-    public func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 3.0
     }
     
@@ -33,7 +33,8 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
     func animatePresenting(transitionContext:UIViewControllerContextTransitioning) {
         let presentingController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
         let presentedController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
-        let containerView = transitionContext.containerView()
+        let containerView = transitionContext.containerView()!
+        
         containerView.insertSubview(presentedController.view, belowSubview: presentingController.view)
         
         var transform = CATransform3DIdentity;
