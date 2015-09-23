@@ -56,7 +56,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     }
     
     required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -105,7 +105,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         frame.origin.y = height
         for imageResource in self.imageResources()! {
             
-            var imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
+            let imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
             self.scrollView.addSubview(imageView)
             
             if imageResource.dynamicType === NSURL.self {
@@ -131,7 +131,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         // Close Button
         if self.visibleCloseButton {
             self.closeButton = UIButton(frame: CGRectZero)
-            var imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
+            let imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
             self.closeButton!.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
             self.closeButton!.addTarget(self, action: "closeButtonDidTap:", forControlEvents: UIControlEvents.TouchUpInside)
             self.closeButton!.imageView?.contentMode = UIViewContentMode.Center;
@@ -149,7 +149,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.scrollInitalized = true
     }
     
-    public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.dismissViewControllerAnimated(true) { () -> Void in
             self.view.removeFromSuperview()
         }
@@ -158,21 +158,21 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     // MARK: - Constraints
     
     func layoutCloseButton() {
-        self.closeButton!.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.closeButton!.translatesAutoresizingMaskIntoConstraints = false
         
-        var views = ["closeButton": self.closeButton!]
-        var constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-22-[closeButton(32@32)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views)
-        var constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-22-|", options: NSLayoutFormatOptions(0), metrics: nil, views: views)
+        let views = ["closeButton": self.closeButton!]
+        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-22-[closeButton(32@32)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-22-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintHorizontal)
     }
     
     func layoutPageControl() {
-        self.pageControl.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.pageControl.translatesAutoresizingMaskIntoConstraints = false
         
-        var views = ["pageControl": self.pageControl]
-        var constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]-22-|", options: NSLayoutFormatOptions(0), metrics: nil, views: views)
-        var constraintCenterX = NSLayoutConstraint.constraintsWithVisualFormat("H:|[pageControl]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        let views = ["pageControl": self.pageControl]
+        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]-22-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintCenterX = NSLayoutConstraint.constraintsWithVisualFormat("H:|[pageControl]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintCenterX)
     }
@@ -231,14 +231,14 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         }
         
         // Save current page index.
-        var previousPage = self.pageControl.currentPage
+        let previousPage = self.pageControl.currentPage
         
         // Update current page index.
         self.generateCurrentPage()
         
         // If page index has changed - reset zoom scale for previous image.
         if previousPage != self.pageControl.currentPage {
-            var imageView = imageViews[previousPage]
+            let imageView = imageViews[previousPage]
             imageView.scrollView.zoomScale = imageView.scrollView.minimumZoomScale
         }
     }
@@ -335,12 +335,12 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     }
     
     func resourceBundle() -> NSBundle {
-        var bundlePath = NSBundle.mainBundle().pathForResource(
+        let bundlePath = NSBundle.mainBundle().pathForResource(
             "PhotoSlider",
             ofType: "bundle",
             inDirectory: "Frameworks/PhotoSlider.framework"
         )
-        var bundle = NSBundle(path: bundlePath!)
+        let bundle = NSBundle(path: bundlePath!)
         return bundle!
     }
     
@@ -369,7 +369,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         // ImageViews
         var frame = CGRect(x: 0.0, y: contentViewBounds.height, width: contentViewBounds.width, height: contentViewBounds.height)
         for i in 0..<self.scrollView.subviews.count {
-            var imageView = self.scrollView.subviews[i] as! PhotoSlider.ImageView
+            let imageView = self.scrollView.subviews[i] as! PhotoSlider.ImageView
             
             imageView.frame = frame
             frame.origin.x += contentViewBounds.size.width
