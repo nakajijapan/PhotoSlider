@@ -13,9 +13,7 @@ class PhotoSliderDemoUITests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         XCUIApplication().launch()
     }
     
@@ -23,4 +21,53 @@ class PhotoSliderDemoUITests: XCTestCase {
         super.tearDown()
     }
     
+    func testPushCloseButtonExample() {
+        
+        let app = XCUIApplication()
+        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+
+        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, true)
+        
+        app.buttons["PhotoSliderClose"].tap()
+
+        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+    }
+    
+    func testSwitchImage() {
+        let app = XCUIApplication()
+        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        
+        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        element.swipeLeft()
+        element.swipeLeft()
+        element.swipeLeft()
+        element.swipeRight()
+        element.swipeRight()
+        element.swipeRight()
+        app.buttons["PhotoSliderClose"].tap()
+        
+        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+        
+    }
+    
+    func testCloseWithSwipingUpImage() {
+        let app = XCUIApplication()
+        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        
+        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        element.swipeUp()
+        
+        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+    }
+    
+    func testCloseWithSwipingDownImage() {
+        let app = XCUIApplication()
+        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        
+        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        element.swipeDown()
+        
+        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+    }
+
 }
