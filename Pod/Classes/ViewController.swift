@@ -168,7 +168,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     }
     
     func layoutPageControl() {
-        self.closeButton!.translatesAutoresizingMaskIntoConstraints = false
+        self.pageControl.translatesAutoresizingMaskIntoConstraints = false
         
         let views = ["pageControl": self.pageControl]
         let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]-22-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
