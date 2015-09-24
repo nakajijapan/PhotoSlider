@@ -58,6 +58,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    // MARK: - UITraitEnvironment
+    
+    override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+
+        if self.collectionView != nil {
+            let indexPath = self.collectionView.indexPathsForVisibleItems().first!
+            self.collectionView.contentOffset = CGPoint(x: CGFloat(indexPath.row) * self.view.bounds.width, y: 0)
+        }
+
+    }
+    
     // MARK: - UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
