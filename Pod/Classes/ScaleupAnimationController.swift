@@ -44,9 +44,7 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
         let presentingController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
         let presentedController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         let containerView = transitionContext.containerView()!
-        
-        containerView.addSubview(presentedController.view)
-        containerView.addSubview(presentingController.view)
+        containerView.insertSubview(presentedController.view, belowSubview: presentingController.view)
 
         let alphaView = UIView(frame: transitionContext.finalFrameForViewController(presentedController))
         alphaView.backgroundColor = UIColor.blackColor()
