@@ -1,5 +1,5 @@
 //
-//  ScaleupAnimationController.swift
+//  ZoomingAnimationController.swift
 //  Pods
 //
 //  Created by nakajijapan on 2015/09/13.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-public protocol ScaleupAnimationControllerTransitioning {
+public protocol ZoomingAnimationControllerTransitioning {
     func transitionSourceImageView() -> UIImageView
     func transitionDestinationImageViewFrame() -> CGRect
 }
 
 
-public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
+public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
     var present = true
-    public var sourceTransition: ScaleupAnimationControllerTransitioning?
-    public var destinationTransition: ScaleupAnimationControllerTransitioning?
+    public var sourceTransition: ZoomingAnimationControllerTransitioning?
+    public var destinationTransition: ZoomingAnimationControllerTransitioning?
 
     public init(present: Bool) {
         super.init()

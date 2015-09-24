@@ -21,7 +21,7 @@ enum PhotoSliderControllerUsingImageType:UInt {
     case None = 0, URL, Image
 }
 
-public class ViewController:UIViewController, UIScrollViewDelegate, ScaleupAnimationControllerTransitioning {
+public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnimationControllerTransitioning {
 
     var scrollView:UIScrollView!
 
@@ -386,7 +386,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ScaleupAnima
         self.scrollMode = .None
     }
     
-    // MARK: - ScaleupAnimationControllerTransitioning
+    // MARK: - ZoomingAnimationControllerTransitioning
     
     public func transitionSourceImageView() -> UIImageView {
         let zoomingImageView = self.imageViews[self.currentPage]

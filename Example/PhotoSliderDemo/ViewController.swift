@@ -9,7 +9,7 @@
 import UIKit
 import PhotoSlider
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate, ScaleupAnimationControllerTransitioning {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate, ZoomingAnimationControllerTransitioning {
     
     @IBOutlet var tableView:UITableView!
     
@@ -168,7 +168,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    // MARK: ScaleupAnimationControllerTransitioning
+    // MARK: ZoomingAnimationControllerTransitioning
     
     func transitionSourceImageView() -> UIImageView {
         
@@ -197,8 +197,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        let animationController = PhotoSlider.ScaleupAnimationController(present: false)
-        animationController.sourceTransition = dismissed as? ScaleupAnimationControllerTransitioning
+        let animationController = PhotoSlider.ZoomingAnimationController(present: false)
+        animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
         animationController.destinationTransition = self
         return animationController
         
@@ -206,9 +206,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        let animationController = PhotoSlider.ScaleupAnimationController(present: true)
-        animationController.sourceTransition = source as? ScaleupAnimationControllerTransitioning
-        animationController.destinationTransition = presented as? ScaleupAnimationControllerTransitioning
+        let animationController = PhotoSlider.ZoomingAnimationController(present: true)
+        animationController.sourceTransition = source as? ZoomingAnimationControllerTransitioning
+        animationController.destinationTransition = presented as? ZoomingAnimationControllerTransitioning
         return animationController
         
     }
