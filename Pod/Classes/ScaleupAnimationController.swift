@@ -44,15 +44,14 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
         let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
         let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         let containerView = transitionContext.containerView()!
-        containerView.insertSubview(toViewController.view, belowSubview: fromViewController.view)
 
-        let alphaView = UIView(frame: transitionContext.finalFrameForViewController(toViewController))
-        alphaView.backgroundColor = UIColor.blackColor()
-        alphaView.alpha = 0.0
-        containerView.addSubview(alphaView);
+        let snapshotView = fromViewController.view.resizableSnapshotViewFromRect(fromViewController.view.frame, afterScreenUpdates: true, withCapInsets: UIEdgeInsetsZero)
+        containerView.addSubview(snapshotView)
+        
+        toViewController.view.alpha = 0.0
+        containerView.addSubview(toViewController.view)
         
         let sourceImageView = self.sourceTransition!.transitionSourceImageView()
-
         containerView.addSubview(sourceImageView)
 
 
@@ -63,10 +62,8 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
             animations: { () -> Void in
                 
                 sourceImageView.frame = self.destinationTransition!.transitionDestinationImageViewFrame()
-                sourceImageView.transform = CGAffineTransformMakeScale(1.02, 1.02)
-                
-                alphaView.alpha = 0.9
-                
+                sourceImageView.transform = CGAffineTransformMakeScale(1.12, 1.12)
+
             }) { (result) -> Void in
                 
                 UIView.animateWithDuration(
@@ -76,18 +73,15 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
                     animations: { () -> Void in
 
                         sourceImageView.transform = CGAffineTransformIdentity
-                        alphaView.alpha = 1.0
-
+                        snapshotView.frame = fromViewController.view.frame
+                        toViewController.view.alpha = 1.0
 
                     },
                     completion: { (result) -> Void in
+
                         sourceImageView.alpha = 0.0
-
-                        alphaView.alpha = 1.0
-
                         sourceImageView.removeFromSuperview()
-                        alphaView.removeFromSuperview()
-                        
+
                         transitionContext.completeTransition(true)
                 })
                 
@@ -118,5 +112,14 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
     }
 
     
-   
+    // MARK: - Private Methods
+    func createImageViewFromView(view: UIView) -> UIImage {
+
+        UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, 0);
+        view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: true)
+        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return image
+    }
 }

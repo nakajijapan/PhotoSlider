@@ -393,11 +393,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ScaleupAnima
         return zoomingImageView.imageView
     }
     
-   
     public func transitionDestinationImageViewFrame() -> CGRect {
-
         return self.view.frame
-
     }
     
     // MARK: - Private Method
