@@ -38,7 +38,6 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
         }
     }
     
-    
     func animatePresenting(transitionContext:UIViewControllerContextTransitioning) {
 
         let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
@@ -51,6 +50,12 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
         toViewController.view.alpha = 0.0
         containerView.addSubview(toViewController.view)
         
+        
+        let backgroundView = UIView(frame: fromViewController.view.frame)
+        backgroundView.backgroundColor = UIColor.blackColor()
+        backgroundView.alpha = 0.0
+        containerView.addSubview(backgroundView)
+        
         let sourceImageView = self.sourceTransition!.transitionSourceImageView()
         containerView.addSubview(sourceImageView)
 
@@ -62,7 +67,9 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
             animations: { () -> Void in
                 
                 sourceImageView.frame = self.destinationTransition!.transitionDestinationImageViewFrame()
-                sourceImageView.transform = CGAffineTransformMakeScale(1.12, 1.12)
+                sourceImageView.transform = CGAffineTransformMakeScale(1.1, 1.1)
+                
+                backgroundView.alpha = 0.9
 
             }) { (result) -> Void in
                 
@@ -74,13 +81,17 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
 
                         sourceImageView.transform = CGAffineTransformIdentity
                         snapshotView.frame = fromViewController.view.frame
-                        toViewController.view.alpha = 1.0
+                        
+                        backgroundView.alpha = 1.0
 
                     },
                     completion: { (result) -> Void in
 
                         sourceImageView.alpha = 0.0
                         sourceImageView.removeFromSuperview()
+
+                        toViewController.view.alpha = 1.0
+                        backgroundView.removeFromSuperview()
 
                         transitionContext.completeTransition(true)
                 })
