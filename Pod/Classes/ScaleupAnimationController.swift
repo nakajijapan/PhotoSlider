@@ -67,14 +67,14 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
             animations: { () -> Void in
                 
                 sourceImageView.frame = self.destinationTransition!.transitionDestinationImageViewFrame()
-                sourceImageView.transform = CGAffineTransformMakeScale(1.1, 1.1)
+                sourceImageView.transform = CGAffineTransformMakeScale(1.06, 1.06)
                 
                 backgroundView.alpha = 0.9
 
             }) { (result) -> Void in
                 
                 UIView.animateWithDuration(
-                    0.2,
+                    0.06,
                     delay: 0.0,
                     options: UIViewAnimationOptions.CurveEaseOut,
                     animations: { () -> Void in
