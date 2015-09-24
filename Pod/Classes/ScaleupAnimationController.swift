@@ -128,7 +128,7 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
 
         UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, 0);
         view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: true)
-        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
         return image
