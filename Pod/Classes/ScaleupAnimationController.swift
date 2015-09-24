@@ -8,10 +8,17 @@
 
 import UIKit
 
+public protocol ScaleupAnimationControllerTransitioning {
+    func transitionSourceImageView() -> UIImageView
+    func transitionDestinationImageViewFrame() -> CGRect
+}
+
+
 public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
-    
     var present = true
+    public var sourceTransition: ScaleupAnimationControllerTransitioning?
+    public var destinationTransition: ScaleupAnimationControllerTransitioning?
 
     public init(present: Bool) {
         super.init()
@@ -19,10 +26,11 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
     }
     
     public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 3.0
+        return 0.3
     }
     
     public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+        
         if self.present {
             self.animatePresenting(transitionContext)
         } else {
@@ -30,34 +38,85 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
         }
     }
     
+    
     func animatePresenting(transitionContext:UIViewControllerContextTransitioning) {
+
         let presentingController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
         let presentedController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         let containerView = transitionContext.containerView()!
         
-        containerView.insertSubview(presentedController.view, belowSubview: presentingController.view)
+        containerView.addSubview(presentedController.view)
+        containerView.addSubview(presentingController.view)
+
+        let alphaView = UIView(frame: transitionContext.finalFrameForViewController(presentedController))
+        alphaView.backgroundColor = UIColor.blackColor()
+        alphaView.alpha = 0.0
+        containerView.addSubview(alphaView);
         
-        var transform = CATransform3DIdentity;
-        transform.m34 = 1.0 / -500.0
-        transform = CATransform3DScale(transform, 0.85, 0.85, 1.0)
+        let sourceImageView = self.sourceTransition!.transitionSourceImageView()
+
+        containerView.addSubview(sourceImageView)
+
+
+        UIView.animateWithDuration(
+            self.transitionDuration(transitionContext),
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: { () -> Void in
+                
+                sourceImageView.frame = self.destinationTransition!.transitionDestinationImageViewFrame()
+                sourceImageView.transform = CGAffineTransformMakeScale(1.02, 1.02)
+                
+                alphaView.alpha = 0.9
+                
+            }) { (result) -> Void in
+                
+                UIView.animateWithDuration(
+                    0.2,
+                    delay: 0.0,
+                    options: UIViewAnimationOptions.CurveEaseOut,
+                    animations: { () -> Void in
+
+                        sourceImageView.transform = CGAffineTransformIdentity
+                        alphaView.alpha = 1.0
+
+
+                    },
+                    completion: { (result) -> Void in
+                        sourceImageView.alpha = 0.0
+
+                        alphaView.alpha = 1.0
+
+                        sourceImageView.removeFromSuperview()
+                        alphaView.removeFromSuperview()
+                        
+                        transitionContext.completeTransition(true)
+                })
+                
+
+        }
         
-        presentedController.view.frame.origin.y -= containerView.bounds.size.height
+    }
+    
+    func animateDismiss(transitionContext:UIViewControllerContextTransitioning) {
         
-        //適当にアニメーション
+        let presentingController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
+        let presentedController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
+        let containerView = transitionContext.containerView()!
+        
+        
+        containerView.addSubview(presentedController.view)
+        containerView.addSubview(presentingController.view)
+
         UIView.animateWithDuration(self.transitionDuration(transitionContext), animations: {
             
             presentingController.view.alpha = 0.0
-            presentingController.view.layer.transform = transform
-            presentedController.view.frame.origin.y = 0.0
+            presentedController.view.alpha = 1.0
             
             
             }, completion: { finished in
                 transitionContext.completeTransition(true)
         })
-    }
-    
-    func animateDismiss(transitionContext:AnyObject) {
-        
     }
 
     

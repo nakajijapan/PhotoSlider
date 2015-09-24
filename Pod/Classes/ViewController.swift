@@ -21,7 +21,7 @@ enum PhotoSliderControllerUsingImageType:UInt {
     case None = 0, URL, Image
 }
 
-public class ViewController:UIViewController, UIScrollViewDelegate {
+public class ViewController:UIViewController, UIScrollViewDelegate, ScaleupAnimationControllerTransitioning {
 
     var scrollView:UIScrollView!
 
@@ -328,6 +328,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     // MARK: - Private Methods
     
     func dissmissViewControllerAnimated(animated:Bool) {
+        
         self.dismissViewControllerAnimated(animated, completion: { () -> Void in
             
             if self.delegate!.respondsToSelector("photoSliderControllerDidDismiss:") {
@@ -385,14 +386,18 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.scrollMode = .None
     }
     
-    // MARK: - UIViewControllerAnimatedTransitioning
+    // MARK: - ScaleupAnimationControllerTransitioning
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PhotoSlider.ScaleupAnimationController(present: false)
+    public func transitionSourceImageView() -> UIImageView {
+        let zoomingImageView = self.imageViews[self.currentPage]
+        return zoomingImageView.imageView
     }
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PhotoSlider.ScaleupAnimationController(present: true)
+   
+    public func transitionDestinationImageViewFrame() -> CGRect {
+
+        return self.view.frame
+
     }
     
     // MARK: - Private Method

@@ -9,12 +9,13 @@
 import UIKit
 import PhotoSlider
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate, ScaleupAnimationControllerTransitioning {
     
     @IBOutlet var tableView:UITableView!
 
     
     var collectionView:UICollectionView!
+    var selectedIndexPath: NSIndexPath?
 
     var imageURLs = [
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg")!,
@@ -43,9 +44,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         if self.collectionView != nil {
             self.collectionView.reloadData()
         }
+
     }
     
     // MARK: - UITableViewDataSource
@@ -64,7 +68,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.collectionView = cell.viewWithTag(1) as! UICollectionView
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-
+        
         return cell
     }
     
@@ -92,19 +96,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) 
-        let imageView = cell.viewWithTag(1) as! UIImageView
-        imageView.sd_setImageWithURL(self.imageURLs[indexPath.row])
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) as! ImageCollectionViewCell
+        let imageView = cell.imageView
+        imageView!.sd_setImageWithURL(self.imageURLs[indexPath.row])
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
 
-        if UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait || UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown {
+        if UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.Portrait ||
+           UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown {
             return CGSize(width:collectionView.bounds.size.width, height:collectionView.bounds.size.width)
         } else {
-            return CGSize(width:self.tableView.bounds.size.width, height:collectionView.bounds.size.height)
+            return CGSize(width:self.tableView.bounds.size.height, height:collectionView.bounds.size.height)
         }
         
     }
@@ -112,21 +117,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: - UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        /*
-        let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
-        //let photoSlider = PhotoSlider.ViewController(images: self.images)
-        //photoSlider.visibleCloseButton = false
-        //photoSlider.visiblePageControl = false
-        photoSlider.modalPresentationStyle = .OverCurrentContext
-        photoSlider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-        */
 
+        self.selectedIndexPath = indexPath
+        
         // Using transition
         let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
+        //let photoSlider = PhotoSlider.ViewController(images: self.images)
         photoSlider.delegate = self
         photoSlider.currentPage = indexPath.row
+        //photoSlider.visibleCloseButton = false
+        //photoSlider.visiblePageControl = false
+        
         photoSlider.transitioningDelegate = self
+        //photoSlider.modalPresentationStyle = .OverCurrentContext
+        //photoSlider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
         self.presentViewController(photoSlider, animated: true, completion: nil)
@@ -145,15 +149,45 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    // MARK: ScaleupAnimationControllerTransitioning
+    
+    func transitionSourceImageView() -> UIImageView {
+
+        let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
+        let imageView = UIImageView(image: cell.imageView.image)
+        imageView.frame = cell.imageView.frame
+        imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        
+        imageView.clipsToBounds = true
+        imageView.userInteractionEnabled = false
+        
+        return imageView
+    }
+
+    func transitionDestinationImageViewFrame() -> CGRect {
+        return CGRectZero
+        
+    }
     
     // MARK: UIViewControllerTransitioningDelegate
 
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PhotoSlider.ScaleupAnimationController(presenting: false)
+
+        let animationController = PhotoSlider.ScaleupAnimationController(present: false)
+        animationController.sourceTransition = dismissed as? ScaleupAnimationControllerTransitioning
+        animationController.destinationTransition = self
+        return animationController
+
     }
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PhotoSlider.ScaleupAnimationController(presenting: true)
+        
+        let animationController = PhotoSlider.ScaleupAnimationController(present: true)
+        animationController.sourceTransition = source as? ScaleupAnimationControllerTransitioning
+        animationController.destinationTransition = presented as? ScaleupAnimationControllerTransitioning
+        return animationController
+
     }
     
 }
