@@ -164,7 +164,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
         let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
         let imageView = UIImageView(image: cell.imageView.image)
-        imageView.frame = cell.imageView.frame
+        
+        var frame = cell.imageView.frame
+        frame.origin.y += 20
+        
+        imageView.frame = frame
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
         
         imageView.clipsToBounds = true

@@ -211,7 +211,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ScaleupAnima
         
         if self.scrollMode == .Vertical {
             let offsetHeight = fabs(scrollView.frame.size.height - scrollView.contentOffset.y)
-            let alpha = 1.0 - ( (fabs(offsetHeight) + fabs(pow(offsetHeight * 0.04, 2))) / (scrollView.frame.size.height / 2.0) )
+            let alpha = 1.0 - ( fabs(offsetHeight) / (scrollView.frame.size.height / 2.0) )
 
             self.backgroundView.alpha = alpha
             
