@@ -139,8 +139,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //photoSlider.visiblePageControl = false
         photoSlider.transitioningDelegate = self
         
-        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
-        self.presentViewController(photoSlider, animated: true, completion: nil)
+        self.presentViewController(photoSlider, animated: true) { () -> Void in
+            UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+        }
     }
     
     // MARK: - PhotoSliderDelegate
