@@ -137,10 +137,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         photoSlider.currentPage = indexPath.row
         //photoSlider.visibleCloseButton = false
         //photoSlider.visiblePageControl = false
-        
         photoSlider.transitioningDelegate = self
-        //photoSlider.modalPresentationStyle = .OverCurrentContext
-        //photoSlider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
         self.presentViewController(photoSlider, animated: true, completion: nil)
