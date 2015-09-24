@@ -122,15 +122,4 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
         })
     }
 
-    
-    // MARK: - Private Methods
-    func createImageViewFromView(view: UIView) -> UIImage {
-
-        UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, 0);
-        view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: true)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return image
-    }
 }
