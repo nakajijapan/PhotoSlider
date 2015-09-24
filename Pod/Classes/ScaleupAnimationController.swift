@@ -41,12 +41,12 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
     
     func animatePresenting(transitionContext:UIViewControllerContextTransitioning) {
 
-        let presentingController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
-        let presentedController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
+        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
+        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         let containerView = transitionContext.containerView()!
-        containerView.insertSubview(presentedController.view, belowSubview: presentingController.view)
+        containerView.insertSubview(toViewController.view, belowSubview: fromViewController.view)
 
-        let alphaView = UIView(frame: transitionContext.finalFrameForViewController(presentedController))
+        let alphaView = UIView(frame: transitionContext.finalFrameForViewController(toViewController))
         alphaView.backgroundColor = UIColor.blackColor()
         alphaView.alpha = 0.0
         containerView.addSubview(alphaView);
@@ -98,18 +98,18 @@ public class ScaleupAnimationController: NSObject, UIViewControllerAnimatedTrans
     
     func animateDismiss(transitionContext:UIViewControllerContextTransitioning) {
         
-        let presentingController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
-        let presentedController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
+        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
+        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         let containerView = transitionContext.containerView()!
         
         
-        containerView.addSubview(presentedController.view)
-        containerView.addSubview(presentingController.view)
+        containerView.addSubview(toViewController.view)
+        containerView.addSubview(fromViewController.view)
 
         UIView.animateWithDuration(self.transitionDuration(transitionContext), animations: {
             
-            presentingController.view.alpha = 0.0
-            presentedController.view.alpha = 1.0
+            fromViewController.view.alpha = 0.0
+            toViewController.view.alpha = 1.0
             
             
             }, completion: { finished in
