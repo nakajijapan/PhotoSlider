@@ -12,11 +12,11 @@ import PhotoSlider
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate, ScaleupAnimationControllerTransitioning {
     
     @IBOutlet var tableView:UITableView!
-
+    
     
     var collectionView:UICollectionView!
     var selectedIndexPath: NSIndexPath?
-
+    
     var imageURLs = [
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg")!,
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg")!,
@@ -46,10 +46,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if self.collectionView != nil {
-            self.collectionView.reloadData()
+        guard let collectionView = self.collectionView else {
+            return
         }
-
+        
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        flowLayout.invalidateLayout()
+        
     }
     
     // MARK: - UITableViewDataSource
@@ -73,7 +79,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
+        
         if indexPath.row == 0 {
             if UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait || UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown {
                 return tableView.bounds.size.width
@@ -104,12 +110,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-
+        
         if UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.Portrait ||
-           UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown {
-            return CGSize(width:collectionView.bounds.size.width, height:collectionView.bounds.size.width)
+            UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown {
+                
+                return CGSize(width:collectionView.bounds.size.width, height:collectionView.bounds.size.width)
+                
         } else {
-            return CGSize(width:self.tableView.bounds.size.height, height:collectionView.bounds.size.height)
+            
+            return CGSize(width:self.tableView.bounds.size.width, height:collectionView.bounds.size.height)
+
         }
         
     }
@@ -117,7 +127,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: - UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-
+        
         self.selectedIndexPath = indexPath
         
         // Using transition
@@ -137,7 +147,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     // MARK: - PhotoSliderDelegate
-
+    
     func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
         UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
     }
@@ -152,7 +162,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: ScaleupAnimationControllerTransitioning
     
     func transitionSourceImageView() -> UIImageView {
-
+        
         let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
         let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
         let imageView = UIImageView(image: cell.imageView.image)
@@ -164,21 +174,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return imageView
     }
-
+    
     func transitionDestinationImageViewFrame() -> CGRect {
         return CGRectZero
         
     }
     
     // MARK: UIViewControllerTransitioningDelegate
-
+    
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
+        
         let animationController = PhotoSlider.ScaleupAnimationController(present: false)
         animationController.sourceTransition = dismissed as? ScaleupAnimationControllerTransitioning
         animationController.destinationTransition = self
         return animationController
-
+        
     }
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -187,7 +197,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         animationController.sourceTransition = source as? ScaleupAnimationControllerTransitioning
         animationController.destinationTransition = presented as? ScaleupAnimationControllerTransitioning
         return animationController
-
+        
     }
     
 }
