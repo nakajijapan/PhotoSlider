@@ -71,7 +71,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ScaleupAnima
         self.view.userInteractionEnabled = true
 
         self.backgroundView = UIView(frame: self.view.bounds)
-        self.backgroundView.backgroundColor = backgroundViewColor
+        self.backgroundView.backgroundColor = self.backgroundViewColor
 
         if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 {
             self.view.addSubview(self.backgroundView)
