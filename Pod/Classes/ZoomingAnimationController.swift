@@ -26,7 +26,7 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
     }
     
     public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 0.3
+        return 0.2
     }
     
     public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
