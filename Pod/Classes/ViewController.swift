@@ -21,7 +21,7 @@ enum PhotoSliderControllerUsingImageType:UInt {
     case None = 0, URL, Image
 }
 
-public class ViewController:UIViewController, UIScrollViewDelegate {
+public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnimationControllerTransitioning {
 
     var scrollView:UIScrollView!
 
@@ -68,10 +68,9 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
 
         self.view.frame = UIScreen.mainScreen().bounds
         self.view.backgroundColor = UIColor.clearColor()
-        self.view.userInteractionEnabled = true
 
         self.backgroundView = UIView(frame: self.view.bounds)
-        self.backgroundView.backgroundColor = backgroundViewColor
+        self.backgroundView.backgroundColor = self.backgroundViewColor
 
         if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 {
             self.view.addSubview(self.backgroundView)
@@ -143,6 +142,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         if self.respondsToSelector("setNeedsStatusBarAppearanceUpdate") {
             self.setNeedsStatusBarAppearanceUpdate()
         }
+
+        self.view.userInteractionEnabled = true
     }
     
     override public func viewWillAppear(animated: Bool) {
@@ -209,8 +210,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         
         if self.scrollMode == .Vertical {
             let offsetHeight = fabs(scrollView.frame.size.height - scrollView.contentOffset.y)
-            let alpha = 1.0 - (fabs(offsetHeight) / (scrollView.frame.size.height / 2.0))
-            
+            let alpha = 1.0 - ( fabs(offsetHeight) / (scrollView.frame.size.height / 2.0) )
+
             self.backgroundView.alpha = alpha
             
             var contentOffset = scrollView.contentOffset
@@ -326,6 +327,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
     // MARK: - Private Methods
     
     func dissmissViewControllerAnimated(animated:Bool) {
+        
         self.dismissViewControllerAnimated(animated, completion: { () -> Void in
             
             if self.delegate!.respondsToSelector("photoSliderControllerDidDismiss:") {
@@ -383,8 +385,19 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         self.scrollMode = .None
     }
     
+    // MARK: - ZoomingAnimationControllerTransitioning
+    
+    public func transitionSourceImageView() -> UIImageView {
+        let zoomingImageView = self.imageViews[self.currentPage]
+        return zoomingImageView.imageView
+    }
+    
+    public func transitionDestinationImageViewFrame() -> CGRect {
+        return self.view.frame
+    }
     
     // MARK: - Private Method
+
     func imageResources() -> Array<AnyObject>? {
 
         if self.usingImageType == .URL {
@@ -395,4 +408,5 @@ public class ViewController:UIViewController, UIScrollViewDelegate {
         
         return nil
     }
+
 }

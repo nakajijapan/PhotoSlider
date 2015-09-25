@@ -9,13 +9,14 @@
 import UIKit
 import PhotoSlider
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate, ZoomingAnimationControllerTransitioning {
     
     @IBOutlet var tableView:UITableView!
-
+    
     
     var collectionView:UICollectionView!
-
+    var selectedIndexPath: NSIndexPath?
+    
     var imageURLs = [
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg")!,
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg")!,
@@ -43,9 +44,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     override func viewDidLayoutSubviews() {
-        if self.collectionView != nil {
-            self.collectionView.reloadData()
+        super.viewDidLayoutSubviews()
+        
+        guard let collectionView = self.collectionView else {
+            return
         }
+        
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        flowLayout.invalidateLayout()
+        
+    }
+    
+    // MARK: - UITraitEnvironment
+    
+    override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+
+        if self.collectionView != nil {
+            let indexPath = self.collectionView.indexPathsForVisibleItems().first!
+            self.collectionView.contentOffset = CGPoint(x: CGFloat(indexPath.row) * self.view.bounds.width, y: 0)
+        }
+
     }
     
     // MARK: - UITableViewDataSource
@@ -64,12 +85,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.collectionView = cell.viewWithTag(1) as! UICollectionView
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-
+        
         return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
+        
         if indexPath.row == 0 {
             if UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait || UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown {
                 return tableView.bounds.size.width
@@ -92,19 +113,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) 
-        let imageView = cell.viewWithTag(1) as! UIImageView
-        imageView.sd_setImageWithURL(self.imageURLs[indexPath.row])
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) as! ImageCollectionViewCell
+        let imageView = cell.imageView
+        imageView!.sd_setImageWithURL(self.imageURLs[indexPath.row])
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-
-        if UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait || UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown {
-            return CGSize(width:collectionView.bounds.size.width, height:collectionView.bounds.size.width)
+        
+        if UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.Portrait ||
+            UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown {
+                
+                return CGSize(width:collectionView.bounds.size.width, height:collectionView.bounds.size.width)
+                
         } else {
+            
             return CGSize(width:self.tableView.bounds.size.width, height:collectionView.bounds.size.height)
+
         }
         
     }
@@ -113,21 +139,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+        self.selectedIndexPath = indexPath
+        
+        // Using transition
         let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
         //let photoSlider = PhotoSlider.ViewController(images: self.images)
-        //photoSlider.visibleCloseButton = false
-        //photoSlider.visiblePageControl = false
-        photoSlider.modalPresentationStyle = .OverCurrentContext
-        photoSlider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         photoSlider.delegate = self
         photoSlider.currentPage = indexPath.row
-
-        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
-        self.presentViewController(photoSlider, animated: true, completion: nil)
+        //photoSlider.visibleCloseButton = false
+        //photoSlider.visiblePageControl = false
+        
+        // ZoomingAnimationControllerTransitioning
+        photoSlider.transitioningDelegate = self
+        
+        // Here implemention is better if you want to use ZoomingAnimationControllerTransitioning.
+        //photoSlider.modalPresentationStyle = .OverCurrentContext
+        //photoSlider.modalTransitionStyle   = .CrossDissolve
+        
+        self.presentViewController(photoSlider, animated: true) { () -> Void in
+            UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+        }
     }
     
     // MARK: - PhotoSliderDelegate
-
+    
     func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
         UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
     }
@@ -136,6 +171,56 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     internal override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         self.tableView.reloadData()
+        
+    }
+    
+    // MARK: ZoomingAnimationControllerTransitioning
+    
+    func transitionSourceImageView() -> UIImageView {
+        
+        let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
+        let imageView = UIImageView(image: cell.imageView.image)
+        
+        var frame = cell.imageView.frame
+        frame.origin.y += 20
+        
+        imageView.frame = frame
+        imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        
+        imageView.clipsToBounds = true
+        imageView.userInteractionEnabled = false
+        
+        return imageView
+    }
+    
+    func transitionDestinationImageViewFrame() -> CGRect {
+        let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
+
+        var frame = cell.imageView.frame
+        frame.origin.y += 20
+
+        return frame
+    }
+    
+    // MARK: UIViewControllerTransitioningDelegate
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        let animationController = PhotoSlider.ZoomingAnimationController(present: false)
+        animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
+        animationController.destinationTransition = self
+        return animationController
+        
+    }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        let animationController = PhotoSlider.ZoomingAnimationController(present: true)
+        animationController.sourceTransition = source as? ZoomingAnimationControllerTransitioning
+        animationController.destinationTransition = presented as? ZoomingAnimationControllerTransitioning
+        return animationController
         
     }
     

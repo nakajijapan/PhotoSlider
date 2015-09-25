@@ -21,7 +21,69 @@ pod "PhotoSlider"
 
 ## Usage
 
+### Using ZoomingAnimationControllerTransitioning
 
+```swift
+
+func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+
+    var slider = PhotoSlider.ViewController(imageURLs: self.images)
+    slider.index = indexPath.row
+    photoSlider.transitioningDelegate = self
+    self.presentViewController(slider, animated: true, completion: nil)
+}
+
+```
+
+#### ZoomingAnimationControllerTransitioning
+
+return imageView for starting position
+
+```swift
+// MARK: ZoomingAnimationControllerTransitioning
+
+func transitionSourceImageView() -> UIImageView {
+    let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+    let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
+    let imageView = UIImageView(image: cell.imageView.image)
+    imageView.contentMode = UIViewContentMode.ScaleAspectFit
+    imageView.clipsToBounds = true
+    imageView.userInteractionEnabled = false
+    return imageView
+}
+
+return frame for finished position
+
+func transitionDestinationImageViewFrame() -> CGRect {
+    let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+    let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
+    return cell.imageView.frame
+}
+```
+
+#### UIViewControllerTransitioningDelegate
+
+```swift
+// MARK: UIViewControllerTransitioningDelegate
+
+func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    let animationController = PhotoSlider.ZoomingAnimationController(present: false)
+    animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
+    animationController.destinationTransition = self
+    return animationController
+}
+
+func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    let animationController = PhotoSlider.ZoomingAnimationController(present: true)
+    animationController.sourceTransition = source as? ZoomingAnimationControllerTransitioning
+    animationController.destinationTransition = presented as? ZoomingAnimationControllerTransitioning
+    return animationController
+}
+
+```
+
+
+### Using UIModalTransitionStyle
 
 ```swift
 
