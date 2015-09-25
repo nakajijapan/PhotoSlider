@@ -93,7 +93,7 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
                         toViewController.view.alpha = 1.0
                         backgroundView.removeFromSuperview()
 
-                        transitionContext.completeTransition(true)
+                        transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
                 })
                 
 
@@ -137,7 +137,7 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
                     completion: { (result) -> Void in
                         
                         sourceImageView.removeFromSuperview()
-                        transitionContext.completeTransition(true)
+                        transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
                 })
                 
                 
