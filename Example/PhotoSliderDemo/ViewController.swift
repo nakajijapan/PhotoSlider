@@ -148,7 +148,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         photoSlider.currentPage = indexPath.row
         //photoSlider.visibleCloseButton = false
         //photoSlider.visiblePageControl = false
+        
+        // ZoomingAnimationControllerTransitioning
         photoSlider.transitioningDelegate = self
+        
+        // Here implemention is better if you want to use ZoomingAnimationControllerTransitioning.
+        //photoSlider.modalPresentationStyle = .OverCurrentContext
+        //photoSlider.modalTransitionStyle   = .CrossDissolve
         
         self.presentViewController(photoSlider, animated: true) { () -> Void in
             UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
