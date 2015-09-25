@@ -68,7 +68,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
 
         self.view.frame = UIScreen.mainScreen().bounds
         self.view.backgroundColor = UIColor.clearColor()
-        self.view.userInteractionEnabled = true
 
         self.backgroundView = UIView(frame: self.view.bounds)
         self.backgroundView.backgroundColor = self.backgroundViewColor
