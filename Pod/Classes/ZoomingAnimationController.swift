@@ -107,19 +107,41 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
         let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         let containerView = transitionContext.containerView()!
         
-        
         containerView.addSubview(toViewController.view)
         containerView.addSubview(fromViewController.view)
+        
+        let sourceImageView = self.sourceTransition!.transitionSourceImageView()
+        containerView.addSubview(sourceImageView)
 
-        UIView.animateWithDuration(self.transitionDuration(transitionContext), animations: {
-            
-            fromViewController.view.alpha = 0.0
-            toViewController.view.alpha = 1.0
-            
-            
-            }, completion: { finished in
-                transitionContext.completeTransition(true)
-        })
+        UIView.animateWithDuration(
+            self.transitionDuration(transitionContext),
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: { () -> Void in
+                
+                sourceImageView.frame = self.destinationTransition!.transitionDestinationImageViewFrame()
+                fromViewController.view.alpha = 0.1
+                
+            }) { (result) -> Void in
+                
+                UIView.animateWithDuration(
+                    0.06,
+                    delay: 0.0,
+                    options: UIViewAnimationOptions.CurveEaseOut,
+                    animations: { () -> Void in
+                        
+                        sourceImageView.alpha = 0.0
+                        fromViewController.view.alpha = 0.0
+
+                    },
+                    completion: { (result) -> Void in
+                        
+                        sourceImageView.removeFromSuperview()
+                        transitionContext.completeTransition(true)
+                })
+                
+                
+        }
     }
 
 }

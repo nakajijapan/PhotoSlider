@@ -189,8 +189,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func transitionDestinationImageViewFrame() -> CGRect {
-        return CGRectZero
-        
+        let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
+
+        var frame = cell.imageView.frame
+        frame.origin.y += 20
+
+        return frame
     }
     
     // MARK: UIViewControllerTransitioningDelegate
