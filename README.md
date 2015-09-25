@@ -51,9 +51,12 @@ func transitionSourceImageView() -> UIImageView {
     imageView.userInteractionEnabled = false
     return imageView
 }
+```
+
 
 return frame for finished position
 
+```swift
 func transitionDestinationImageViewFrame() -> CGRect {
     let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
     let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
@@ -84,6 +87,8 @@ func animationControllerForPresentedController(presented: UIViewController, pres
 
 
 ### Using UIModalTransitionStyle
+
+select ZoomingAnimationController
 
 ```swift
 
