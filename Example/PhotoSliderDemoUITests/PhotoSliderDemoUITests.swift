@@ -69,5 +69,23 @@ class PhotoSliderDemoUITests: XCTestCase {
         
         XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
     }
+    
+    func testRightRotation() {
+
+        let app = XCUIApplication()
+        app.otherElements["rootView"].tap()
+
+        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        element.swipeLeft()
+        element.swipeLeft()
+
+        XCUIDevice.sharedDevice().orientation = .LandscapeRight
+        XCUIDevice.sharedDevice().orientation = .PortraitUpsideDown
+        XCUIDevice.sharedDevice().orientation = .LandscapeLeft
+        XCUIDevice.sharedDevice().orientation = .Portrait
+        app.buttons["PhotoSliderClose"].tap()
+    }
+    
+    
 
 }
