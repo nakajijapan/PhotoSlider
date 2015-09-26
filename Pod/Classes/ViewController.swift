@@ -21,7 +21,7 @@ enum PhotoSliderControllerUsingImageType:UInt {
     case None = 0, URL, Image
 }
 
-public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnimationControllerTransitioning {
+public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderImageViewDelegate, ZoomingAnimationControllerTransitioning {
 
     var scrollView:UIScrollView!
 
@@ -106,6 +106,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
         for imageResource in self.imageResources()! {
             
             let imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
+            imageView.delegate = self
             self.scrollView.addSubview(imageView)
             
             if imageResource.dynamicType === NSURL.self {
@@ -322,6 +323,16 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
         }
         self.dissmissViewControllerAnimated(true)
 
+    }
+    
+    // MARK: - PhotoSliderImageViewDelegate
+
+    func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
+        if scale <= 1.0 {
+            self.scrollView.scrollEnabled = true
+        } else {
+            self.scrollView.scrollEnabled = false
+        }
     }
     
     // MARK: - Private Methods
