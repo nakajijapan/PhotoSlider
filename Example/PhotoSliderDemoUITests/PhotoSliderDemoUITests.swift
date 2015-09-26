@@ -3,7 +3,7 @@
 //  PhotoSliderDemoUITests
 //
 //  Created by nakajijapan on 2015/09/23.
-//  Copyright © 2015年 net.nakajijapan. All rights reserved.
+//  Copyright © 2015 net.nakajijapan. All rights reserved.
 //
 
 import XCTest
@@ -24,7 +24,7 @@ class PhotoSliderDemoUITests: XCTestCase {
     func testPushCloseButtonExample() {
         
         let app = XCUIApplication()
-        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        app.otherElements["rootView"].tap()
 
         XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, true)
         
@@ -35,7 +35,7 @@ class PhotoSliderDemoUITests: XCTestCase {
     
     func testSwitchImage() {
         let app = XCUIApplication()
-        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        app.otherElements["rootView"].tap()
         
         let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
         element.swipeLeft()
@@ -52,7 +52,7 @@ class PhotoSliderDemoUITests: XCTestCase {
     
     func testCloseWithSwipingUpImage() {
         let app = XCUIApplication()
-        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        app.otherElements["rootView"].tap()
         
         let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
         element.swipeUp()
@@ -62,12 +62,28 @@ class PhotoSliderDemoUITests: XCTestCase {
     
     func testCloseWithSwipingDownImage() {
         let app = XCUIApplication()
-        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        app.otherElements["rootView"].tap()
         
         let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
         element.swipeDown()
         
         XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+    }
+    
+    func testRightRotation() {
+
+        let app = XCUIApplication()
+        app.otherElements["rootView"].tap()
+
+        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        element.swipeLeft()
+        element.swipeLeft()
+
+        XCUIDevice.sharedDevice().orientation = .LandscapeRight
+        XCUIDevice.sharedDevice().orientation = .PortraitUpsideDown
+        XCUIDevice.sharedDevice().orientation = .LandscapeLeft
+        XCUIDevice.sharedDevice().orientation = .Portrait
+        app.buttons["PhotoSliderClose"].tap()
     }
 
 }

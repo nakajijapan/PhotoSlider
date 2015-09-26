@@ -21,7 +21,7 @@ enum PhotoSliderControllerUsingImageType:UInt {
     case None = 0, URL, Image
 }
 
-public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnimationControllerTransitioning {
+public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderImageViewDelegate, ZoomingAnimationControllerTransitioning {
 
     var scrollView:UIScrollView!
 
@@ -35,11 +35,13 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
     var scrollInitalized = false
     var closeAnimating = false
     var imageViews = Array<PhotoSlider.ImageView>()
+    var previousPage = 0
 
     public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
     public var visibleCloseButton = true
     public var currentPage = 0
+
     public var pageControl = UIPageControl()
     public var backgroundViewColor = UIColor.blackColor()
     
@@ -93,6 +95,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
         self.scrollView.scrollEnabled = true
         self.scrollView.accessibilityLabel = "PhotoSliderScrollView"
         self.view.addSubview(self.scrollView)
+        self.layoutScrollView()
 
         self.scrollView.contentSize = CGSizeMake(
             CGRectGetWidth(self.view.bounds) * CGFloat(self.imageResources()!.count),
@@ -106,6 +109,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
         for imageResource in self.imageResources()! {
             
             let imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
+            imageView.delegate = self
             self.scrollView.addSubview(imageView)
             
             if imageResource.dynamicType === NSURL.self {
@@ -159,11 +163,21 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
     
     // MARK: - Constraints
     
+    func layoutScrollView() {
+        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let views = ["scrollView": self.scrollView]
+        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        self.view.addConstraints(constraintVertical)
+        self.view.addConstraints(constraintHorizontal)
+    }
+    
     func layoutCloseButton() {
         self.closeButton!.translatesAutoresizingMaskIntoConstraints = false
         
         let views = ["closeButton": self.closeButton!]
-        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-22-[closeButton(32@32)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat("V:|-22-[closeButton(32@32)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-22-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintHorizontal)
@@ -174,16 +188,20 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
         
         let views = ["pageControl": self.pageControl]
         let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]-22-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        let constraintCenterX = NSLayoutConstraint.constraintsWithVisualFormat("H:|[pageControl]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        let constraintCenterX  = NSLayoutConstraint.constraintsWithVisualFormat("H:|[pageControl]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintCenterX)
     }
     
     // MARK: - UIScrollViewDelegate
 
-    var scrollPreviewPoint = CGPointZero;
+    var scrollPreviewPoint = CGPointZero
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        
+        self.previousPage = self.currentPage
+        
         self.scrollPreviewPoint = scrollView.contentOffset
+        
     }
 
     public func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -193,10 +211,18 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
             return
         }
         
+        let imageView = self.imageViews[self.currentPage]
+        if imageView.scrollView.zoomScale > 1.0 {
+            self.generateCurrentPage()
+            self.scrollView.scrollEnabled = false
+            return
+        }
+        
         if self.scrollMode == .Rotating {
             return
         }
         
+
         let offsetX = fabs(scrollView.contentOffset.x - self.scrollPreviewPoint.x)
         let offsetY = fabs(scrollView.contentOffset.y - self.scrollPreviewPoint.y)
         
@@ -232,17 +258,9 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
             scrollView.contentOffset = contentOffset
         }
         
-        // Save current page index.
-        let previousPage = self.pageControl.currentPage
-        
         // Update current page index.
         self.generateCurrentPage()
-        
-        // If page index has changed - reset zoom scale for previous image.
-        if previousPage != self.pageControl.currentPage {
-            let imageView = imageViews[previousPage]
-            imageView.scrollView.zoomScale = imageView.scrollView.minimumZoomScale
-        }
+
     }
     
     func generateCurrentPage() {
@@ -310,7 +328,15 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
     }
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+
+        // If page index has changed - reset zoom scale for previous image.
+        if self.previousPage != self.currentPage {
+            let imageView = self.imageViews[self.previousPage]
+            imageView.scrollView.zoomScale = imageView.scrollView.minimumZoomScale
+        }
+        
         self.scrollMode = .None
+
     }
     
     // MARK: - Button Actions
@@ -322,6 +348,16 @@ public class ViewController:UIViewController, UIScrollViewDelegate, ZoomingAnima
         }
         self.dissmissViewControllerAnimated(true)
 
+    }
+    
+    // MARK: - PhotoSliderImageViewDelegate
+
+    func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
+        if scale <= 1.0 {
+            self.scrollView.scrollEnabled = true
+        } else {
+            self.scrollView.scrollEnabled = false
+        }
     }
     
     // MARK: - Private Methods

@@ -7,11 +7,16 @@
 
 import UIKit
 
+protocol PhotoSliderImageViewDelegate {
+    func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
+}
+
 class ImageView: UIView, UIScrollViewDelegate {
 
-    var imageView:UIImageView!
-    var scrollView:UIScrollView!
+    var imageView: UIImageView!
+    var scrollView: UIScrollView!
     var progressView: PhotoSlider.ProgressView!
+    var delegate: PhotoSliderImageViewDelegate? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -91,6 +96,10 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return self.imageView
+    }
+    
+    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+        self.delegate?.photoSliderImageViewDidEndZooming(self, atScale: scale)
     }
 
 }
