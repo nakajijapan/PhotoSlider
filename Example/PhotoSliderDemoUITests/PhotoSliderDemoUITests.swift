@@ -24,7 +24,7 @@ class PhotoSliderDemoUITests: XCTestCase {
     func testPushCloseButtonExample() {
         
         let app = XCUIApplication()
-        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        app.otherElements["rootView"].tap()
 
         XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, true)
         
@@ -35,7 +35,7 @@ class PhotoSliderDemoUITests: XCTestCase {
     
     func testSwitchImage() {
         let app = XCUIApplication()
-        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        app.otherElements["rootView"].tap()
         
         let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
         element.swipeLeft()
@@ -52,7 +52,7 @@ class PhotoSliderDemoUITests: XCTestCase {
     
     func testCloseWithSwipingUpImage() {
         let app = XCUIApplication()
-        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        app.otherElements["rootView"].tap()
         
         let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
         element.swipeUp()
@@ -62,7 +62,7 @@ class PhotoSliderDemoUITests: XCTestCase {
     
     func testCloseWithSwipingDownImage() {
         let app = XCUIApplication()
-        app.descendantsMatchingType(XCUIElementType.Other)["rootView"].tap()
+        app.otherElements["rootView"].tap()
         
         let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
         element.swipeDown()
@@ -85,7 +85,5 @@ class PhotoSliderDemoUITests: XCTestCase {
         XCUIDevice.sharedDevice().orientation = .Portrait
         app.buttons["PhotoSliderClose"].tap()
     }
-    
-    
 
 }
