@@ -93,6 +93,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         self.scrollView.scrollEnabled = true
         self.scrollView.accessibilityLabel = "PhotoSliderScrollView"
         self.view.addSubview(self.scrollView)
+        self.layoutScrollView()
 
         self.scrollView.contentSize = CGSizeMake(
             CGRectGetWidth(self.view.bounds) * CGFloat(self.imageResources()!.count),
@@ -159,6 +160,16 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
     }
     
     // MARK: - Constraints
+    
+    func layoutScrollView() {
+        self.pageControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        let views = ["scrollView": self.scrollView]
+        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        self.view.addConstraints(constraintVertical)
+        self.view.addConstraints(constraintHorizontal)
+    }
     
     func layoutCloseButton() {
         self.closeButton!.translatesAutoresizingMaskIntoConstraints = false
