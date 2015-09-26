@@ -12,11 +12,7 @@ import PhotoSlider
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate, ZoomingAnimationControllerTransitioning {
     
     @IBOutlet var tableView:UITableView!
-    
-    
     var collectionView:UICollectionView!
-    var selectedIndexPath: NSIndexPath?
-    
     var imageURLs = [
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg")!,
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg")!,
@@ -27,7 +23,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image007.jpg")!,
         NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image008.jpg")!,
     ]
-    
     var images = [
         UIImage(named: "image001.jpg")!,
         UIImage(named: "image002.jpg")!,
@@ -139,8 +134,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        self.selectedIndexPath = indexPath
-        
         // Using transition
         let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
         //let photoSlider = PhotoSlider.ViewController(images: self.images)
@@ -165,6 +158,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
         UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
+        
+        let indexPath = NSIndexPath(forItem: viewController.currentPage, inSection: 0)
+        self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
     }
     
     // MARK: - UIContentContainer
