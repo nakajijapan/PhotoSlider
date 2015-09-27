@@ -177,8 +177,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         self.closeButton!.translatesAutoresizingMaskIntoConstraints = false
         
         let views = ["closeButton": self.closeButton!]
-        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat("V:|-22-[closeButton(32@32)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-22-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat("V:|[closeButton(52)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton(52)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintHorizontal)
     }
@@ -355,8 +355,24 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
     func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
         if scale <= 1.0 {
             self.scrollView.scrollEnabled = true
+            
+            UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                self.closeButton?.alpha = 1.0
+                if self.visiblePageControl {
+                    self.pageControl.alpha = 1.0
+                }
+                
+                }, completion: nil)
+
         } else {
             self.scrollView.scrollEnabled = false
+
+            UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                self.closeButton?.alpha = 0.0
+                if self.visiblePageControl {
+                    self.pageControl.alpha = 0.0
+                }
+                }, completion: nil)
         }
     }
     

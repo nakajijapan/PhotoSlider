@@ -85,5 +85,21 @@ class PhotoSliderDemoUITests: XCTestCase {
         XCUIDevice.sharedDevice().orientation = .Portrait
         app.buttons["PhotoSliderClose"].tap()
     }
+    
+    func testZooming() {
+        XCUIDevice.sharedDevice().orientation = .Portrait
+        
+        let app = XCUIApplication()
+        app.otherElements["rootView"].tap()
+        
+        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        element.doubleTap()
+        element.swipeUp()
+        element.swipeDown()
+        element.doubleTap()
+        app.buttons["PhotoSliderClose"].tap()
+
+        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+    }
 
 }
