@@ -355,8 +355,24 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
     func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
         if scale <= 1.0 {
             self.scrollView.scrollEnabled = true
+            
+            UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                self.closeButton?.alpha = 1.0
+                if self.visiblePageControl {
+                    self.pageControl.alpha = 1.0
+                }
+                
+                }, completion: nil)
+
         } else {
             self.scrollView.scrollEnabled = false
+
+            UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                self.closeButton?.alpha = 0.0
+                if self.visiblePageControl {
+                    self.pageControl.alpha = 0.0
+                }
+                }, completion: nil)
         }
     }
     
