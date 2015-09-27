@@ -138,7 +138,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             let imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
             self.closeButton!.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
             self.closeButton!.addTarget(self, action: "closeButtonDidTap:", forControlEvents: UIControlEvents.TouchUpInside)
-            self.closeButton!.imageView?.contentMode = UIViewContentMode.Center;
+            self.closeButton!.imageView?.contentMode = UIViewContentMode.Center
             self.view.addSubview(self.closeButton!)
             self.layoutCloseButton()
         }
@@ -228,9 +228,9 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         
         if self.scrollMode == .None {
             if (offsetY > offsetX) {
-                self.scrollMode = .Vertical;
+                self.scrollMode = .Vertical
             } else {
-                self.scrollMode = .Horizontal;
+                self.scrollMode = .Horizontal
             }
         }
         
@@ -278,10 +278,10 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             
             let velocity = scrollView.panGestureRecognizer.velocityInView(scrollView)
             if velocity.y < -500 {
-                self.scrollView.frame = scrollView.frame;
+                self.scrollView.frame = scrollView.frame
                 self.closePhotoSlider(true)
             } else if velocity.y > 500 {
-                self.scrollView.frame = scrollView.frame;
+                self.scrollView.frame = scrollView.frame
                 self.closePhotoSlider(false)
             }
             
@@ -419,7 +419,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             contentViewBounds.width * CGFloat(self.imageResources()!.count),
             contentViewBounds.height * 3.0
         )
-        self.scrollView.frame = contentViewBounds;
+        self.scrollView.frame = contentViewBounds
         
         // ImageViews
         var frame = CGRect(x: 0.0, y: contentViewBounds.height, width: contentViewBounds.width, height: contentViewBounds.height)

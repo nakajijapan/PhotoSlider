@@ -94,7 +94,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
         
-        return 0.0;
+        return 0.0
     }
     
     // MARK: - UICollectionViewDataSource
