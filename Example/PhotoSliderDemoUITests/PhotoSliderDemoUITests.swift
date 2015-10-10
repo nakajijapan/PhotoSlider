@@ -98,6 +98,8 @@ class PhotoSliderDemoUITests: XCTestCase {
         element.swipeDown()
         element.doubleTap()
         app.buttons["PhotoSliderClose"].tap()
+        
+        sleep(1)
 
         XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
     }
