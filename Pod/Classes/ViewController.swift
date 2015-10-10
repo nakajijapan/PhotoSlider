@@ -264,7 +264,15 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
     }
     
     func generateCurrentPage() {
-        self.currentPage = abs(Int(scrollView.contentOffset.x / scrollView.frame.size.width))
+
+        var page = Int(round(scrollView.contentOffset.x / scrollView.frame.size.width))
+        if page < 0 {
+            page = 0
+        } else if page >= self.imageResources()?.count {
+            page = self.imageResources()!.count - 1;
+        }
+        
+        self.currentPage = page
 
         if self.visiblePageControl {
             self.pageControl.currentPage = self.currentPage
