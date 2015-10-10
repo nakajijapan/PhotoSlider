@@ -147,18 +147,11 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             self.setNeedsStatusBarAppearanceUpdate()
         }
 
-        self.view.userInteractionEnabled = true
     }
     
     override public func viewWillAppear(animated: Bool) {
         self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width * CGFloat(self.currentPage), self.scrollView.bounds.height)
         self.scrollInitalized = true
-    }
-    
-    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.dismissViewControllerAnimated(true) { () -> Void in
-            self.view.removeFromSuperview()
-        }
     }
     
     // MARK: - Constraints
