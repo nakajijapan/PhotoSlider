@@ -21,6 +21,13 @@ class PhotoSliderDemoUITests: XCTestCase {
         super.tearDown()
     }
     
+    func existsPhotoSliderScrollView(app: XCUIApplication) {
+
+        sleep(1)
+        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+
+    }
+    
     func testPushCloseButtonExample() {
         
         let app = XCUIApplication()
@@ -29,8 +36,8 @@ class PhotoSliderDemoUITests: XCTestCase {
         XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, true)
         
         app.buttons["PhotoSliderClose"].tap()
-
-        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+        
+        self.existsPhotoSliderScrollView(app)
     }
     
     func testSwitchImage() {
@@ -46,8 +53,7 @@ class PhotoSliderDemoUITests: XCTestCase {
         element.swipeRight()
         app.buttons["PhotoSliderClose"].tap()
         
-        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
-        
+        self.existsPhotoSliderScrollView(app)
     }
     
     func testCloseWithSwipingUpImage() {
@@ -57,7 +63,7 @@ class PhotoSliderDemoUITests: XCTestCase {
         let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
         element.swipeUp()
         
-        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+        self.existsPhotoSliderScrollView(app)
     }
     
     func testCloseWithSwipingDownImage() {
@@ -67,7 +73,7 @@ class PhotoSliderDemoUITests: XCTestCase {
         let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
         element.swipeDown()
         
-        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+        self.existsPhotoSliderScrollView(app)
     }
     
     func testRightRotation() {
@@ -99,9 +105,7 @@ class PhotoSliderDemoUITests: XCTestCase {
         element.doubleTap()
         app.buttons["PhotoSliderClose"].tap()
         
-        sleep(1)
-
-        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+        self.existsPhotoSliderScrollView(app)
     }
 
 }
