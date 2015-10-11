@@ -115,7 +115,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             if imageResource.dynamicType === NSURL.self {
                 imageView.loadImage(imageResource as! NSURL)
             } else {
-                imageView.imageView.image = imageResource as? UIImage
+                imageView.setImage(imageResource as! UIImage)
             }
             
             frame.origin.x += width
