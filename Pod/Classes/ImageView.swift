@@ -74,7 +74,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         let boundsSize = self.bounds.size
         var frameToCenter = self.imageView.frame
         
@@ -137,6 +137,13 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.imageView.center = CGPoint(x: CGRectGetMidX(self.bounds), y: CGRectGetMidY(self.bounds))
     }
     
+    func layoutImageView() {
+        
+        guard let image = self.imageView.image else {
+            return
+        }
+        self.layoutImageView(image)
+    }
     
     func didDoubleTap(sender: UIGestureRecognizer) {
 
