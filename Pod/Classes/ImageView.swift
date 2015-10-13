@@ -120,7 +120,10 @@ class ImageView: UIView, UIScrollViewDelegate {
     }
     
     func setImage(image:UIImage) {
+
+        self.imageView.image = image
         self.layoutImageView(image)
+        
     }
     
     func layoutImageView(image:UIImage) {
