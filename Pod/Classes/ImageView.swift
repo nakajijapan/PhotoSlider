@@ -127,10 +127,23 @@ class ImageView: UIView, UIScrollViewDelegate {
         var frame = CGRectZero
         frame.origin = CGPointZero
         
+        let height = image.size.height * (self.bounds.width / image.size.width)
+        let width = image.size.width * (self.bounds.height / image.size.height)
+        
         if image.size.width > image.size.height {
-            frame.size = CGSize(width: self.bounds.width, height: image.size.height * (self.bounds.width / image.size.width))
+            
+            frame.size = CGSize(width: self.bounds.width, height: height)
+            if height >= self.bounds.height {
+                frame.size = CGSize(width: width, height: self.bounds.height)
+            }
+            
         } else {
-            frame.size = CGSize(width: image.size.width * (self.bounds.height / image.size.height), height: self.bounds.height)
+
+            frame.size = CGSize(width: width, height: self.bounds.height)
+            if width >= self.bounds.width {
+                frame.size = CGSize(width: self.bounds.width, height: height)
+            }
+
         }
         
         self.imageView.frame = frame
