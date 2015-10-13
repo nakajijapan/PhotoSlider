@@ -19,6 +19,8 @@ class PhotoSliderDemoUITests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
+        
+        XCUIApplication().terminate()
     }
     
     func existsPhotoSliderScrollView(app: XCUIApplication) {
