@@ -115,7 +115,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             if imageResource.dynamicType === NSURL.self {
                 imageView.loadImage(imageResource as! NSURL)
             } else {
-                imageView.imageView.image = imageResource as? UIImage
+                imageView.setImage(imageResource as! UIImage)
             }
             
             frame.origin.x += width
@@ -425,12 +425,15 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         // ImageViews
         var frame = CGRect(x: 0.0, y: contentViewBounds.height, width: contentViewBounds.width, height: contentViewBounds.height)
         for i in 0..<self.scrollView.subviews.count {
+
             let imageView = self.scrollView.subviews[i] as! PhotoSlider.ImageView
             
             imageView.frame = frame
             frame.origin.x += contentViewBounds.size.width
-            
             imageView.scrollView.frame = contentViewBounds
+
+            imageView.layoutImageView()
+
         }
         
         self.scrollView.contentOffset = CGPointMake(CGFloat(self.currentPage) * contentViewBounds.width, height)
