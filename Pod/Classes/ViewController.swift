@@ -123,7 +123,11 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
                 imageView.setImage(imageResource as! UIImage)
             } else {
                 let photo = imageResource as! PhotoSlider.Photo
-                imageView.loadImage(photo.imageURL!)
+                if photo.imageURL != nil {
+                    imageView.loadImage(photo.imageURL!)
+                } else {
+                    imageView.setImage(photo.image!)
+                }
             }
             
             frame.origin.x += width
