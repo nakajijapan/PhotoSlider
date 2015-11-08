@@ -54,7 +54,7 @@ class ImageView: UIView, UIScrollViewDelegate {
        
         // progress view
         self.progressView = ProgressView(frame: CGRectZero)
-        self.progressView.hidden = false
+        self.progressView.hidden = true
         self.addSubview(self.progressView)
         self.layoutProgressView()
         
