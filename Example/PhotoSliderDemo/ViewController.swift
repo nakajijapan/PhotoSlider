@@ -59,7 +59,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         if self.collectionView != nil {
             let indexPath = self.collectionView.indexPathsForVisibleItems().first!
-            self.collectionView.contentOffset = CGPoint(x: CGFloat(indexPath.row) * self.view.bounds.width, y: 0)
+            self.collectionView.contentOffset = CGPoint(x: CGFloat(indexPath.row) * self.view.bounds.width, y: 0.0)
         }
 
     }
@@ -179,7 +179,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let imageView = UIImageView(image: cell.imageView.image)
         
         var frame = cell.imageView.frame
-        frame.origin.y += 20
+        frame.origin.y += UIApplication.sharedApplication().statusBarFrame.height
         
         imageView.frame = frame
         imageView.clipsToBounds = true
@@ -192,16 +192,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
         let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
-        
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
         var frame = CGRectZero
-        if sourceImageView.image!.size.height < sourceImageView.image!.size.width {
-            let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
-            let x = width * 0.5 - CGRectGetWidth(cell.imageView.bounds) * 0.5
-            frame = CGRectMake(-1 * x, 20.0, width, CGRectGetHeight(cell.imageView.bounds))
-        } else {
-            frame = CGRectMake(0.0, 20.0, CGRectGetWidth(cell.imageView.bounds), CGRectGetHeight(cell.imageView.bounds))
-        }
+        
+        if UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.Portrait ||
+            UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown {
 
+                if sourceImageView.image!.size.height < sourceImageView.image!.size.width {
+                    let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
+                    let x = width * 0.5 - CGRectGetWidth(cell.imageView.bounds) * 0.5
+                    frame = CGRectMake(-1.0 * x, statusBarHeight, width, CGRectGetHeight(cell.imageView.bounds))
+                } else {
+                    frame = CGRectMake(0.0, statusBarHeight, CGRectGetWidth(cell.imageView.bounds), CGRectGetHeight(cell.imageView.bounds))
+                }
+
+        } else {
+
+            let height = (sourceImageView.image!.size.height * CGRectGetWidth(cell.imageView.bounds)) / sourceImageView.image!.size.width
+            let y = height * 0.5 - CGRectGetHeight(cell.imageView.bounds) * 0.5 - statusBarHeight
+            frame = CGRectMake(0.0, -1.0 * y, CGRectGetWidth(self.view.bounds), height)
+
+        }
+        
         sourceImageView.frame = frame
         
     }
@@ -213,6 +225,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let animationController = PhotoSlider.ZoomingAnimationController(present: false)
         animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
         animationController.destinationTransition = self
+        
+        // for orientation
+        if self.respondsToSelector("animationControllerForDismissedController:") {
+            self.view.frame = dismissed.view.bounds
+        }
+        
         return animationController
         
     }

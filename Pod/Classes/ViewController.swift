@@ -458,16 +458,28 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         guard let sourceImage = sourceImageView.image else {
             return
         }
+        
+        var height = CGFloat(0.0)
+        var width = CGFloat(0.0)
+        
+        if UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.Portrait ||
+            UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown {
+                
+            height = (sourceImage.size.height * sourceImageView.bounds.size.width) / sourceImage.size.width
+            width  = CGRectGetWidth(sourceImageView.bounds)
 
-        var frame = CGRectZero
-        let height = (sourceImage.size.height * sourceImageView.bounds.size.width) / sourceImage.size.width
-        frame = CGRect(x: 0.0, y: 0.0, width: CGRectGetWidth(sourceImageView.bounds), height: height)
+        } else {
+            height = CGRectGetHeight(sourceImageView.bounds)
+            width  = (sourceImageView.bounds.size.height * sourceImage.size.width) / sourceImage.size.height
+        }
 
-        sourceImageView.frame = frame
+        sourceImageView.frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
         sourceImageView.center = CGPoint(
             x: CGRectGetWidth(self.view.frame) * 0.5,
             y: CGRectGetHeight(self.view.frame) * 0.5
         )
+        
+        
     }
     
     // MARK: - Private Method
