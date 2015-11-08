@@ -445,11 +445,29 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
     
     public func transitionSourceImageView() -> UIImageView {
         let zoomingImageView = self.imageViews[self.currentPage]
+        zoomingImageView.imageView.clipsToBounds = true
+        zoomingImageView.imageView.contentMode = UIViewContentMode.ScaleAspectFill
         return zoomingImageView.imageView
     }
     
     public func transitionDestinationImageViewFrame() -> CGRect {
         return self.view.frame
+    }
+    public func transitionDestinationImageView(sourceImageView: UIImageView) {
+        
+        guard let sourceImage = sourceImageView.image else {
+            return
+        }
+
+        var frame = CGRectZero
+        let height = (sourceImage.size.height * sourceImageView.bounds.size.width) / sourceImage.size.width
+        frame = CGRect(x: 0.0, y: 0.0, width: CGRectGetWidth(sourceImageView.bounds), height: height)
+
+        sourceImageView.frame = frame
+        sourceImageView.center = CGPoint(
+            x: CGRectGetWidth(self.view.frame) * 0.5,
+            y: CGRectGetHeight(self.view.frame) * 0.5
+        )
     }
     
     // MARK: - Private Method

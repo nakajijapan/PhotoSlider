@@ -182,22 +182,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         frame.origin.y += 20
         
         imageView.frame = frame
-        imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        
         imageView.clipsToBounds = true
-        imageView.userInteractionEnabled = false
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill
         
         return imageView
     }
     
-    func transitionDestinationImageViewFrame() -> CGRect {
+    func transitionDestinationImageView(sourceImageView: UIImageView) {
+        
         let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
         let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
+        
+        var frame = CGRectZero
+        if sourceImageView.image!.size.height < sourceImageView.image!.size.width {
+            let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
+            let x = width * 0.5 - CGRectGetWidth(cell.imageView.bounds) * 0.5
+            frame = CGRectMake(-1 * x, 20.0, width, CGRectGetHeight(cell.imageView.bounds))
+        } else {
+            frame = CGRectMake(0.0, 20.0, CGRectGetWidth(cell.imageView.bounds), CGRectGetHeight(cell.imageView.bounds))
+        }
 
-        var frame = cell.imageView.frame
-        frame.origin.y += 20
-
-        return frame
+        sourceImageView.frame = frame
+        
     }
     
     // MARK: UIViewControllerTransitioningDelegate
