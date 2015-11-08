@@ -180,7 +180,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         self.pageControl.translatesAutoresizingMaskIntoConstraints = false
         
         let views = ["pageControl": self.pageControl]
-        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]-22-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         let constraintCenterX  = NSLayoutConstraint.constraintsWithVisualFormat("H:|[pageControl]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintCenterX)
