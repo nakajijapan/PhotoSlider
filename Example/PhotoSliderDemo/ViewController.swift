@@ -118,9 +118,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
         if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
-                
-            return CGSize(width:collectionView.bounds.size.width, height:collectionView.bounds.size.width)
-                
+
+            return CGSize(width:self.tableView.bounds.size.width, height:self.tableView.bounds.size.width)
+
         } else {
             
             return CGSize(width:self.tableView.bounds.size.width, height:collectionView.bounds.size.height)
