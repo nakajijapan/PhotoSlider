@@ -61,10 +61,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         super.init(coder: aDecoder)!
     }
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
     public override func viewDidLoad() {
         super.viewDidLoad()
 
