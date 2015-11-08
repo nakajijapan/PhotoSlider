@@ -18,7 +18,7 @@ enum PhotoSliderControllerScrollMode:UInt {
 }
 
 enum PhotoSliderControllerUsingImageType:UInt {
-    case None = 0, URL, Image
+    case None = 0, URL, Image, Photo
 }
 
 public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderImageViewDelegate, ZoomingAnimationControllerTransitioning {
@@ -27,6 +27,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
 
     var imageURLs:Array<NSURL>?
     var images:Array<UIImage>?
+    var photos:Array<PhotoSlider.Photo>?
     var usingImageType = PhotoSliderControllerUsingImageType.None
     var backgroundView:UIView!
     var effectView:UIVisualEffectView!
@@ -55,6 +56,12 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         super.init(nibName: nil, bundle: nil)
         self.images = images
         self.usingImageType = .Image
+    }
+
+    public init(photos:Array<PhotoSlider.Photo>) {
+        super.init(nibName: nil, bundle: nil)
+        self.photos = photos
+        self.usingImageType = .Photo
     }
     
     required public init(coder aDecoder: NSCoder) {
@@ -110,8 +117,12 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             
             if imageResource.dynamicType === NSURL.self {
                 imageView.loadImage(imageResource as! NSURL)
-            } else {
+            } else if imageResource.dynamicType === UIImage.self {
                 imageView.setImage(imageResource as! UIImage)
+            } else {
+                let photo = imageResource as! PhotoSlider.Photo
+                imageView.loadImage(photo.imageURL!)
+                imageView.captionLabel.text = photo.caption
             }
             
             frame.origin.x += width
@@ -484,6 +495,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             return self.imageURLs
         } else if self.usingImageType == .Image {
             return self.images
+        } else if self.usingImageType == .Photo {
+            return self.photos
         }
         
         return nil

@@ -33,7 +33,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         UIImage(named: "image007.jpg")!,
         UIImage(named: "image008.jpg")!,
     ]
-    
+    var photos = [
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg")!, caption: "This is very good photo1."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg")!, caption: "This is very good photo2."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image003.jpg")!, caption: "This is very good photo3."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image004.jpg")!, caption: "This is very good photo4."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image005.jpg")!, caption: "This is very good photo5."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image006.jpg")!, caption: "This is very good photo6."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image007.jpg")!, caption: "This is very good photo7."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image008.jpg")!, caption: "This is very good photo8."),
+    ]
     override func prefersStatusBarHidden() -> Bool {
         return false
     }
@@ -134,8 +143,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         // Using transition
-        let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
+        //let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
         //let photoSlider = PhotoSlider.ViewController(images: self.images)
+        let photoSlider = PhotoSlider.ViewController(photos: self.photos)
         photoSlider.delegate = self
         photoSlider.currentPage = indexPath.row
         //photoSlider.visibleCloseButton = false
