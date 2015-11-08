@@ -450,9 +450,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         return zoomingImageView.imageView
     }
     
-    public func transitionDestinationImageViewFrame() -> CGRect {
-        return self.view.frame
-    }
     public func transitionDestinationImageView(sourceImageView: UIImageView) {
         
         guard let sourceImage = sourceImageView.image else {
