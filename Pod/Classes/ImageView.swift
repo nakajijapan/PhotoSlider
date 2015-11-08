@@ -48,13 +48,15 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.imageView.userInteractionEnabled = true
 
         self.addSubview(self.scrollView)
+        self.layoutScrollView()
+
         self.scrollView.addSubview(self.imageView)
-        
+       
         // progress view
-        self.progressView = ProgressView(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0))
-        self.progressView.center = CGPoint(x: self.frame.size.width / 2.0, y: self.frame.size.height / 2.0)
-        self.progressView.hidden = true
+        self.progressView = ProgressView(frame: CGRectZero)
+        self.progressView.hidden = false
         self.addSubview(self.progressView)
+        self.layoutProgressView()
         
 
         let doubleTabGesture = UITapGestureRecognizer(target: self, action: "didDoubleTap:")
@@ -100,6 +102,47 @@ class ImageView: UIView, UIScrollViewDelegate {
             
         }
     }
+    
+    // MARK: - Constraints
+    
+    func layoutScrollView() {
+        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+        let views = ["scrollView": self.scrollView]
+        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:|[scrollView]|",
+            options: NSLayoutFormatOptions(rawValue: 0),
+            metrics: nil,
+            views: views
+        )
+        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:|[scrollView]|",
+            options: NSLayoutFormatOptions(rawValue: 0),
+            metrics: nil,
+            views: views
+        )
+        self.addConstraints(constraintVertical)
+        self.addConstraints(constraintHorizontal)
+    }
+    
+    func layoutProgressView() {
+        self.progressView.translatesAutoresizingMaskIntoConstraints = false
+        let views = ["progressView": self.progressView, "superView": self]
+        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:[superView]-(<=1)-[progressView(40)]",
+            options: NSLayoutFormatOptions.AlignAllCenterX,
+            metrics: nil,
+            views: views
+        )
+        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:[superView]-(<=1)-[progressView(40)]",
+            options: NSLayoutFormatOptions.AlignAllCenterY,
+            metrics: nil,
+            views: views
+        )
+        self.addConstraints(constraintVertical)
+        self.addConstraints(constraintHorizontal)
+    }
+
     
     func loadImage(imageURL: NSURL) {
         self.progressView.hidden = false
