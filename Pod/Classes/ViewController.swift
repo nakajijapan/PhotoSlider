@@ -461,12 +461,14 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         
         if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
                 
-            height = (sourceImage.size.height * sourceImageView.bounds.size.width) / sourceImage.size.width
-            width  = CGRectGetWidth(sourceImageView.bounds)
+            height = (CGRectGetWidth(self.view.frame) * sourceImage.size.height) / sourceImage.size.width
+            width  = CGRectGetWidth(self.view.frame)
 
         } else {
-            height = CGRectGetHeight(sourceImageView.bounds)
-            width  = (sourceImageView.bounds.size.height * sourceImage.size.width) / sourceImage.size.height
+
+            height = CGRectGetHeight(self.view.frame)
+            width  = (CGRectGetHeight(self.view.frame) * sourceImage.size.width) / sourceImage.size.height
+
         }
 
         sourceImageView.frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
