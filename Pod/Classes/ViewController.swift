@@ -459,8 +459,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         var height = CGFloat(0.0)
         var width = CGFloat(0.0)
         
-        if UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.Portrait ||
-            UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown {
+        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
                 
             height = (sourceImage.size.height * sourceImageView.bounds.size.width) / sourceImage.size.width
             width  = CGRectGetWidth(sourceImageView.bounds)

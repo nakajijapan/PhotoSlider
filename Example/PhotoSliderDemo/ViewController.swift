@@ -117,10 +117,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        if UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.Portrait ||
-            UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown {
+        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
                 
-                return CGSize(width:collectionView.bounds.size.width, height:collectionView.bounds.size.width)
+            return CGSize(width:collectionView.bounds.size.width, height:collectionView.bounds.size.width)
                 
         } else {
             
@@ -195,17 +194,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
         var frame = CGRectZero
         
-        if UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.Portrait ||
-            UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown {
+        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
 
-                if sourceImageView.image!.size.height < sourceImageView.image!.size.width {
-                    let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
-                    let x = width * 0.5 - CGRectGetWidth(cell.imageView.bounds) * 0.5
-                    frame = CGRectMake(-1.0 * x, statusBarHeight, width, CGRectGetHeight(cell.imageView.bounds))
-                } else {
-                    frame = CGRectMake(0.0, statusBarHeight, CGRectGetWidth(cell.imageView.bounds), CGRectGetHeight(cell.imageView.bounds))
-                }
-
+            if sourceImageView.image!.size.height < sourceImageView.image!.size.width {
+                let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
+                let x = width * 0.5 - CGRectGetWidth(cell.imageView.bounds) * 0.5
+                frame = CGRectMake(-1.0 * x, statusBarHeight, width, CGRectGetHeight(cell.imageView.bounds))
+            } else {
+                frame = CGRectMake(0.0, statusBarHeight, CGRectGetWidth(cell.imageView.bounds), CGRectGetHeight(cell.imageView.bounds))
+            }
+            
         } else {
 
             let height = (sourceImageView.image!.size.height * CGRectGetWidth(cell.imageView.bounds)) / sourceImageView.image!.size.width
