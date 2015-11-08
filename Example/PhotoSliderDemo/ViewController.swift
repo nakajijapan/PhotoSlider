@@ -35,8 +35,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     ]
     var photos = [
         PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg")!, caption: "This is very good photo1."),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg")!, caption: "This is very good photo2."),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image003.jpg")!, caption: "This is very good photo3."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg")!, caption: "This is very good photo2. \n Good!"),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image003.jpg")!, caption: ""),
         PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image004.jpg")!, caption: "This is very good photo4."),
         PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image005.jpg")!, caption: "This is very good photo5."),
         PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image006.jpg")!, caption: "This is very good photo6."),

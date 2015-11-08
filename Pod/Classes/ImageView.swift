@@ -17,7 +17,6 @@ class ImageView: UIView, UIScrollViewDelegate {
     var scrollView: UIScrollView!
     var progressView: PhotoSlider.ProgressView!
     var delegate: PhotoSliderImageViewDelegate? = nil
-    var captionLabel = UILabel(frame: CGRectZero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,12 +57,6 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.progressView.hidden = false
         self.addSubview(self.progressView)
         self.layoutProgressView()
-        
-        // caption
-        self.captionLabel.textColor = UIColor.whiteColor()
-        self.captionLabel.numberOfLines = 3
-        self.addSubview(self.captionLabel)
-        self.layoutCaptionLabel()
         
         let doubleTabGesture = UITapGestureRecognizer(target: self, action: "didDoubleTap:")
         doubleTabGesture.numberOfTapsRequired = 2
@@ -148,27 +141,6 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.addConstraints(constraintVertical)
         self.addConstraints(constraintHorizontal)
     }
-    
-    func layoutCaptionLabel() {
-        self.captionLabel.translatesAutoresizingMaskIntoConstraints = false
-        let views = ["captionLabel": self.captionLabel]
-        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:[captionLabel]-32-|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
-        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-16-[captionLabel]-16-|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
-        self.addConstraints(constraintVertical)
-        self.addConstraints(constraintHorizontal)
-    }
-
-
     
     func loadImage(imageURL: NSURL) {
         self.progressView.hidden = false
@@ -260,17 +232,6 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
         self.delegate?.photoSliderImageViewDidEndZooming(self, atScale: scale)
-        
-        if scale <= 1.0 {
-            UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
-                self.captionLabel.alpha = 1.0
-                }, completion: nil)
-        } else {
-            UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
-                self.captionLabel.alpha = 0.0
-                }, completion: nil)
-
-        }
     }
     
 }
