@@ -10,7 +10,7 @@ import UIKit
 
 public protocol ZoomingAnimationControllerTransitioning {
     func transitionSourceImageView() -> UIImageView
-    func transitionDestinationImageViewFrame() -> CGRect
+    func transitionDestinationImageView(sourceImageView: UIImageView)
 }
 
 
@@ -66,36 +66,18 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
             options: UIViewAnimationOptions.CurveEaseOut,
             animations: { () -> Void in
                 
-                sourceImageView.frame = self.destinationTransition!.transitionDestinationImageViewFrame()
-                sourceImageView.transform = CGAffineTransformMakeScale(1.06, 1.06)
-                
-                backgroundView.alpha = 0.9
+                self.destinationTransition!.transitionDestinationImageView(sourceImageView)
+                backgroundView.alpha = 1.0
 
             }) { (result) -> Void in
                 
-                UIView.animateWithDuration(
-                    0.06,
-                    delay: 0.0,
-                    options: UIViewAnimationOptions.CurveEaseOut,
-                    animations: { () -> Void in
-
-                        sourceImageView.transform = CGAffineTransformIdentity
-                        snapshotView.frame = fromViewController.view.frame
-                        
-                        backgroundView.alpha = 1.0
-
-                    },
-                    completion: { (result) -> Void in
-
-                        sourceImageView.alpha = 0.0
-                        sourceImageView.removeFromSuperview()
-
-                        toViewController.view.alpha = 1.0
-                        backgroundView.removeFromSuperview()
-
-                        transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
-                })
+                sourceImageView.alpha = 0.0
+                sourceImageView.removeFromSuperview()
                 
+                toViewController.view.alpha = 1.0
+                backgroundView.removeFromSuperview()
+                
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
 
         }
         
@@ -119,27 +101,16 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
             options: UIViewAnimationOptions.CurveEaseOut,
             animations: { () -> Void in
                 
-                sourceImageView.frame = self.destinationTransition!.transitionDestinationImageViewFrame()
+                self.destinationTransition!.transitionDestinationImageView(sourceImageView)
                 fromViewController.view.alpha = 0.1
                 
             }) { (result) -> Void in
                 
-                UIView.animateWithDuration(
-                    0.06,
-                    delay: 0.0,
-                    options: UIViewAnimationOptions.CurveEaseOut,
-                    animations: { () -> Void in
-                        
-                        sourceImageView.alpha = 0.0
-                        fromViewController.view.alpha = 0.0
+                sourceImageView.alpha = 0.0
+                fromViewController.view.alpha = 0.0
 
-                    },
-                    completion: { (result) -> Void in
-                        
-                        sourceImageView.removeFromSuperview()
-                        transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
-                })
-                
+                sourceImageView.removeFromSuperview()
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
                 
         }
     }
