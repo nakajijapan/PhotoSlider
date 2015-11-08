@@ -546,7 +546,17 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         if self.usingImageType == .Photo {
             if self.imageResources()?.count > 0 {
                 let photo = self.photos![self.currentPage] as Photo
-                self.captionLabel.text = photo.caption
+                UIView.animateWithDuration(0.1, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                    self.captionLabel.alpha = 0.0
+                    }, completion: { (completed) -> Void in
+
+                        self.captionLabel.text = photo.caption
+                        UIView.animateWithDuration(0.1, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                            self.captionLabel.alpha = 1.0
+                        }, completion: nil)
+
+                        
+                })
             }
         }
 
