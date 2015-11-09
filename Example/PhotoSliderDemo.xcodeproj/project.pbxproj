@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		965C495DE0B350CAA38C7A20 /* Pods_PhotoSliderDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		AB06F23938AC0BC283224E8E /* Pods_PhotoSliderDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B4B364A5955F05C03F5A24 /* Pods_PhotoSliderDemoUITests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		965C495DE0B350CAA38C7A20 /* Pods_PhotoSliderDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; };
+		AB06F23938AC0BC283224E8E /* Pods_PhotoSliderDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B4B364A5955F05C03F5A24 /* Pods_PhotoSliderDemoUITests.framework */; };
 		DC0358011B2D550600B80D21 /* Pods_PhotoSliderDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */; };
 		DC20F45D1ADA871D009A4C64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F45C1ADA871D009A4C64 /* AppDelegate.swift */; };
 		DC20F45F1ADA871D009A4C64 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F45E1ADA871D009A4C64 /* ViewController.swift */; };
@@ -25,7 +25,7 @@
 		DC917AEB1BB2ABCD00031F84 /* Pods_PhotoSliderDemoTests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 689274A363491ABEA8D3598A /* Pods_PhotoSliderDemoTests.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DC917AEC1BB2ABD000031F84 /* Pods_PhotoSliderDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B4B364A5955F05C03F5A24 /* Pods_PhotoSliderDemoUITests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DC917AED1BB2ABD000031F84 /* Pods_PhotoSliderDemoUITests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96B4B364A5955F05C03F5A24 /* Pods_PhotoSliderDemoUITests.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DC917AF11BB3BC5700031F84 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917AF01BB3BC5700031F84 /* ImageCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		DC917AF11BB3BC5700031F84 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917AF01BB3BC5700031F84 /* ImageCollectionViewCell.swift */; };
 		DCE8F5351B94A2EA00B2D224 /* image001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52D1B94A2EA00B2D224 /* image001.jpg */; };
 		DCE8F5361B94A2EA00B2D224 /* image002.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52E1B94A2EA00B2D224 /* image002.jpg */; };
 		DCE8F5371B94A2EA00B2D224 /* image003.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52F1B94A2EA00B2D224 /* image003.jpg */; };

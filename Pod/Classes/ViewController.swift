@@ -18,7 +18,7 @@ enum PhotoSliderControllerScrollMode:UInt {
 }
 
 enum PhotoSliderControllerUsingImageType:UInt {
-    case None = 0, URL, Image
+    case None = 0, URL, Image, Photo
 }
 
 public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderImageViewDelegate, ZoomingAnimationControllerTransitioning {
@@ -27,6 +27,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
 
     var imageURLs:Array<NSURL>?
     var images:Array<UIImage>?
+    var photos:Array<PhotoSlider.Photo>?
     var usingImageType = PhotoSliderControllerUsingImageType.None
     var backgroundView:UIView!
     var effectView:UIVisualEffectView!
@@ -36,6 +37,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
     var closeAnimating = false
     var imageViews = Array<PhotoSlider.ImageView>()
     var previousPage = 0
+    var captionLabel = UILabel(frame: CGRectZero)
+
 
     public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
@@ -56,13 +59,15 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         self.images = images
         self.usingImageType = .Image
     }
+
+    public init(photos:Array<PhotoSlider.Photo>) {
+        super.init(nibName: nil, bundle: nil)
+        self.photos = photos
+        self.usingImageType = .Photo
+    }
     
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-    }
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
     public override func viewDidLoad() {
@@ -114,8 +119,15 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             
             if imageResource.dynamicType === NSURL.self {
                 imageView.loadImage(imageResource as! NSURL)
-            } else {
+            } else if imageResource.dynamicType === UIImage.self {
                 imageView.setImage(imageResource as! UIImage)
+            } else {
+                let photo = imageResource as! PhotoSlider.Photo
+                if photo.imageURL != nil {
+                    imageView.loadImage(photo.imageURL!)
+                } else {
+                    imageView.setImage(photo.image!)
+                }
             }
             
             frame.origin.x += width
@@ -142,6 +154,14 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             self.view.addSubview(self.closeButton!)
             self.layoutCloseButton()
         }
+        
+        // Caption
+        self.captionLabel.textColor = UIColor.whiteColor()
+        self.captionLabel.numberOfLines = 3
+        self.view.addSubview(self.captionLabel)
+        self.layoutCaptionLabel()
+        
+        self.updateCaption()
         
         if self.respondsToSelector("setNeedsStatusBarAppearanceUpdate") {
             self.setNeedsStatusBarAppearanceUpdate()
@@ -180,10 +200,29 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         self.pageControl.translatesAutoresizingMaskIntoConstraints = false
         
         let views = ["pageControl": self.pageControl]
-        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]-22-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         let constraintCenterX  = NSLayoutConstraint.constraintsWithVisualFormat("H:|[pageControl]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintCenterX)
+    }
+    
+    func layoutCaptionLabel() {
+        self.captionLabel.translatesAutoresizingMaskIntoConstraints = false
+        let views = ["captionLabel": self.captionLabel]
+        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:[captionLabel]-32-|",
+            options: NSLayoutFormatOptions(rawValue: 0),
+            metrics: nil,
+            views: views
+        )
+        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:|-16-[captionLabel]-16-|",
+            options: NSLayoutFormatOptions(rawValue: 0),
+            metrics: nil,
+            views: views
+        )
+        self.view.addConstraints(constraintVertical)
+        self.view.addConstraints(constraintHorizontal)
     }
     
     // MARK: - UIScrollViewDelegate
@@ -319,6 +358,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
                 self.scrollView.frame = CGRectMake(0, movedHeight, screenWidth, screenHeight)
                 self.backgroundView.alpha = 0.0
                 self.closeButton?.alpha = 0.0
+                self.captionLabel.alpha = 0.0
                 self.view.alpha = 0.0
             },
             completion: {(result) -> Void in
@@ -330,10 +370,15 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
 
-        // If page index has changed - reset zoom scale for previous image.
         if self.previousPage != self.currentPage {
+
+            // If page index has changed - reset zoom scale for previous image.
             let imageView = self.imageViews[self.previousPage]
             imageView.scrollView.zoomScale = imageView.scrollView.minimumZoomScale
+            
+            // Show Caption Label
+            self.updateCaption()
+
         }
         
         self.scrollMode = .None
@@ -359,10 +404,10 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             
             UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
                 self.closeButton?.alpha = 1.0
+                self.captionLabel.alpha = 1.0
                 if self.visiblePageControl {
                     self.pageControl.alpha = 1.0
                 }
-                
                 }, completion: nil)
 
         } else {
@@ -370,6 +415,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
 
             UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
                 self.closeButton?.alpha = 0.0
+                self.captionLabel.alpha = 0.0
                 if self.visiblePageControl {
                     self.pageControl.alpha = 0.0
                 }
@@ -488,9 +534,32 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             return self.imageURLs
         } else if self.usingImageType == .Image {
             return self.images
+        } else if self.usingImageType == .Photo {
+            return self.photos
         }
         
         return nil
+    }
+    
+    func updateCaption() {
+
+        if self.usingImageType == .Photo {
+            if self.imageResources()?.count > 0 {
+                let photo = self.photos![self.currentPage] as Photo
+                UIView.animateWithDuration(0.1, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                    self.captionLabel.alpha = 0.0
+                    }, completion: { (completed) -> Void in
+
+                        self.captionLabel.text = photo.caption
+                        UIView.animateWithDuration(0.1, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                            self.captionLabel.alpha = 1.0
+                        }, completion: nil)
+
+                        
+                })
+            }
+        }
+
     }
 
 }
