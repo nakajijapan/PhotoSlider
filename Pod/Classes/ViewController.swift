@@ -47,6 +47,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
 
     public var pageControl = UIPageControl()
     public var backgroundViewColor = UIColor.blackColor()
+    public var captionTextColor = UIColor.whiteColor()
     
     public init(imageURLs:Array<NSURL>) {
         super.init(nibName: nil, bundle: nil)
@@ -156,7 +157,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         }
         
         // Caption
-        self.captionLabel.textColor = UIColor.whiteColor()
+        self.captionLabel.textColor = self.captionTextColor
         self.captionLabel.numberOfLines = 3
         self.view.addSubview(self.captionLabel)
         self.layoutCaptionLabel()
