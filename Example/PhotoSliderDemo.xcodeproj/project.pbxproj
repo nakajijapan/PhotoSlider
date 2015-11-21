@@ -18,6 +18,17 @@
 		DC20F4731ADA871D009A4C64 /* PhotoSliderDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F4721ADA871D009A4C64 /* PhotoSliderDemoTests.swift */; };
 		DC740B191AEC6B2F00079D30 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC740B161AEC6B2F00079D30 /* LICENSE */; };
 		DC740B1A1AEC6B2F00079D30 /* PhotoSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */; };
+		DC76FA6F1C0053E400646B67 /* PhotoSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = DC76FA6E1C0053E400646B67 /* PhotoSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC76FA731C0053E400646B67 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC76FA6C1C0053E400646B67 /* PhotoSlider.framework */; };
+		DC76FA741C0053E400646B67 /* PhotoSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DC76FA6C1C0053E400646B67 /* PhotoSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DC76FA791C00543200646B67 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76FA581C00536D00646B67 /* ImageView.swift */; };
+		DC76FA7A1C00543200646B67 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76FA591C00536D00646B67 /* Photo.swift */; };
+		DC76FA7B1C00543200646B67 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76FA5A1C00536D00646B67 /* ProgressView.swift */; };
+		DC76FA7C1C00543200646B67 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76FA5B1C00536D00646B67 /* ViewController.swift */; };
+		DC76FA7D1C00543200646B67 /* ZoomingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76FA5C1C00536D00646B67 /* ZoomingAnimationController.swift */; };
+		DC76FA7E1C00545B00646B67 /* PhotoSliderClose.png in Resources */ = {isa = PBXBuildFile; fileRef = DC76FA531C00536D00646B67 /* PhotoSliderClose.png */; };
+		DC76FA7F1C00545B00646B67 /* PhotoSliderClose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC76FA541C00536D00646B67 /* PhotoSliderClose@2x.png */; };
+		DC76FA801C00545B00646B67 /* PhotoSliderClose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC76FA551C00536D00646B67 /* PhotoSliderClose@3x.png */; };
 		DC917AC71BB29B7300031F84 /* PhotoSliderDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917AC61BB29B7300031F84 /* PhotoSliderDemoUITests.swift */; };
 		DC917AE71BB2ABAC00031F84 /* Pods_PhotoSliderDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */; };
 		DC917AE81BB2ABAC00031F84 /* Pods_PhotoSliderDemo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 191D9A2EE675029B0F5FAEC1 /* Pods_PhotoSliderDemo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -36,6 +47,18 @@
 		DCE8F53C1B94A2EA00B2D224 /* image008.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F5341B94A2EA00B2D224 /* image008.jpg */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		DC76FA781C0053EC00646B67 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.xcode.tools.swift.compiler;
+			fileType = sourcecode.swift;
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# $(SWIFT_EXEC)\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXContainerItemProxy section */
 		DC20F46D1ADA871D009A4C64 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -43,6 +66,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = DC20F4561ADA871D009A4C64;
 			remoteInfo = PhotoSliderDemo;
+		};
+		DC76FA711C0053E400646B67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC20F44F1ADA871D009A4C64 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC76FA6B1C0053E400646B67;
+			remoteInfo = PhotoSlider;
 		};
 		DC917AC91BB29B7300031F84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -62,6 +92,7 @@
 			files = (
 				DC917AE81BB2ABAC00031F84 /* Pods_PhotoSliderDemo.framework in Embed Frameworks */,
 				DC917AED1BB2ABD000031F84 /* Pods_PhotoSliderDemoUITests.framework in Embed Frameworks */,
+				DC76FA741C0053E400646B67 /* PhotoSlider.framework in Embed Frameworks */,
 				DC917AEB1BB2ABCD00031F84 /* Pods_PhotoSliderDemoTests.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -93,6 +124,17 @@
 		DC740B161AEC6B2F00079D30 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		DC740B171AEC6B2F00079D30 /* PhotoSlider.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PhotoSlider.podspec; path = ../PhotoSlider.podspec; sourceTree = "<group>"; };
 		DC740B181AEC6B2F00079D30 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		DC76FA531C00536D00646B67 /* PhotoSliderClose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoSliderClose.png; sourceTree = "<group>"; };
+		DC76FA541C00536D00646B67 /* PhotoSliderClose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhotoSliderClose@2x.png"; sourceTree = "<group>"; };
+		DC76FA551C00536D00646B67 /* PhotoSliderClose@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhotoSliderClose@3x.png"; sourceTree = "<group>"; };
+		DC76FA581C00536D00646B67 /* ImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		DC76FA591C00536D00646B67 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		DC76FA5A1C00536D00646B67 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		DC76FA5B1C00536D00646B67 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DC76FA5C1C00536D00646B67 /* ZoomingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomingAnimationController.swift; sourceTree = "<group>"; };
+		DC76FA6C1C0053E400646B67 /* PhotoSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PhotoSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC76FA6E1C0053E400646B67 /* PhotoSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoSlider.h; sourceTree = "<group>"; };
+		DC76FA701C0053E400646B67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC917AC41BB29B7300031F84 /* PhotoSliderDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoSliderDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC917AC61BB29B7300031F84 /* PhotoSliderDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSliderDemoUITests.swift; sourceTree = "<group>"; };
 		DC917AC81BB29B7300031F84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -119,6 +161,7 @@
 			files = (
 				DC917AE71BB2ABAC00031F84 /* Pods_PhotoSliderDemo.framework in Frameworks */,
 				DC917AEC1BB2ABD000031F84 /* Pods_PhotoSliderDemoUITests.framework in Frameworks */,
+				DC76FA731C0053E400646B67 /* PhotoSlider.framework in Frameworks */,
 				DC917AEA1BB2ABCD00031F84 /* Pods_PhotoSliderDemoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,6 +172,13 @@
 			files = (
 				965C495DE0B350CAA38C7A20 /* Pods_PhotoSliderDemoTests.framework in Frameworks */,
 				DC0358011B2D550600B80D21 /* Pods_PhotoSliderDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC76FA681C0053E400646B67 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +229,7 @@
 				DC20F4591ADA871D009A4C64 /* PhotoSliderDemo */,
 				DC20F46F1ADA871D009A4C64 /* PhotoSliderDemoTests */,
 				DC917AC51BB29B7300031F84 /* PhotoSliderDemoUITests */,
+				DC76FA6D1C0053E400646B67 /* PhotoSlider */,
 				DC20F4581ADA871D009A4C64 /* Products */,
 				9BF74163E5DA4094004C64A0 /* Pods */,
 				66A3BAA23076667DA79DC70A /* Frameworks */,
@@ -191,6 +242,7 @@
 				DC20F4571ADA871D009A4C64 /* PhotoSliderDemo.app */,
 				DC20F46C1ADA871D009A4C64 /* PhotoSliderDemoTests.xctest */,
 				DC917AC41BB29B7300031F84 /* PhotoSliderDemoUITests.xctest */,
+				DC76FA6C1C0053E400646B67 /* PhotoSlider.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -245,6 +297,41 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		DC76FA511C00536D00646B67 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				DC76FA531C00536D00646B67 /* PhotoSliderClose.png */,
+				DC76FA541C00536D00646B67 /* PhotoSliderClose@2x.png */,
+				DC76FA551C00536D00646B67 /* PhotoSliderClose@3x.png */,
+			);
+			name = Assets;
+			path = ../../Pod/Assets;
+			sourceTree = "<group>";
+		};
+		DC76FA561C00536D00646B67 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				DC76FA581C00536D00646B67 /* ImageView.swift */,
+				DC76FA591C00536D00646B67 /* Photo.swift */,
+				DC76FA5A1C00536D00646B67 /* ProgressView.swift */,
+				DC76FA5B1C00536D00646B67 /* ViewController.swift */,
+				DC76FA5C1C00536D00646B67 /* ZoomingAnimationController.swift */,
+			);
+			name = Classes;
+			path = ../../Pod/Classes;
+			sourceTree = "<group>";
+		};
+		DC76FA6D1C0053E400646B67 /* PhotoSlider */ = {
+			isa = PBXGroup;
+			children = (
+				DC76FA6E1C0053E400646B67 /* PhotoSlider.h */,
+				DC76FA701C0053E400646B67 /* Info.plist */,
+				DC76FA511C00536D00646B67 /* Assets */,
+				DC76FA561C00536D00646B67 /* Classes */,
+			);
+			path = PhotoSlider;
+			sourceTree = "<group>";
+		};
 		DC917AC51BB29B7300031F84 /* PhotoSliderDemoUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +358,17 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		DC76FA691C0053E400646B67 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC76FA6F1C0053E400646B67 /* PhotoSlider.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		DC20F4561ADA871D009A4C64 /* PhotoSliderDemo */ = {
 			isa = PBXNativeTarget;
@@ -287,6 +385,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				DC76FA721C0053E400646B67 /* PBXTargetDependency */,
 			);
 			name = PhotoSliderDemo;
 			productName = PhotoSliderDemo;
@@ -313,6 +412,25 @@
 			productName = PhotoSliderDemoTests;
 			productReference = DC20F46C1ADA871D009A4C64 /* PhotoSliderDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DC76FA6B1C0053E400646B67 /* PhotoSlider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC76FA771C0053E400646B67 /* Build configuration list for PBXNativeTarget "PhotoSlider" */;
+			buildPhases = (
+				DC76FA671C0053E400646B67 /* Sources */,
+				DC76FA681C0053E400646B67 /* Frameworks */,
+				DC76FA691C0053E400646B67 /* Headers */,
+				DC76FA6A1C0053E400646B67 /* Resources */,
+			);
+			buildRules = (
+				DC76FA781C0053EC00646B67 /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = PhotoSlider;
+			productName = PhotoSlider;
+			productReference = DC76FA6C1C0053E400646B67 /* PhotoSlider.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		DC917AC31BB29B7300031F84 /* PhotoSliderDemoUITests */ = {
 			isa = PBXNativeTarget;
@@ -351,6 +469,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = DC20F4561ADA871D009A4C64;
 					};
+					DC76FA6B1C0053E400646B67 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
 					DC917AC31BB29B7300031F84 = {
 						CreatedOnToolsVersion = 7.0;
 						TestTargetID = DC20F4561ADA871D009A4C64;
@@ -373,6 +494,7 @@
 				DC20F4561ADA871D009A4C64 /* PhotoSliderDemo */,
 				DC20F46B1ADA871D009A4C64 /* PhotoSliderDemoTests */,
 				DC917AC31BB29B7300031F84 /* PhotoSliderDemoUITests */,
+				DC76FA6B1C0053E400646B67 /* PhotoSlider */,
 			);
 		};
 /* End PBXProject section */
@@ -402,6 +524,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC76FA6A1C0053E400646B67 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC76FA7E1C00545B00646B67 /* PhotoSliderClose.png in Resources */,
+				DC76FA7F1C00545B00646B67 /* PhotoSliderClose@2x.png in Resources */,
+				DC76FA801C00545B00646B67 /* PhotoSliderClose@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,6 +688,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC76FA671C0053E400646B67 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC76FA791C00543200646B67 /* ImageView.swift in Sources */,
+				DC76FA7A1C00543200646B67 /* Photo.swift in Sources */,
+				DC76FA7B1C00543200646B67 /* ProgressView.swift in Sources */,
+				DC76FA7C1C00543200646B67 /* ViewController.swift in Sources */,
+				DC76FA7D1C00543200646B67 /* ZoomingAnimationController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC917AC01BB29B7300031F84 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -571,6 +715,11 @@
 			isa = PBXTargetDependency;
 			target = DC20F4561ADA871D009A4C64 /* PhotoSliderDemo */;
 			targetProxy = DC20F46D1ADA871D009A4C64 /* PBXContainerItemProxy */;
+		};
+		DC76FA721C0053E400646B67 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC76FA6B1C0053E400646B67 /* PhotoSlider */;
+			targetProxy = DC76FA711C0053E400646B67 /* PBXContainerItemProxy */;
 		};
 		DC917ACA1BB29B7300031F84 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -683,6 +832,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -702,6 +852,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -749,6 +900,52 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.nakajijapan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoSliderDemo.app/PhotoSliderDemo";
+			};
+			name = Release;
+		};
+		DC76FA751C0053E400646B67 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PhotoSlider/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSlider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DC76FA761C0053E400646B67 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PhotoSlider/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSlider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -813,6 +1010,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		DC76FA771C0053E400646B67 /* Build configuration list for PBXNativeTarget "PhotoSlider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC76FA751C0053E400646B67 /* Debug */,
+				DC76FA761C0053E400646B67 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		DC917ACD1BB29B7300031F84 /* Build configuration list for PBXNativeTarget "PhotoSliderDemoUITests" */ = {
 			isa = XCConfigurationList;
