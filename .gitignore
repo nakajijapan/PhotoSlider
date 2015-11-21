@@ -32,3 +32,6 @@ DerivedData
 #
 Pods/
 Example/Podfile.lock
+
+# Carthage
+Carthage/

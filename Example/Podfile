@@ -17,3 +17,7 @@ end
 target 'PhotoSliderDemoUITests', :exclusive => true do
   shared_pods
 end
+
+target 'PhotoSlider' do
+  shared_pods
+end
