@@ -199,6 +199,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func transitionDestinationImageView(sourceImageView: UIImageView) {
         
+        guard let image = sourceImageView.image else {
+            return
+        }
+        
         let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
         let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
@@ -206,7 +210,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
 
-            if sourceImageView.image!.size.height < sourceImageView.image!.size.width {
+            if image.size.height < image.size.width {
                 let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
                 let x = width * 0.5 - CGRectGetWidth(cell.imageView.bounds) * 0.5
                 frame = CGRectMake(-1.0 * x, statusBarHeight, width, CGRectGetHeight(cell.imageView.bounds))
@@ -216,7 +220,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
         } else {
 
-            let height = (sourceImageView.image!.size.height * CGRectGetWidth(cell.imageView.bounds)) / sourceImageView.image!.size.width
+            let height = (image.size.height * CGRectGetWidth(cell.imageView.bounds)) / image.size.width
             let y = height * 0.5 - CGRectGetHeight(cell.imageView.bounds) * 0.5 - statusBarHeight
             frame = CGRectMake(0.0, -1.0 * y, CGRectGetWidth(self.view.bounds), height)
 
