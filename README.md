@@ -73,16 +73,9 @@ func transitionDestinationImageView(sourceImageView: UIImageView) {
     let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
     let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
     let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
-    var frame = CGRectZero
 
-    if image.size.height < image.size.width {
-        let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
-        let x = width * 0.5 - CGRectGetWidth(cell.imageView.bounds) * 0.5
-        frame = CGRectMake(-1.0 * x, statusBarHeight, width, CGRectGetHeight(cell.imageView.bounds))
-    } else {
-        frame = CGRectMake(0.0, statusBarHeight, CGRectGetWidth(cell.imageView.bounds), CGRectGetHeight(cell.imageView.bounds))
-    }
-        
+    // snip..
+
     sourceImageView.frame = frame
     
 }
