@@ -1,0 +1,18 @@
+PODS:
+  - Kingfisher (1.8.5)
+  - PhotoSlider (0.12.1):
+    - Kingfisher
+
+DEPENDENCIES:
+  - Kingfisher
+  - PhotoSlider (from `../`)
+
+EXTERNAL SOURCES:
+  PhotoSlider:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Kingfisher: 780fed0fa82692a3bd59d53329ae2b85cdd354a5
+  PhotoSlider: 70ccfe6735785894ea0ca7762f4b165f58563518
+
+COCOAPODS: 0.39.0
