@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 @objc public protocol PhotoSliderDelegate:NSObjectProtocol {
     optional func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController)
