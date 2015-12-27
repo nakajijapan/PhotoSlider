@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol PhotoSliderImageViewDelegate {
     func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
@@ -143,21 +144,25 @@ class ImageView: UIView, UIScrollViewDelegate {
     }
     
     func loadImage(imageURL: NSURL) {
+        
         self.progressView.hidden = false
-        self.imageView.sd_setImageWithURL(
+        self.imageView.kf_setImageWithURL(
             imageURL,
             placeholderImage: nil,
-            options: .CacheMemoryOnly,
-            progress: { (receivedSize, expectedSize) -> Void in
-                let progress = Float(receivedSize) / Float(expectedSize)
+            optionsInfo: [.Options(.CacheMemoryOnly)],
+            progressBlock: { (receivedSize, totalSize) -> () in
+                
+                let progress = Float(receivedSize) / Float(totalSize)
                 self.progressView.animateCurveToProgress(progress)
-            }) { (image, error, cacheType, imageURL) -> Void in
+
+            }) { (image, error, cacheType, imageURL) -> () in
                 self.progressView.hidden = true
                 
                 if error == nil {
-                    self.layoutImageView(image)
+                    self.layoutImageView(image!)
                 }
         }
+        
     }
     
     func setImage(image:UIImage) {

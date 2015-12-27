@@ -119,7 +119,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) as! ImageCollectionViewCell
         let imageView = cell.imageView
-        imageView!.sd_setImageWithURL(self.imageURLs[indexPath.row])
+        imageView!.kf_setImageWithURL(self.imageURLs[indexPath.row])
         
         return cell
     }
