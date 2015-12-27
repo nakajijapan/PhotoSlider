@@ -38,6 +38,7 @@
 		DC917AED1BB2ABD000031F84 /* Pods_PhotoSliderDemoUITests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96B4B364A5955F05C03F5A24 /* Pods_PhotoSliderDemoUITests.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DC917AF11BB3BC5700031F84 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917AF01BB3BC5700031F84 /* ImageCollectionViewCell.swift */; };
 		DC9E68791C301D6C0095C3AB /* PhotoSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = DC76FA6E1C0053E400646B67 /* PhotoSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC9E687B1C301E9C0095C3AB /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC9E687A1C301E9C0095C3AB /* Kingfisher.framework */; };
 		DCE8F5351B94A2EA00B2D224 /* image001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52D1B94A2EA00B2D224 /* image001.jpg */; };
 		DCE8F5361B94A2EA00B2D224 /* image002.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52E1B94A2EA00B2D224 /* image002.jpg */; };
 		DCE8F5371B94A2EA00B2D224 /* image003.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52F1B94A2EA00B2D224 /* image003.jpg */; };
@@ -147,6 +148,7 @@
 		DC917AD41BB2AA6500031F84 /* Pods_PhotoSliderDemoTests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_PhotoSliderDemoTests.framework; path = "Pods/../build/Debug-iphoneos/Pods_PhotoSliderDemoTests.framework"; sourceTree = "<group>"; };
 		DC917AD61BB2AA6800031F84 /* Pods_PhotoSliderDemoUITests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_PhotoSliderDemoUITests.framework; path = "Pods/../build/Debug-iphoneos/Pods_PhotoSliderDemoUITests.framework"; sourceTree = "<group>"; };
 		DC917AF01BB3BC5700031F84 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		DC9E687A1C301E9C0095C3AB /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = "Pods/../build/Debug-iphoneos/Kingfisher.framework"; sourceTree = "<group>"; };
 		DCE8F52D1B94A2EA00B2D224 /* image001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image001.jpg; sourceTree = "<group>"; };
 		DCE8F52E1B94A2EA00B2D224 /* image002.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image002.jpg; sourceTree = "<group>"; };
 		DCE8F52F1B94A2EA00B2D224 /* image003.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image003.jpg; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC9E687B1C301E9C0095C3AB /* Kingfisher.framework in Frameworks */,
 				D9DCCF302DB3F19DA4074317 /* Pods_PhotoSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,6 +204,7 @@
 		66A3BAA23076667DA79DC70A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DC9E687A1C301E9C0095C3AB /* Kingfisher.framework */,
 				DC917AD61BB2AA6800031F84 /* Pods_PhotoSliderDemoUITests.framework */,
 				DC917AD41BB2AA6500031F84 /* Pods_PhotoSliderDemoTests.framework */,
 				DC917AD21BB2AA6000031F84 /* Pods_PhotoSliderDemo.framework */,
@@ -951,6 +955,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotoSlider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -975,6 +983,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotoSlider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
