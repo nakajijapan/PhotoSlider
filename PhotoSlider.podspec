@@ -24,6 +24,6 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'PhotoSlider' => ['Pod/Assets/*.png']
   }
-  #s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'SDWebImage'
+
+  s.dependency 'Kingfisher'
 end

@@ -3,7 +3,7 @@ use_frameworks!
 
 def shared_pods
   pod "PhotoSlider", :path => "../"
-  pod 'SDWebImage'
+  pod 'Kingfisher'
 end
 
 target 'PhotoSliderDemo', :exclusive => true do
