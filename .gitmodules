@@ -1,0 +1,7 @@
+[submodule "Carthage/Checkouts/NKJMovieComposer"]
+    path = Carthage/Checkouts/NKJMovieComposer
+    url = https://github.com/nakajijapan/NKJMovieComposer.git
+    ignore = dirty
+[submodule "Carthage/Checkouts/Kingfisher"]
+	path = Carthage/Checkouts/Kingfisher
+	url = https://github.com/onevcat/Kingfisher.git
