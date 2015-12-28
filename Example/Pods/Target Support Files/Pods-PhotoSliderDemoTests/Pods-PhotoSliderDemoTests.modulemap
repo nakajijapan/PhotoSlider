@@ -1,6 +1,0 @@
-framework module Pods_PhotoSliderDemoTests {
-  umbrella header "Pods-PhotoSliderDemoTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
