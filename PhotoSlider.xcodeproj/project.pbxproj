@@ -450,6 +450,7 @@
 				DC0E42011C3181EE0090AC94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
