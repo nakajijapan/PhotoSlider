@@ -9,15 +9,17 @@
 /* Begin PBXBuildFile section */
 		DC0E41DA1C3180290090AC94 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41D71C3180290090AC94 /* LICENSE */; };
 		DC0E41DB1C3180290090AC94 /* PhotoSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41D81C3180290090AC94 /* PhotoSlider.podspec */; };
-		DC0E420D1C31830E0090AC94 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E420C1C31830E0090AC94 /* PhotoSlider.framework */; };
-		DC0E420E1C31830E0090AC94 /* PhotoSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E420C1C31830E0090AC94 /* PhotoSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DC0E42231C3185720090AC94 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E42221C3185720090AC94 /* Kingfisher.framework */; };
-		DC0E42241C3185720090AC94 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E42221C3185720090AC94 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DC20F45D1ADA871D009A4C64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F45C1ADA871D009A4C64 /* AppDelegate.swift */; };
 		DC20F45F1ADA871D009A4C64 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F45E1ADA871D009A4C64 /* ViewController.swift */; };
 		DC20F4621ADA871D009A4C64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4601ADA871D009A4C64 /* Main.storyboard */; };
 		DC20F4641ADA871D009A4C64 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4631ADA871D009A4C64 /* Images.xcassets */; };
 		DC20F4671ADA871D009A4C64 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4651ADA871D009A4C64 /* LaunchScreen.xib */; };
+		DC69C9641C32414F006D5347 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E42221C3185720090AC94 /* Kingfisher.framework */; };
+		DC69C9651C324153006D5347 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E420C1C31830E0090AC94 /* PhotoSlider.framework */; };
+		DC69C96C1C324469006D5347 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E420C1C31830E0090AC94 /* PhotoSlider.framework */; };
+		DC69C96D1C324469006D5347 /* PhotoSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E420C1C31830E0090AC94 /* PhotoSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DC69C96F1C324478006D5347 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E42221C3185720090AC94 /* Kingfisher.framework */; };
+		DC69C9701C324478006D5347 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E42221C3185720090AC94 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DC917AC71BB29B7300031F84 /* PhotoSliderDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917AC61BB29B7300031F84 /* PhotoSliderDemoUITests.swift */; };
 		DC917AF11BB3BC5700031F84 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917AF01BB3BC5700031F84 /* ImageCollectionViewCell.swift */; };
 		DCE8F5351B94A2EA00B2D224 /* image001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52D1B94A2EA00B2D224 /* image001.jpg */; };
@@ -41,14 +43,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		DC917AE91BB2ABAD00031F84 /* Embed Frameworks */ = {
+		DC69C96E1C324469006D5347 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DC0E42241C3185720090AC94 /* Kingfisher.framework in Embed Frameworks */,
-				DC0E420E1C31830E0090AC94 /* PhotoSlider.framework in Embed Frameworks */,
+				DC69C9701C324478006D5347 /* Kingfisher.framework in Embed Frameworks */,
+				DC69C96D1C324469006D5347 /* PhotoSlider.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,8 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC0E42231C3185720090AC94 /* Kingfisher.framework in Frameworks */,
-				DC0E420D1C31830E0090AC94 /* PhotoSlider.framework in Frameworks */,
+				DC69C96F1C324478006D5347 /* Kingfisher.framework in Frameworks */,
+				DC69C96C1C324469006D5347 /* PhotoSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +98,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC69C9651C324153006D5347 /* PhotoSlider.framework in Frameworks */,
+				DC69C9641C32414F006D5347 /* Kingfisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +202,7 @@
 				DC20F4531ADA871D009A4C64 /* Sources */,
 				DC20F4541ADA871D009A4C64 /* Frameworks */,
 				DC20F4551ADA871D009A4C64 /* Resources */,
-				DC917AE91BB2ABAD00031F84 /* Embed Frameworks */,
+				DC69C96E1C324469006D5347 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
