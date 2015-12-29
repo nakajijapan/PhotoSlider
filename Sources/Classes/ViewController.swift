@@ -437,13 +437,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
     }
     
     func resourceBundle() -> NSBundle {
-        let bundlePath = NSBundle.mainBundle().pathForResource(
-            "PhotoSlider",
-            ofType: "bundle",
-            inDirectory: "Frameworks/PhotoSlider.framework"
-        )
-        let bundle = NSBundle(path: bundlePath!)
-        return bundle!
+        return NSBundle(forClass: self.dynamicType)
     }
     
     // MARK: - UITraitEnvironment
