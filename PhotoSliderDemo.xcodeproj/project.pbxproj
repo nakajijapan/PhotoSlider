@@ -105,6 +105,7 @@
 		66A3BAA23076667DA79DC70A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DC0E42221C3185720090AC94 /* Kingfisher.framework */,
 				DC0E420C1C31830E0090AC94 /* PhotoSlider.framework */,
 			);
 			name = Frameworks;
@@ -113,7 +114,6 @@
 		DC20F44E1ADA871D009A4C64 = {
 			isa = PBXGroup;
 			children = (
-				DC0E42221C3185720090AC94 /* Kingfisher.framework */,
 				DCE8F52C1B94A2EA00B2D224 /* Resources */,
 				DC740B151AEC6A0900079D30 /* Podspec Metadata */,
 				DC20F4591ADA871D009A4C64 /* PhotoSliderDemo */,
