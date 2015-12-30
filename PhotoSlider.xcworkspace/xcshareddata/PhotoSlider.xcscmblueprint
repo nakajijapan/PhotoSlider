@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D0A6AB916F573DD274F8C517EF3CE89CC031E8C7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "17FB51EC7B87DC25DD21E28FDFD877B479CFFAC1" : 0,
+    "D0A6AB916F573DD274F8C517EF3CE89CC031E8C7" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C25ED943-543C-4837-A66E-F015E605B8D8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "17FB51EC7B87DC25DD21E28FDFD877B479CFFAC1" : "PhotoSlider\/Carthage\/Checkouts\/Kingfisher\/",
+    "D0A6AB916F573DD274F8C517EF3CE89CC031E8C7" : "PhotoSlider\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "PhotoSlider",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "PhotoSlider.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/onevcat\/Kingfisher.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "17FB51EC7B87DC25DD21E28FDFD877B479CFFAC1"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:nakajijapan\/PhotoSlider.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D0A6AB916F573DD274F8C517EF3CE89CC031E8C7"
+    }
+  ]
+}

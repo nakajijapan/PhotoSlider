@@ -22,15 +22,15 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DC20F46B1ADA871D009A4C64"
-               BuildableName = "PhotoSliderDemoTests.xctest"
-               BlueprintName = "PhotoSliderDemoTests"
+               BlueprintIdentifier = "DC917AC31BB29B7300031F84"
+               BuildableName = "PhotoSliderDemoUITests.xctest"
+               BlueprintName = "PhotoSliderDemoUITests"
                ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,16 +42,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DC20F46B1ADA871D009A4C64"
-               BuildableName = "PhotoSliderDemoTests.xctest"
-               BlueprintName = "PhotoSliderDemoTests"
-               ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference

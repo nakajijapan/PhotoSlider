@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0710"
+   LastUpgradeVersion = "0720"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DC76FA6B1C0053E400646B67"
+               BlueprintIdentifier = "DC0E41F91C3181EE0090AC94"
                BuildableName = "PhotoSlider.framework"
                BlueprintName = "PhotoSlider"
-               ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+               ReferencedContainer = "container:PhotoSlider.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC76FA6B1C0053E400646B67"
+            BlueprintIdentifier = "DC0E41F91C3181EE0090AC94"
             BuildableName = "PhotoSlider.framework"
             BlueprintName = "PhotoSlider"
-            ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+            ReferencedContainer = "container:PhotoSlider.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC76FA6B1C0053E400646B67"
+            BlueprintIdentifier = "DC0E41F91C3181EE0090AC94"
             BuildableName = "PhotoSlider.framework"
             BlueprintName = "PhotoSlider"
-            ReferencedContainer = "container:PhotoSliderDemo.xcodeproj">
+            ReferencedContainer = "container:PhotoSlider.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

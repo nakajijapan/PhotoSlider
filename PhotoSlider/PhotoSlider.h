@@ -2,8 +2,8 @@
 //  PhotoSlider.h
 //  PhotoSlider
 //
-//  Created by nakajijapan on 2015/11/21.
-//  Copyright © 2015年 net.nakajijapan. All rights reserved.
+//  Created by nakajijapan on 2015/12/28.
+//  Copyright © 2015年 nakajijapan. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
