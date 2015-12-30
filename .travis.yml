@@ -3,10 +3,13 @@ language: objective-c
 osx_image: xcode7
 
 before_install:
-- gem install cocoapods
+  - git submodule update --init --recursive
+  - gem install cocoapods
 
 install:
-- gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- pod lib lint --quick
+  - rake build:ios DESTINATION='OS=8.4,name=iPhone 6'
+  - rake build:ios DESTINATION='OS=9.2,name=iPhone 6s Plus'
+  - pod lib lint --quick

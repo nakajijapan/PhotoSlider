@@ -25,8 +25,8 @@ namespace "build" do
   desc "Build for all iOS targets"
   task :ios do |task, args|
 
-    if ENV['destination']
-      destination = ENV['destination']
+    if ENV['DESTINATION']
+      destination = ENV['DESTINATION']
     else
       destination = 'platform=iOS Simulator,name=iPhone 6s'
     end
