@@ -1,5 +1,3 @@
-#require 'pp'
-
 def run(command)
   system(command) or raise "RAKE TASK FAILED: #{command}"
 end
