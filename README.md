@@ -10,14 +10,42 @@ PhotoSlider can a simple photo slider and delete slider with swiping.
 
 <img src="https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/demo.gif" width="300" />
 
+## Requirements
+
+- Xcode 7+
+- Swift 2.0+
+- iOS 8+
 
 ## Installation
+
+### CocoaPods
 
 PhotoSlider is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
 pod "PhotoSlider"
+```
+
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager for Cocoa application.
+
+``` bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate Kingfisher into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+``` ogdl
+github "nakajijapan/PhotoSlider"
+```
+
+Then, run the following command to build the Kingfisher framework:
+
+``` bash
+$ carthage update
 ```
 
 ## Usage
@@ -29,9 +57,10 @@ pod "PhotoSlider"
 func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
     var slider = PhotoSlider.ViewController(imageURLs: self.images)
-    slider.index = indexPath.row
+    slider.currentPage = indexPath.row
     photoSlider.transitioningDelegate = self
     self.presentViewController(slider, animated: true, completion: nil)
+
 }
 
 ```
@@ -46,6 +75,7 @@ return imageView for starting position
 func transitionSourceImageView() -> UIImageView {
 
 let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+
     let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
     let imageView = UIImageView(image: cell.imageView.image)
 
@@ -81,6 +111,7 @@ func transitionDestinationImageView(sourceImageView: UIImageView) {
     
 }
 ```
+
 
 #### UIViewControllerTransitioningDelegate
 
@@ -122,8 +153,13 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
 
 ```
 
-## Requirements
-Xcode 6 is required.
+## Delegation
+
+You can handle the following event:
+
+- optional func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController)
+- optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
+
 
 ## Author
 
