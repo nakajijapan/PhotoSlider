@@ -11,5 +11,5 @@ install:
 
 script:
   - rake build:ios DESTINATION='OS=8.4,name=iPhone 6'
-  - rake build:ios DESTINATION='OS=9.2,name=iPhone 6s Plus'
+  - rake build:ios DESTINATION='platform=iOS Simulator,name=iPhone 6s Plus'
   - pod lib lint --quick
