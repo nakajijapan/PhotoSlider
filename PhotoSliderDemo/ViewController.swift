@@ -14,14 +14,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var tableView:UITableView!
     var collectionView:UICollectionView!
     var imageURLs = [
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image003.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image004.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image005.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image006.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image007.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image008.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image001.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image002.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image003.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image004.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image005.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image006.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image007.jpg")!,
+        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image008.jpg")!,
     ]
     var images = [
         UIImage(named: "image001.jpg")!,
@@ -34,14 +34,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         UIImage(named: "image008.jpg")!,
     ]
     var photos = [
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image001.jpg")!, caption: "In San Francisco, I went walking in the night. The city is still bright."),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image002.jpg")!, caption: "This is a very good photo. \nGood!"),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image003.jpg")!, caption: ""),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image004.jpg")!, caption: "Fire Alerm"),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image005.jpg")!, caption: "He is misyobun. He is from Japan."),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image006.jpg")!, caption: "Bamboo grove.\nGreen\nGood"),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image007.jpg")!, caption: "Railroad"),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Example/Resources/image008.jpg")!, caption: "Japan. \nRice paddy."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image001.jpg")!, caption: "In San Francisco, I went walking in the night. The city is still bright."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image002.jpg")!, caption: "This is a very good photo. \nGood!"),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image003.jpg")!, caption: ""),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image004.jpg")!, caption: "Fire Alerm"),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image005.jpg")!, caption: "He is misyobun. He is from Japan."),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image006.jpg")!, caption: "Bamboo grove.\nGreen\nGood"),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image007.jpg")!, caption: "Railroad"),
+        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image008.jpg")!, caption: "Japan. \nRice paddy."),
     ]
     override func prefersStatusBarHidden() -> Bool {
         return false
@@ -119,7 +119,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) as! ImageCollectionViewCell
         let imageView = cell.imageView
-        imageView!.sd_setImageWithURL(self.imageURLs[indexPath.row])
+        imageView!.kf_setImageWithURL(self.imageURLs[indexPath.row])
         
         return cell
     }
@@ -199,6 +199,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func transitionDestinationImageView(sourceImageView: UIImageView) {
         
+        guard let image = sourceImageView.image else {
+            return
+        }
+        
         let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
         let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
@@ -206,7 +210,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
 
-            if sourceImageView.image!.size.height < sourceImageView.image!.size.width {
+            if image.size.height < image.size.width {
                 let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
                 let x = width * 0.5 - CGRectGetWidth(cell.imageView.bounds) * 0.5
                 frame = CGRectMake(-1.0 * x, statusBarHeight, width, CGRectGetHeight(cell.imageView.bounds))
@@ -216,7 +220,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
         } else {
 
-            let height = (sourceImageView.image!.size.height * CGRectGetWidth(cell.imageView.bounds)) / sourceImageView.image!.size.width
+            let height = (image.size.height * CGRectGetWidth(cell.imageView.bounds)) / image.size.width
             let y = height * 0.5 - CGRectGetHeight(cell.imageView.bounds) * 0.5 - statusBarHeight
             frame = CGRectMake(0.0, -1.0 * y, CGRectGetWidth(self.view.bounds), height)
 
