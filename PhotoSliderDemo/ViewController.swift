@@ -166,12 +166,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: - PhotoSliderDelegate
     
     func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
+
         UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
         
         let indexPath = NSIndexPath(forItem: viewController.currentPage, inSection: 0)
         self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
     }
-    
+
     // MARK: - UIContentContainer
     
     internal override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
