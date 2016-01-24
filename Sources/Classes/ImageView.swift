@@ -146,10 +146,11 @@ class ImageView: UIView, UIScrollViewDelegate {
     func loadImage(imageURL: NSURL) {
         
         self.progressView.hidden = false
+        
         self.imageView.kf_setImageWithURL(
             imageURL,
             placeholderImage: nil,
-            optionsInfo: [.Options(.CacheMemoryOnly)],
+            optionsInfo: [.CacheMemoryOnly],
             progressBlock: { (receivedSize, totalSize) -> () in
                 
                 let progress = Float(receivedSize) / Float(totalSize)
