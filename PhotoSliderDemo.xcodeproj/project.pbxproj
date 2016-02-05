@@ -72,6 +72,8 @@
 		DC917AC61BB29B7300031F84 /* PhotoSliderDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSliderDemoUITests.swift; sourceTree = "<group>"; };
 		DC917AC81BB29B7300031F84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC917AF01BB3BC5700031F84 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		DCE0A1781C64B2F1009ECD47 /* PhotoSlider.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotoSlider.framework; path = "build/Debug-iphoneos/PhotoSlider.framework"; sourceTree = "<group>"; };
+		DCE0A17A1C64B30A009ECD47 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = "Carthage/Checkouts/Kingfisher/build/Debug-iphoneos/Kingfisher.framework"; sourceTree = "<group>"; };
 		DCE8F52D1B94A2EA00B2D224 /* image001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image001.jpg; sourceTree = "<group>"; };
 		DCE8F52E1B94A2EA00B2D224 /* image002.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image002.jpg; sourceTree = "<group>"; };
 		DCE8F52F1B94A2EA00B2D224 /* image003.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image003.jpg; sourceTree = "<group>"; };
@@ -105,6 +107,8 @@
 		66A3BAA23076667DA79DC70A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DCE0A17A1C64B30A009ECD47 /* Kingfisher.framework */,
+				DCE0A1781C64B2F1009ECD47 /* PhotoSlider.framework */,
 				DC2D64971C54E2670041881D /* Kingfisher.framework */,
 				DC2D64981C54E2670041881D /* PhotoSlider.framework */,
 			);
@@ -463,6 +467,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Kingfisher/build/Debug-iphoneos",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotoSliderDemoUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -478,6 +487,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Kingfisher/build/Debug-iphoneos",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotoSliderDemoUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

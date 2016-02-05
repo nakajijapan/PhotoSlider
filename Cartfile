@@ -1,1 +1,1 @@
-github "onevcat/Kingfisher"
+github "onevcat/Kingfisher" ~> 2.0.1
