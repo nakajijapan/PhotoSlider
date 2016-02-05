@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "PhotoSlider"
-  s.version          = "0.13.1"
+  s.version          = "0.13.2"
   s.summary          = "PhotoSlider can a simple photo slider and delete slider with swiping."
   s.homepage         = "https://github.com/nakajijapan/PhotoSlider"
   s.license          = 'MIT'
@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
     'PhotoSlider' => ['Sources/Assets/*.png']
   }
 
-  s.dependency 'Kingfisher'
+  s.dependency 'Kingfisher', '~> 2.0.1'
 end
