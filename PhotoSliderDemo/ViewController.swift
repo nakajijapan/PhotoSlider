@@ -172,7 +172,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let indexPath = NSIndexPath(forItem: viewController.currentPage, inSection: 0)
         self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
     }
-
+    
+    func photoSliderControllerDidMoveToIndex(viewController: PhotoSlider.ViewController , index : Int) {
+        
+        print(index)
+    }
     // MARK: - UIContentContainer
     
     internal override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -240,7 +244,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         animationController.destinationTransition = self
         
         // for orientation
-        if self.respondsToSelector("animationControllerForDismissedController:") {
+        if self.respondsToSelector(#selector(UIViewControllerTransitioningDelegate.animationControllerForDismissedController(_:))) {
             self.view.frame = dismissed.view.bounds
         }
         

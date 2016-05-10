@@ -59,7 +59,7 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.addSubview(self.progressView)
         self.layoutProgressView()
         
-        let doubleTabGesture = UITapGestureRecognizer(target: self, action: "didDoubleTap:")
+        let doubleTabGesture = UITapGestureRecognizer(target: self, action: #selector(ImageView.didDoubleTap(_:)))
         doubleTabGesture.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTabGesture)
         

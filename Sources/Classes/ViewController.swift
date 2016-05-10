@@ -10,6 +10,7 @@ import UIKit
 @objc public protocol PhotoSliderDelegate:NSObjectProtocol {
     optional func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController)
     optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
+    optional func photoSliderControllerDidMoveToIndex(viewController: PhotoSlider.ViewController , index : Int)
 }
 
 enum PhotoSliderControllerScrollMode:UInt {
@@ -149,7 +150,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             self.closeButton = UIButton(frame: CGRectZero)
             let imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
             self.closeButton!.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
-            self.closeButton!.addTarget(self, action: "closeButtonDidTap:", forControlEvents: UIControlEvents.TouchUpInside)
+            self.closeButton!.addTarget(self, action: #selector(ViewController.closeButtonDidTap(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.closeButton!.imageView?.contentMode = UIViewContentMode.Center
             self.view.addSubview(self.closeButton!)
             self.layoutCloseButton()
@@ -302,7 +303,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         }
         
         self.currentPage = page
-
+        delegate?.photoSliderControllerDidMoveToIndex?(self, index: self.currentPage)
         if self.visiblePageControl {
             self.pageControl.currentPage = self.currentPage
         }
