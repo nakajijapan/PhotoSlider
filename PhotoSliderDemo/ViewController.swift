@@ -96,7 +96,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if indexPath.row == 0 {
-            if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
+            
+            if self.interfaceOrientation.isPortrait {
                 return tableView.bounds.size.width
             } else {
                 return tableView.bounds.size.height
