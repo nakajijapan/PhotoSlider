@@ -97,7 +97,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if indexPath.row == 0 {
             
-            if self.interfaceOrientation.isPortrait {
+            if self.view.bounds.size.width < self.view.bounds.height {
                 return tableView.bounds.size.width
             } else {
                 return tableView.bounds.size.height
