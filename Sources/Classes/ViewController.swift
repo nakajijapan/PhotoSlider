@@ -149,7 +149,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
             self.closeButton = UIButton(frame: CGRectZero)
             let imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
             self.closeButton!.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
-            self.closeButton!.addTarget(self, action: "closeButtonDidTap:", forControlEvents: UIControlEvents.TouchUpInside)
+            self.closeButton!.addTarget(self, action: #selector(ViewController.closeButtonDidTap(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.closeButton!.imageView?.contentMode = UIViewContentMode.Center
             self.view.addSubview(self.closeButton!)
             self.layoutCloseButton()
