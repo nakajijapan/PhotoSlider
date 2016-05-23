@@ -240,7 +240,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         animationController.destinationTransition = self
         
         // for orientation
-        if self.respondsToSelector("animationControllerForDismissedController:") {
+        if self.respondsToSelector(#selector(UIViewControllerTransitioningDelegate.animationControllerForDismissedController(_:))) {
             self.view.frame = dismissed.view.bounds
         }
         
