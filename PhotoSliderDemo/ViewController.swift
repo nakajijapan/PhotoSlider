@@ -127,7 +127,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
+        if self.view.bounds.size.width < self.view.bounds.height {
 
             return CGSize(width:self.tableView.bounds.size.width, height:self.tableView.bounds.size.width)
 
@@ -210,7 +210,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
         var frame = CGRectZero
         
-        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation) {
+        if self.view.bounds.size.width < self.view.bounds.height {
 
             if image.size.height < image.size.width {
                 let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
