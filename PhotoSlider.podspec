@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
     'PhotoSlider' => ['Sources/Assets/*.png']
   }
 
-  s.dependency 'Kingfisher', '~> 2.0.1'
+  s.dependency 'Kingfisher'
 end
