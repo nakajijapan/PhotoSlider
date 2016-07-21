@@ -15,8 +15,8 @@
 		DC0E42071C3182180090AC94 /* PhotoSliderClose.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41C21C317E850090AC94 /* PhotoSliderClose.png */; };
 		DC0E42081C31821B0090AC94 /* PhotoSliderClose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41C31C317E850090AC94 /* PhotoSliderClose@2x.png */; };
 		DC0E42091C31821D0090AC94 /* PhotoSliderClose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41C41C317E850090AC94 /* PhotoSliderClose@3x.png */; };
+		DC5846DF1D40531E003A5D23 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E421B1C3184D80090AC94 /* Kingfisher.framework */; };
 		DC69C9511C322595006D5347 /* PhotoSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0E41BE1C317E850090AC94 /* PhotoSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DC69C96B1C32442D006D5347 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E421B1C3184D80090AC94 /* Kingfisher.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,7 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC69C96B1C32442D006D5347 /* Kingfisher.framework in Frameworks */,
+				DC5846DF1D40531E003A5D23 /* Kingfisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
