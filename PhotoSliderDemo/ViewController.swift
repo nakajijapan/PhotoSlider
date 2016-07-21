@@ -9,7 +9,7 @@
 import UIKit
 import PhotoSlider
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate, ZoomingAnimationControllerTransitioning {
+class ViewController: UIViewController {
     
     @IBOutlet var tableView:UITableView!
     var collectionView:UICollectionView!
@@ -73,41 +73,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     }
     
-    // MARK: - UITableViewDataSource
+    // MARK: - UIContentContainer
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell01")!
+    internal override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        self.tableView.reloadData()
         
-        self.collectionView = cell.viewWithTag(1) as! UICollectionView
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        
-        return cell
     }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if indexPath.row == 0 {
-            
-            if self.view.bounds.size.width < self.view.bounds.height {
-                return tableView.bounds.size.width
-            } else {
-                return tableView.bounds.size.height
-            }
-        }
-        
-        return 0.0
-    }
-    
-    // MARK: - UICollectionViewDataSource
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension ViewController: UICollectionViewDataSource {
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -125,21 +101,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        if self.view.bounds.size.width < self.view.bounds.height {
+}
 
-            return CGSize(width:self.tableView.bounds.size.width, height:self.tableView.bounds.size.width)
+// MARK: - UICollectionViewDelegate
 
-        } else {
-            
-            return CGSize(width:self.tableView.bounds.size.width, height:collectionView.bounds.size.height)
-
-        }
-        
-    }
-    
-    // MARK: - UICollectionViewDelegate
+extension ViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
@@ -164,24 +130,91 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    // MARK: - PhotoSliderDelegate
-    
-    func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
+}
 
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension ViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        if self.view.bounds.size.width < self.view.bounds.height {
+            
+            return CGSize(width:self.tableView.bounds.size.width, height:self.tableView.bounds.size.width)
+            
+        } else {
+            
+            return CGSize(width:self.tableView.bounds.size.width, height:collectionView.bounds.size.height)
+            
+        }
+        
+    }
+    
+}
+
+
+// MARK: - UITableViewDataSource
+
+extension ViewController: UITableViewDataSource {
+
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell01")!
+        
+        self.collectionView = cell.viewWithTag(1) as! UICollectionView
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        
+        return cell
+    }
+    
+}
+
+// MARK: - UITableViewDelegate
+
+extension ViewController: UITableViewDelegate {
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if indexPath.row == 0 {
+            
+            if self.view.bounds.size.width < self.view.bounds.height {
+                return tableView.bounds.size.width
+            } else {
+                return tableView.bounds.size.height
+            }
+        }
+        
+        return 0.0
+    }
+    
+}
+
+// MARK: - PhotoSliderDelegate
+
+extension ViewController: PhotoSliderDelegate {
+
+    func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
+        
         UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
         
         let indexPath = NSIndexPath(forItem: viewController.currentPage, inSection: 0)
         self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
     }
 
-    // MARK: - UIContentContainer
-    
-    internal override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        self.tableView.reloadData()
-        
-    }
-    
-    // MARK: ZoomingAnimationControllerTransitioning
+}
+
+// MARK: - ZoomingAnimationControllerTransitioning
+
+extension ViewController: ZoomingAnimationControllerTransitioning {
     
     func transitionSourceImageView() -> UIImageView {
         
@@ -231,9 +264,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         sourceImageView.frame = frame
         
     }
-    
-    // MARK: UIViewControllerTransitioningDelegate
-    
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension ViewController: UIViewControllerTransitioningDelegate {
+
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         let animationController = PhotoSlider.ZoomingAnimationController(present: false)
