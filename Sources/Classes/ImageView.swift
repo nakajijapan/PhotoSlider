@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 protocol PhotoSliderImageViewDelegate {
-    func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
+    func photoSliderImageViewDidEndZooming(_ viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
 }
 
 class ImageView: UIView, UIScrollViewDelegate {
@@ -31,8 +31,8 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     func initialize() {
 
-        self.backgroundColor = UIColor.clearColor()
-        self.userInteractionEnabled = true
+        self.backgroundColor = UIColor.clear()
+        self.isUserInteractionEnabled = true
 
         // for zoom
         self.scrollView = UIScrollView(frame: self.bounds)
@@ -44,9 +44,9 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.scrollView.delegate  = self
         
         // image
-        self.imageView = UIImageView(frame: CGRectZero)
-        self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        self.imageView.userInteractionEnabled = true
+        self.imageView = UIImageView(frame: CGRect.zero)
+        self.imageView.contentMode = UIViewContentMode.scaleAspectFit
+        self.imageView.isUserInteractionEnabled = true
 
         self.addSubview(self.scrollView)
         self.layoutScrollView()
@@ -54,8 +54,8 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.scrollView.addSubview(self.imageView)
        
         // progress view
-        self.progressView = ProgressView(frame: CGRectZero)
-        self.progressView.hidden = true
+        self.progressView = ProgressView(frame: CGRect.zero)
+        self.progressView.isHidden = true
         self.addSubview(self.progressView)
         self.layoutProgressView()
         
@@ -64,12 +64,12 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.addGestureRecognizer(doubleTabGesture)
         
         self.imageView.autoresizingMask = [
-            .FlexibleWidth,
-            .FlexibleLeftMargin,
-            .FlexibleRightMargin,
-            .FlexibleTopMargin,
-            .FlexibleHeight,
-            .FlexibleBottomMargin
+            .flexibleWidth,
+            .flexibleLeftMargin,
+            .flexibleRightMargin,
+            .flexibleTopMargin,
+            .flexibleHeight,
+            .flexibleBottomMargin
         ]
         
     }
@@ -96,7 +96,7 @@ class ImageView: UIView, UIScrollViewDelegate {
         }
         
         // Center
-        if !CGRectEqualToRect(self.imageView.frame, frameToCenter) {
+        if !self.imageView.frame.equalTo(frameToCenter) {
             
             self.imageView.frame = frameToCenter;
             
@@ -108,14 +108,14 @@ class ImageView: UIView, UIScrollViewDelegate {
     func layoutScrollView() {
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
         let views = ["scrollView": self.scrollView]
-        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|[scrollView]|",
+        let constraintVertical   = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|[scrollView]|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: views
         )
-        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|[scrollView]|",
+        let constraintHorizontal = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[scrollView]|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: views
@@ -127,15 +127,15 @@ class ImageView: UIView, UIScrollViewDelegate {
     func layoutProgressView() {
         self.progressView.translatesAutoresizingMaskIntoConstraints = false
         let views = ["progressView": self.progressView, "superView": self]
-        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:[superView]-(<=1)-[progressView(40)]",
-            options: NSLayoutFormatOptions.AlignAllCenterX,
+        let constraintVertical = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[superView]-(<=1)-[progressView(40)]",
+            options: NSLayoutFormatOptions.alignAllCenterX,
             metrics: nil,
             views: views
         )
-        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:[superView]-(<=1)-[progressView(40)]",
-            options: NSLayoutFormatOptions.AlignAllCenterY,
+        let constraintHorizontal = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:[superView]-(<=1)-[progressView(40)]",
+            options: NSLayoutFormatOptions.alignAllCenterY,
             metrics: nil,
             views: views
         )
@@ -143,9 +143,9 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.addConstraints(constraintHorizontal)
     }
     
-    func loadImage(imageURL: NSURL) {
+    func loadImage(_ imageURL: URL) {
         
-        self.progressView.hidden = false
+        self.progressView.isHidden = false
         
         self.imageView.kf_setImageWithURL(
             imageURL,
@@ -166,16 +166,16 @@ class ImageView: UIView, UIScrollViewDelegate {
         
     }
     
-    func setImage(image:UIImage) {
+    func setImage(_ image:UIImage) {
 
         self.imageView.image = image
         self.layoutImageView(image)
         
     }
     
-    func layoutImageView(image:UIImage) {
-        var frame = CGRectZero
-        frame.origin = CGPointZero
+    func layoutImageView(_ image:UIImage) {
+        var frame = CGRect.zero
+        frame.origin = CGPoint.zero
         
         let height = image.size.height * (self.bounds.width / image.size.width)
         let width = image.size.width * (self.bounds.height / image.size.height)
@@ -197,7 +197,7 @@ class ImageView: UIView, UIScrollViewDelegate {
         }
         
         self.imageView.frame = frame
-        self.imageView.center = CGPoint(x: CGRectGetMidX(self.bounds), y: CGRectGetMidY(self.bounds))
+        self.imageView.center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
     }
     
     func layoutImageView() {
@@ -208,12 +208,12 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.layoutImageView(image)
     }
     
-    func didDoubleTap(sender: UIGestureRecognizer) {
+    func didDoubleTap(_ sender: UIGestureRecognizer) {
 
         if self.scrollView.zoomScale == 1.0 {
 
-            let touchPoint = sender.locationInView(self)
-            self.scrollView.zoomToRect(CGRect(x: touchPoint.x, y: touchPoint.y, width: 1, height: 1), animated: true)
+            let touchPoint = sender.location(in: self)
+            self.scrollView.zoom(to: CGRect(x: touchPoint.x, y: touchPoint.y, width: 1, height: 1), animated: true)
 
 
             
@@ -227,16 +227,16 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     // MARK: - UIScrollViewDelegate
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.imageView
     }
     
-    func scrollViewDidZoom(scrollView: UIScrollView) {
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
         self.setNeedsLayout()
         self.layoutIfNeeded()
     }
     
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         self.delegate?.photoSliderImageViewDidEndZooming(self, atScale: scale)
     }
     

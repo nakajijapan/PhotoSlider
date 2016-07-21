@@ -14,15 +14,15 @@ public class ProgressView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear()
     }
 
     public required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear()
     }
     
-    public override func drawRect(rect: CGRect) {
+    public override func draw(_ rect: CGRect) {
         self.createInitialProgressLayer()
         self.createProgressLayer()
     }
@@ -30,7 +30,7 @@ public class ProgressView: UIView {
     func createInitialProgressLayer() {
         let startAngle = -M_PI_2
         let endAngle = M_PI_2 * 2 + M_PI_2
-        let centerPoint = CGPointMake(CGRectGetWidth(self.frame) / 2.0, CGRectGetHeight(self.frame) / 2.0)
+        let centerPoint = CGPoint(x: self.frame.width / 2.0, y: self.frame.height / 2.0)
         
         self.progressLayer = CAShapeLayer()
         self.progressLayer.path = UIBezierPath(
@@ -39,10 +39,10 @@ public class ProgressView: UIView {
             startAngle: CGFloat(startAngle),
             endAngle: CGFloat(endAngle),
             clockwise: true
-        ).CGPath
-        self.progressLayer.backgroundColor = UIColor.clearColor().CGColor
-        self.progressLayer.fillColor = UIColor.clearColor().CGColor
-        self.progressLayer.strokeColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2).CGColor
+        ).cgPath
+        self.progressLayer.backgroundColor = UIColor.clear().cgColor
+        self.progressLayer.fillColor = UIColor.clear().cgColor
+        self.progressLayer.strokeColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2).cgColor
         self.progressLayer.lineWidth = 4.0
         self.progressLayer.strokeStart = 0.0
         self.progressLayer.strokeEnd = 1.0
@@ -52,14 +52,14 @@ public class ProgressView: UIView {
     func createProgressLayer() {
         let startAngle = -M_PI_2
         let endAngle = M_PI_2 * 2 + M_PI_2
-        let centerPoint = CGPointMake(CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame) / 2)
+        let centerPoint = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
         
         self.progressLayer = CAShapeLayer()
         let bezierPath = UIBezierPath(arcCenter: centerPoint, radius: 20.0, startAngle: CGFloat(startAngle), endAngle: CGFloat(endAngle), clockwise: true)
-        self.progressLayer.path = bezierPath.CGPath
-        self.progressLayer.backgroundColor = UIColor.clearColor().CGColor
-        self.progressLayer.fillColor = UIColor.clearColor().CGColor
-        self.progressLayer.strokeColor = UIColor.whiteColor().CGColor
+        self.progressLayer.path = bezierPath.cgPath
+        self.progressLayer.backgroundColor = UIColor.clear().cgColor
+        self.progressLayer.fillColor = UIColor.clear().cgColor
+        self.progressLayer.strokeColor = UIColor.white().cgColor
         self.progressLayer.lineWidth = 4.0
         self.progressLayer.strokeStart = 0.0
         self.progressLayer.strokeEnd = 0.0
@@ -67,19 +67,19 @@ public class ProgressView: UIView {
         self.layer.addSublayer(self.progressLayer)
     }
     
-    func animateCurveToProgress(progress: Float) {
+    func animateCurveToProgress(_ progress: Float) {
         
         if self.progressLayer == nil {
             return
         }
         
         let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.fromValue = NSNumber(float: Float(self.progressLayer.strokeEnd))
-        animation.toValue = NSNumber(float: progress)
+        animation.fromValue = NSNumber(value: Float(self.progressLayer.strokeEnd))
+        animation.toValue = NSNumber(value: progress)
         animation.duration = 0.05
         animation.fillMode = kCAFillModeForwards
         self.progressLayer.strokeEnd = CGFloat(progress)
-        self.progressLayer.addAnimation(animation, forKey: "strokeEnd")
+        self.progressLayer.add(animation, forKey: "strokeEnd")
     }
 
 
