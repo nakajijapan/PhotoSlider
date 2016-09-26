@@ -120,9 +120,9 @@ public class ViewController:UIViewController {
             imageView.delegate = self
             self.scrollView.addSubview(imageView)
             
-            if imageResource.dynamicType === NSURL.self {
+            if imageResource is NSURL {
                 imageView.loadImage(imageResource as! NSURL)
-            } else if imageResource.dynamicType === UIImage.self {
+            } else if imageResource is UIImage {
                 imageView.setImage(imageResource as! UIImage)
             } else {
                 let photo = imageResource as! PhotoSlider.Photo
@@ -448,7 +448,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
             return NSBundle(path: bundlePath!)!
         }
         
-        return NSBundle(forClass: self.dynamicType)
+        return NSBundle(forClass: type(of: self))
 
     }
 }
