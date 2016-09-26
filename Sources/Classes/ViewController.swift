@@ -20,7 +20,7 @@ enum PhotoSliderControllerUsingImageType:UInt {
     case None = 0, URL, Image, Photo
 }
 
-public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderImageViewDelegate, ZoomingAnimationControllerTransitioning {
+public class ViewController:UIViewController {
 
     var scrollView:UIScrollView!
 
@@ -37,6 +37,9 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
     var imageViews = Array<PhotoSlider.ImageView>()
     var previousPage = 0
     var captionLabel = UILabel(frame: CGRectZero)
+
+    // For ScrollViewDelegate
+    var scrollPreviewPoint = CGPointZero
 
 
     public var delegate: PhotoSliderDelegate? = nil
@@ -170,8 +173,8 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width * CGFloat(self.currentPage), self.scrollView.bounds.height)
         self.scrollInitalized = true
     }
-    
-    // MARK: - Constraints
+
+    // Constraints
     
     func layoutScrollView() {
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -221,10 +224,12 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintHorizontal)
     }
-    
-    // MARK: - UIScrollViewDelegate
+}
+// MARK: - UIScrollViewDelegate
 
-    var scrollPreviewPoint = CGPointZero
+extension ViewController: UIScrollViewDelegate {
+   
+
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
         self.previousPage = self.currentPage
@@ -379,17 +384,23 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         self.scrollMode = .None
 
     }
-    
-    // MARK: - Button Actions
-    
+}
+
+// MARK: - Button Actions
+
+extension ViewController {
+
     func closeButtonDidTap(sender:UIButton) {
 
         self.delegate?.photoSliderControllerWillDismiss?(self)
         self.dissmissViewControllerAnimated(true)
 
     }
-    
-    // MARK: - PhotoSliderImageViewDelegate
+}
+
+// MARK: - PhotoSliderImageViewDelegate
+
+extension ViewController: PhotoSliderImageViewDelegate {
 
     func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
         if scale <= 1.0 {
@@ -416,8 +427,6 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         }
     }
     
-    // MARK: - Private Methods
-    
     func dissmissViewControllerAnimated(animated:Bool) {
         
         self.dismissViewControllerAnimated(animated, completion: { () -> Void in
@@ -442,8 +451,11 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         return NSBundle(forClass: self.dynamicType)
 
     }
-    
-    // MARK: - UITraitEnvironment
+}
+
+// MARK: - UITraitEnvironmenat
+
+extension ViewController {
     
     public override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
         
@@ -483,8 +495,11 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         
         self.scrollMode = .None
     }
-    
-    // MARK: - ZoomingAnimationControllerTransitioning
+}
+
+// MARK: - ZoomingAnimationControllerTransitioning
+
+extension ViewController: ZoomingAnimationControllerTransitioning {
     
     public func transitionSourceImageView() -> UIImageView {
         let zoomingImageView = self.imageViews[self.currentPage]
@@ -523,7 +538,7 @@ public class ViewController:UIViewController, UIScrollViewDelegate, PhotoSliderI
         
     }
     
-    // MARK: - Private Method
+    // Private Method
 
     func imageResources() -> Array<AnyObject>? {
 
