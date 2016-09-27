@@ -22,25 +22,24 @@ enum PhotoSliderControllerUsingImageType:UInt {
 
 public class ViewController:UIViewController {
 
-    var scrollView:UIScrollView!
+    var scrollView: UIScrollView!
 
-    var imageURLs:Array<URL>?
-    var images:Array<UIImage>?
-    var photos:Array<PhotoSlider.Photo>?
+    var imageURLs: [URL]?
+    var images: [UIImage]?
+    var photos: [PhotoSlider.Photo]?
     var usingImageType = PhotoSliderControllerUsingImageType.None
-    var backgroundView:UIView!
-    var effectView:UIVisualEffectView!
-    var closeButton:UIButton?
-    var scrollMode:PhotoSliderControllerScrollMode = .None
+    var backgroundView: UIView!
+    var effectView: UIVisualEffectView!
+    var closeButton: UIButton?
+    var scrollMode: PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
-    var imageViews = Array<PhotoSlider.ImageView>()
+    var imageViews = [PhotoSlider.ImageView]
     var previousPage = 0
     var captionLabel = UILabel(frame: CGRect.zero)
 
     // For ScrollViewDelegate
     var scrollPreviewPoint = CGPoint.zero
-
 
     public var delegate: PhotoSliderDelegate? = nil
     public var visiblePageControl = true
