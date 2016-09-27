@@ -34,7 +34,7 @@ public class ViewController:UIViewController {
     var scrollMode: PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
-    var imageViews = [PhotoSlider.ImageView]
+    var imageViews: [PhotoSlider.ImageView] = []
     var previousPage = 0
     var captionLabel = UILabel(frame: CGRect.zero)
 
@@ -114,7 +114,7 @@ public class ViewController:UIViewController {
         frame.origin.y = height
         for imageResource in imageResources()! {
             
-            let imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
+            let imageView: PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
             imageView.delegate = self
             scrollView.addSubview(imageView)
             
