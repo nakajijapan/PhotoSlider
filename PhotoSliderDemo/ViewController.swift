@@ -188,9 +188,9 @@ extension ViewController: UITableViewDelegate {
         if indexPath.row == 0 {
             
             if self.view.bounds.size.width < self.view.bounds.height {
-                return tableView.bounds.size.width
+                return tableView.bounds.width
             } else {
-                return tableView.bounds.size.height
+                return tableView.bounds.height
             }
         }
         

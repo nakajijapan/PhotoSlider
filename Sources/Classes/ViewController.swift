@@ -187,7 +187,7 @@ public class ViewController:UIViewController {
     func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
-        let views = ["scrollView": scrollView]
+        let views: [String: UIView] = ["scrollView": scrollView]
         let constraintVertical   = NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         let constraintHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         view.addConstraints(constraintVertical)
@@ -197,7 +197,7 @@ public class ViewController:UIViewController {
     func layoutCloseButton() {
         closeButton!.translatesAutoresizingMaskIntoConstraints = false
         
-        let views = ["closeButton": closeButton!]
+        let views: [String: UIView] = ["closeButton": closeButton!]
         let constraintVertical   = NSLayoutConstraint.constraints(withVisualFormat: "V:|[closeButton(52)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         let constraintHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:[closeButton(52)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         view.addConstraints(constraintVertical)
@@ -207,7 +207,7 @@ public class ViewController:UIViewController {
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         
-        let views = ["pageControl": pageControl]
+        let views: [String: UIView]c = ["pageControl": pageControl]
         let constraintVertical = NSLayoutConstraint.constraints(withVisualFormat: "V:[pageControl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         let constraintCenterX  = NSLayoutConstraint.constraints(withVisualFormat: "H:|[pageControl]|", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
         view.addConstraints(constraintVertical)

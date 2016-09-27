@@ -106,8 +106,9 @@ class ImageView: UIView, UIScrollViewDelegate {
     // MARK: - Constraints
     
     func layoutScrollView() {
+        
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
-        let views = ["scrollView": self.scrollView]
+        let views: [String: UIView] = ["scrollView": scrollView]
         let constraintVertical   = NSLayoutConstraint.constraints(
             withVisualFormat: "V:|[scrollView]|",
             options: NSLayoutFormatOptions(rawValue: 0),
@@ -126,7 +127,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     func layoutProgressView() {
         self.progressView.translatesAutoresizingMaskIntoConstraints = false
-        let views = ["progressView": self.progressView, "superView": self]
+        let views = ["progressView": progressView, "superView": self]
         let constraintVertical = NSLayoutConstraint.constraints(
             withVisualFormat: "V:[superView]-(<=1)-[progressView(40)]",
             options: NSLayoutFormatOptions.alignAllCenterX,
@@ -146,7 +147,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     func loadImage(imageURL: URL) {
         
         self.progressView.isHidden = false
-        
+
         self.imageView.kf.setImage(
             with: imageURL,
             placeholder: nil,
