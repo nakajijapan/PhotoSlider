@@ -8,8 +8,8 @@
 import UIKit
 
 @objc public protocol PhotoSliderDelegate:NSObjectProtocol {
-    optional func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController)
-    optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
+    @objc optional func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController)
+    @objc optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
 }
 
 enum PhotoSliderControllerScrollMode:UInt {
@@ -24,7 +24,7 @@ public class ViewController:UIViewController {
 
     var scrollView:UIScrollView!
 
-    var imageURLs:Array<NSURL>?
+    var imageURLs:Array<URL>?
     var images:Array<UIImage>?
     var photos:Array<PhotoSlider.Photo>?
     var usingImageType = PhotoSliderControllerUsingImageType.None
@@ -36,10 +36,10 @@ public class ViewController:UIViewController {
     var closeAnimating = false
     var imageViews = Array<PhotoSlider.ImageView>()
     var previousPage = 0
-    var captionLabel = UILabel(frame: CGRectZero)
+    var captionLabel = UILabel(frame: CGRect.zero)
 
     // For ScrollViewDelegate
-    var scrollPreviewPoint = CGPointZero
+    var scrollPreviewPoint = CGPoint.zero
 
 
     public var delegate: PhotoSliderDelegate? = nil
@@ -48,10 +48,9 @@ public class ViewController:UIViewController {
     public var currentPage = 0
 
     public var pageControl = UIPageControl()
-    public var backgroundViewColor = UIColor.blackColor()
-    public var captionTextColor = UIColor.whiteColor()
-    
-    public init(imageURLs:Array<NSURL>) {
+    public var backgroundViewColor = UIColor.black
+    public var captionTextColor = UIColor.white
+    public init(imageURLs:Array<URL>) {
         super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
         self.usingImageType = .URL
@@ -76,60 +75,60 @@ public class ViewController:UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.frame = UIScreen.mainScreen().bounds
-        self.view.backgroundColor = UIColor.clearColor()
+        view.frame = UIScreen.main.bounds
+        view.backgroundColor = UIColor.clear
 
-        self.backgroundView = UIView(frame: self.view.bounds)
-        self.backgroundView.backgroundColor = self.backgroundViewColor
+        backgroundView = UIView(frame: view.bounds)
+        backgroundView.backgroundColor = backgroundViewColor
 
         if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 {
-            self.view.addSubview(self.backgroundView)
+            view.addSubview(backgroundView)
         } else {
-            self.effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
-            self.effectView.frame = self.view.bounds
-            self.view.addSubview(self.effectView)
-            self.effectView.addSubview(self.backgroundView)
+            effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+            effectView.frame = view.bounds
+            view.addSubview(effectView)
+            effectView.addSubview(backgroundView)
         }
 
         // scrollview setting for Item
-        self.scrollView = UIScrollView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height))
-        self.scrollView.pagingEnabled = true
-        self.scrollView.showsHorizontalScrollIndicator = false
-        self.scrollView.showsVerticalScrollIndicator = false
-        self.scrollView.delegate = self
-        self.scrollView.clipsToBounds = false
-        self.scrollView.alwaysBounceHorizontal = true
-        self.scrollView.alwaysBounceVertical = true
-        self.scrollView.scrollEnabled = true
-        self.scrollView.accessibilityLabel = "PhotoSliderScrollView"
-        self.view.addSubview(self.scrollView)
-        self.layoutScrollView()
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.delegate = self
+        scrollView.clipsToBounds = false
+        scrollView.alwaysBounceHorizontal = true
+        scrollView.alwaysBounceVertical = true
+        scrollView.isScrollEnabled = true
+        scrollView.accessibilityLabel = "PhotoSliderScrollView"
+        view.addSubview(scrollView)
+        layoutScrollView()
 
-        self.scrollView.contentSize = CGSizeMake(
-            CGRectGetWidth(self.view.bounds) * CGFloat(self.imageResources()!.count),
-            CGRectGetHeight(self.view.bounds) * 3.0
+        scrollView.contentSize = CGSize(
+            width: view.bounds.width * CGFloat(imageResources()!.count),
+            height: view.bounds.height * 3.0
         )
 
-        let width = CGRectGetWidth(self.view.bounds)
-        let height = CGRectGetHeight(self.view.bounds)
-        var frame = self.view.bounds
+        let width = view.bounds.width
+        let height = view.bounds.height
+        var frame = view.bounds
         frame.origin.y = height
-        for imageResource in self.imageResources()! {
+        for imageResource in imageResources()! {
             
             let imageView:PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
             imageView.delegate = self
             self.scrollView.addSubview(imageView)
             
-            if imageResource is NSURL {
-                imageView.loadImage(imageResource as! NSURL)
+            if imageResource is URL {
+                imageView.loadImage(imageURL: imageResource as! URL)
             } else if imageResource is UIImage {
-                imageView.setImage(imageResource as! UIImage)
+                imageView.setImage(image: imageResource as! UIImage)
             } else {
                 let photo = imageResource as! PhotoSlider.Photo
                 if photo.imageURL != nil {
-                    imageView.loadImage(photo.imageURL!)
+                    imageView.loadImage(imageURL: photo.imageURL!)
                 } else {
-                    imageView.setImage(photo.image!)
+                    imageView.setImage(image: photo.image!)
                 }
             }
             
@@ -140,20 +139,20 @@ public class ViewController:UIViewController {
         
         // Page Control
         if self.visiblePageControl {
-            self.pageControl.frame = CGRectZero
-            self.pageControl.numberOfPages = self.imageResources()!.count
-            self.pageControl.userInteractionEnabled = false
-            self.view.addSubview(self.pageControl)
-            self.layoutPageControl()
+            pageControl.frame = CGRect.zero
+            pageControl.numberOfPages = self.imageResources()!.count
+            pageControl.isUserInteractionEnabled = false
+            view.addSubview(self.pageControl)
+            layoutPageControl()
         }
         
         // Close Button
         if self.visibleCloseButton {
-            self.closeButton = UIButton(frame: CGRectZero)
-            let imagePath = self.resourceBundle().pathForResource("PhotoSliderClose", ofType: "png")
-            self.closeButton!.setImage(UIImage(contentsOfFile: imagePath!), forState: UIControlState.Normal)
-            self.closeButton!.addTarget(self, action: #selector(ViewController.closeButtonDidTap(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            self.closeButton!.imageView?.contentMode = UIViewContentMode.Center
+            self.closeButton = UIButton(frame: CGRect.zero)
+            let imagePath = self.resourceBundle().path(forResource: "PhotoSliderClose", ofType: "png")
+            self.closeButton!.setImage(UIImage(contentsOfFile: imagePath!), for: .normal)
+            self.closeButton!.addTarget(self, action: #selector(closeButtonDidTap(_:)), for: .touchUpInside)
+            self.closeButton!.imageView?.contentMode = UIViewContentMode.center
             self.view.addSubview(self.closeButton!)
             self.layoutCloseButton()
         }
@@ -169,9 +168,19 @@ public class ViewController:UIViewController {
 
     }
     
-    override public func viewWillAppear(animated: Bool) {
-        self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width * CGFloat(self.currentPage), self.scrollView.bounds.height)
-        self.scrollInitalized = true
+    func closeButtonDidTap(_ sender: UIButton) {
+        
+        self.delegate?.photoSliderControllerWillDismiss?(viewController: self)
+        self.dissmissViewControllerAnimated(animated: true)
+        
+    }
+    
+    override public func viewWillAppear(_ animated: Bool) {
+        scrollView.contentOffset = CGPoint(
+            x: scrollView.bounds.width * CGFloat(currentPage),
+            y: scrollView.bounds.height
+        )
+        scrollInitalized = true
     }
 
     // Constraints
@@ -180,8 +189,8 @@ public class ViewController:UIViewController {
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         let views = ["scrollView": self.scrollView]
-        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintVertical   = NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintHorizontal)
     }
@@ -190,8 +199,8 @@ public class ViewController:UIViewController {
         self.closeButton!.translatesAutoresizingMaskIntoConstraints = false
         
         let views = ["closeButton": self.closeButton!]
-        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat("V:|[closeButton(52)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton(52)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintVertical   = NSLayoutConstraint.constraints(withVisualFormat: "V:|[closeButton(52)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:[closeButton(52)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintHorizontal)
     }
@@ -200,8 +209,8 @@ public class ViewController:UIViewController {
         self.pageControl.translatesAutoresizingMaskIntoConstraints = false
         
         let views = ["pageControl": self.pageControl]
-        let constraintVertical = NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        let constraintCenterX  = NSLayoutConstraint.constraintsWithVisualFormat("H:|[pageControl]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        let constraintVertical = NSLayoutConstraint.constraints(withVisualFormat: "V:[pageControl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let constraintCenterX  = NSLayoutConstraint.constraints(withVisualFormat: "H:|[pageControl]|", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
         self.view.addConstraints(constraintVertical)
         self.view.addConstraints(constraintCenterX)
     }
@@ -209,14 +218,14 @@ public class ViewController:UIViewController {
     func layoutCaptionLabel() {
         self.captionLabel.translatesAutoresizingMaskIntoConstraints = false
         let views = ["captionLabel": self.captionLabel]
-        let constraintVertical   = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:[captionLabel]-32-|",
+        let constraintVertical   = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[captionLabel]-32-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: views
         )
-        let constraintHorizontal = NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-16-[captionLabel]-16-|",
+        let constraintHorizontal = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-16-[captionLabel]-16-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: views
@@ -228,27 +237,27 @@ public class ViewController:UIViewController {
 // MARK: - UIScrollViewDelegate
 
 extension ViewController: UIScrollViewDelegate {
-   
 
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         self.previousPage = self.currentPage
-        
+
         self.scrollPreviewPoint = scrollView.contentOffset
         
     }
 
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         if scrollInitalized == false {
-            self.generateCurrentPage()
+            generateCurrentPage()
             return
         }
         
         let imageView = self.imageViews[self.currentPage]
         if imageView.scrollView.zoomScale > 1.0 {
-            self.generateCurrentPage()
-            self.scrollView.scrollEnabled = false
+            generateCurrentPage()
+            scrollView.isScrollEnabled = false
             return
         }
         
@@ -278,12 +287,12 @@ extension ViewController: UIScrollViewDelegate {
             contentOffset.x = self.scrollPreviewPoint.x
             scrollView.contentOffset = contentOffset
             
-            let screenHeight = UIScreen.mainScreen().bounds.size.height
+            let screenHeight = UIScreen.main.bounds.size.height
             
             if self.scrollView.contentOffset.y > screenHeight * 1.4 {
-                self.closePhotoSlider(true)
+                self.closePhotoSlider(up: true)
             } else if self.scrollView.contentOffset.y < screenHeight * 0.6  {
-                self.closePhotoSlider(false)
+                self.closePhotoSlider(up: false)
             }
             
         } else if self.scrollMode == .Horizontal {
@@ -302,7 +311,7 @@ extension ViewController: UIScrollViewDelegate {
         var page = Int(round(scrollView.contentOffset.x / scrollView.frame.size.width))
         if page < 0 {
             page = 0
-        } else if page >= self.imageResources()?.count {
+        } else if page >= self.imageResources()!.count {
             page = self.imageResources()!.count - 1;
         }
         
@@ -314,17 +323,17 @@ extension ViewController: UIScrollViewDelegate {
 
     }
     
-    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
         if self.scrollMode == .Vertical {
             
-            let velocity = scrollView.panGestureRecognizer.velocityInView(scrollView)
+            let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView)
             if velocity.y < -500 {
-                self.scrollView.frame = scrollView.frame
-                self.closePhotoSlider(true)
+                scrollView.frame = scrollView.frame
+                closePhotoSlider(up: true)
             } else if velocity.y > 500 {
-                self.scrollView.frame = scrollView.frame
-                self.closePhotoSlider(false)
+                scrollView.frame = scrollView.frame
+                closePhotoSlider(up: false)
             }
             
         }
@@ -338,11 +347,11 @@ extension ViewController: UIScrollViewDelegate {
         }
         self.closeAnimating = true
         
-        let screenHeight = UIScreen.mainScreen().bounds.size.height
-        let screenWidth = UIScreen.mainScreen().bounds.size.width
+        let screenHeight = UIScreen.main.bounds.height
+        let screenWidth = UIScreen.main.bounds.width
         var movedHeight = CGFloat(0)
         
-        self.delegate?.photoSliderControllerWillDismiss?(self)
+        self.delegate?.photoSliderControllerWillDismiss?(viewController: self)
         
         if up {
             movedHeight = -screenHeight
@@ -350,25 +359,25 @@ extension ViewController: UIScrollViewDelegate {
             movedHeight = screenHeight
         }
         
-        UIView.animateWithDuration(
-            0.4,
+        UIView.animate(
+            withDuration: 0.4,
             delay: 0,
-            options: UIViewAnimationOptions.CurveEaseOut,
+            options: .curveEaseOut,
             animations: { () -> Void in
-                self.scrollView.frame = CGRectMake(0, movedHeight, screenWidth, screenHeight)
+                self.scrollView.frame = CGRect(x: 0, y: movedHeight, width: screenWidth, height: screenHeight)
                 self.backgroundView.alpha = 0.0
                 self.closeButton?.alpha = 0.0
                 self.captionLabel.alpha = 0.0
                 self.view.alpha = 0.0
             },
             completion: {(result) -> Void in
-                self.dissmissViewControllerAnimated(false)
+                self.dissmissViewControllerAnimated(animated: false)
                 self.closeAnimating = false
             }
         )
     }
     
-    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 
         if self.previousPage != self.currentPage {
 
@@ -386,27 +395,15 @@ extension ViewController: UIScrollViewDelegate {
     }
 }
 
-// MARK: - Button Actions
-
-extension ViewController {
-
-    func closeButtonDidTap(sender:UIButton) {
-
-        self.delegate?.photoSliderControllerWillDismiss?(self)
-        self.dissmissViewControllerAnimated(true)
-
-    }
-}
-
 // MARK: - PhotoSliderImageViewDelegate
 
 extension ViewController: PhotoSliderImageViewDelegate {
 
     func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
         if scale <= 1.0 {
-            self.scrollView.scrollEnabled = true
+            self.scrollView.isScrollEnabled = true
             
-            UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+            UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                 self.closeButton?.alpha = 1.0
                 self.captionLabel.alpha = 1.0
                 if self.visiblePageControl {
@@ -415,9 +412,9 @@ extension ViewController: PhotoSliderImageViewDelegate {
                 }, completion: nil)
 
         } else {
-            self.scrollView.scrollEnabled = false
+            self.scrollView.isScrollEnabled = false
 
-            UIView.animateWithDuration(0.05, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+            UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                 self.closeButton?.alpha = 0.0
                 self.captionLabel.alpha = 0.0
                 if self.visiblePageControl {
@@ -429,26 +426,26 @@ extension ViewController: PhotoSliderImageViewDelegate {
     
     func dissmissViewControllerAnimated(animated:Bool) {
         
-        self.dismissViewControllerAnimated(animated, completion: { () -> Void in
+        dismiss(animated: animated, completion: { () -> Void in
             
-            self.delegate?.photoSliderControllerDidDismiss?(self)
+            self.delegate?.photoSliderControllerDidDismiss?(viewController: self)
             
         })
     }
     
-    func resourceBundle() -> NSBundle {
+    func resourceBundle() -> Bundle {
         
-        let bundlePath = NSBundle.mainBundle().pathForResource(
-            "PhotoSlider",
+        let bundlePath = Bundle.main.path(
+            forResource: "PhotoSlider",
             ofType: "bundle",
             inDirectory: "Frameworks/PhotoSlider.framework"
         )
         
         if bundlePath != nil {
-            return NSBundle(path: bundlePath!)!
+            return Bundle(path: bundlePath!)!
         }
         
-        return NSBundle(forClass: type(of: self))
+        return Bundle(for: type(of: self))
 
     }
 }
@@ -457,25 +454,25 @@ extension ViewController: PhotoSliderImageViewDelegate {
 
 extension ViewController {
     
-    public override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         
-        self.scrollMode = .Rotating
+        scrollMode = .Rotating
         
         let contentViewBounds = self.view.bounds
         let height = contentViewBounds.height
         
         // Background View
-        self.backgroundView.frame = contentViewBounds
+        backgroundView.frame = contentViewBounds
         if floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1 {
             self.effectView.frame = contentViewBounds
         }
         
         // Scroll View
-        self.scrollView.contentSize = CGSizeMake(
-            contentViewBounds.width * CGFloat(self.imageResources()!.count),
-            contentViewBounds.height * 3.0
+        scrollView.contentSize = CGSize(
+            width: contentViewBounds.width * CGFloat(self.imageResources()!.count),
+            height: contentViewBounds.height * 3.0
         )
-        self.scrollView.frame = contentViewBounds
+        scrollView.frame = contentViewBounds
         
         // ImageViews
         var frame = CGRect(x: 0.0, y: contentViewBounds.height, width: contentViewBounds.width, height: contentViewBounds.height)
@@ -491,9 +488,9 @@ extension ViewController {
 
         }
         
-        self.scrollView.contentOffset = CGPointMake(CGFloat(self.currentPage) * contentViewBounds.width, height)
+        scrollView.contentOffset = CGPoint(x: CGFloat(self.currentPage) * contentViewBounds.width, y: height)
         
-        self.scrollMode = .None
+        scrollMode = .None
     }
 }
 
@@ -504,7 +501,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
     public func transitionSourceImageView() -> UIImageView {
         let zoomingImageView = self.imageViews[self.currentPage]
         zoomingImageView.imageView.clipsToBounds = true
-        zoomingImageView.imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        zoomingImageView.imageView.contentMode = UIViewContentMode.scaleAspectFill
         return zoomingImageView.imageView
     }
     
@@ -519,20 +516,20 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         
         if self.view.bounds.width < self.view.bounds.height {
                 
-            height = (CGRectGetWidth(self.view.frame) * sourceImage.size.height) / sourceImage.size.width
-            width  = CGRectGetWidth(self.view.frame)
+            height = (view.frame.width * sourceImage.size.height) / sourceImage.size.width
+            width  = view.frame.width
 
         } else {
 
-            height = CGRectGetHeight(self.view.frame)
-            width  = (CGRectGetHeight(self.view.frame) * sourceImage.size.width) / sourceImage.size.height
+            height = view.frame.height
+            width  = (view.frame.height * sourceImage.size.width) / sourceImage.size.height
 
         }
 
         sourceImageView.frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
         sourceImageView.center = CGPoint(
-            x: CGRectGetWidth(self.view.frame) * 0.5,
-            y: CGRectGetHeight(self.view.frame) * 0.5
+            x: view.frame.width * 0.5,
+            y: view.frame.height * 0.5
         )
         
         
@@ -543,7 +540,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
     func imageResources() -> Array<AnyObject>? {
 
         if self.usingImageType == .URL {
-            return self.imageURLs
+            return self.imageURLs as Array<AnyObject>?
         } else if self.usingImageType == .Image {
             return self.images
         } else if self.usingImageType == .Photo {
@@ -556,14 +553,14 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
     func updateCaption() {
 
         if self.usingImageType == .Photo {
-            if self.imageResources()?.count > 0 {
+            if self.imageResources()!.count > 0 {
                 let photo = self.photos![self.currentPage] as Photo
-                UIView.animateWithDuration(0.1, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                     self.captionLabel.alpha = 0.0
                     }, completion: { (completed) -> Void in
 
                         self.captionLabel.text = photo.caption
-                        UIView.animateWithDuration(0.1, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                        UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                             self.captionLabel.alpha = 1.0
                         }, completion: nil)
 
