@@ -509,8 +509,8 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
             return
         }
         
-        var height = CGFloat(0.0)
-        var width = CGFloat(0.0)
+        var height: CGFloat = 0.0
+        var width: CGFloat = 0.0
         
         if view.bounds.width < view.bounds.height {
 
@@ -535,7 +535,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
     
     // Private Method
 
-    func imageResources() -> Array<AnyObject>? {
+    func imageResources() -> [AnyObject]? {
 
         if usingImageType == .URL {
             return imageURLs as [AnyObject]?
