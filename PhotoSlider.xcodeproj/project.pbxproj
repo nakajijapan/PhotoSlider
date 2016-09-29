@@ -15,6 +15,7 @@
 		DC0E42071C3182180090AC94 /* PhotoSliderClose.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41C21C317E850090AC94 /* PhotoSliderClose.png */; };
 		DC0E42081C31821B0090AC94 /* PhotoSliderClose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41C31C317E850090AC94 /* PhotoSliderClose@2x.png */; };
 		DC0E42091C31821D0090AC94 /* PhotoSliderClose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41C41C317E850090AC94 /* PhotoSliderClose@3x.png */; };
+		DC3EE1DB1D9C96610046AFE2 /* UIImage+PhotoSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3EE1DA1D9C96610046AFE2 /* UIImage+PhotoSlider.swift */; };
 		DC5846DF1D40531E003A5D23 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E421B1C3184D80090AC94 /* Kingfisher.framework */; };
 		DC69C9511C322595006D5347 /* PhotoSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0E41BE1C317E850090AC94 /* PhotoSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -120,6 +121,7 @@
 		DC0E41F31C3181230090AC94 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		DC0E41FA1C3181EE0090AC94 /* PhotoSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PhotoSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0E42101C3184D80090AC94 /* Kingfisher.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kingfisher.xcodeproj; path = Carthage/Checkouts/Kingfisher/Kingfisher.xcodeproj; sourceTree = "<group>"; };
+		DC3EE1DA1D9C96610046AFE2 /* UIImage+PhotoSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+PhotoSlider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 				DC0E41C91C317E850090AC94 /* ProgressView.swift */,
 				DC0E41CA1C317E850090AC94 /* ViewController.swift */,
 				DC0E41CB1C317E850090AC94 /* ZoomingAnimationController.swift */,
+				DC3EE1DA1D9C96610046AFE2 /* UIImage+PhotoSlider.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -344,7 +347,7 @@
 		DCA3F6801CF3697600B261A0 /* Kingfisher-OSX-Demo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = "Kingfisher-OSX-Demo.app";
+			path = "Kingfisher-macOS-Demo.app";
 			remoteRef = DCA3F67F1CF3697600B261A0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -372,7 +375,7 @@
 		DCA3F6881CF3697600B261A0 /* KingfisherTests-OSX.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "KingfisherTests-OSX.xctest";
+			path = "KingfisherTests-macOS.xctest";
 			remoteRef = DCA3F6871CF3697600B261A0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -399,6 +402,7 @@
 				DC0E42031C3182090090AC94 /* Photo.swift in Sources */,
 				DC0E42021C3182080090AC94 /* ImageView.swift in Sources */,
 				DC0E42041C31820C0090AC94 /* ProgressView.swift in Sources */,
+				DC3EE1DB1D9C96610046AFE2 /* UIImage+PhotoSlider.swift in Sources */,
 				DC0E42051C3182110090AC94 /* ViewController.swift in Sources */,
 				DC0E42061C3182130090AC94 /* ZoomingAnimationController.swift in Sources */,
 			);

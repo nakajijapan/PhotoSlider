@@ -44,19 +44,18 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
         let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
         let containerView = transitionContext.containerView
 
-        let snapshotView = fromViewController.view.resizableSnapshotView(from: fromViewController.view.frame, afterScreenUpdates: true, withCapInsets: UIEdgeInsets.zero)
-        containerView.addSubview(snapshotView!)
+        let snapShotImageView = UIImageView(image: fromViewController.view.toImage())
+        containerView.addSubview(snapShotImageView)
         
         toViewController.view.alpha = 0.0
         containerView.addSubview(toViewController.view)
-        
         
         let backgroundView = UIView(frame: fromViewController.view.frame)
         backgroundView.backgroundColor = UIColor.black
         backgroundView.alpha = 0.0
         containerView.addSubview(backgroundView)
         
-        let sourceImageView = self.sourceTransition!.transitionSourceImageView()
+        let sourceImageView = sourceTransition!.transitionSourceImageView()
         containerView.addSubview(sourceImageView)
 
 
@@ -66,6 +65,7 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
             options: UIViewAnimationOptions.curveEaseOut,
             animations: { () -> Void in
                 
+                containerView.alpha = 1.0
                 self.destinationTransition!.transitionDestinationImageView(sourceImageView: sourceImageView)
                 backgroundView.alpha = 1.0
 
@@ -98,7 +98,7 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
         UIView.animate(
             withDuration: self.transitionDuration(using: transitionContext),
             delay: 0.0,
-            options: UIViewAnimationOptions.curveEaseOut,
+            options: UIViewAnimationOptions.curveLinear,
             animations: { () -> Void in
                 
                 self.destinationTransition!.transitionDestinationImageView(sourceImageView: sourceImageView)

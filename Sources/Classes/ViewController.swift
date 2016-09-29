@@ -207,7 +207,7 @@ public class ViewController:UIViewController {
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         
-        let views: [String: UIView]c = ["pageControl": pageControl]
+        let views: [String: UIView] = ["pageControl": pageControl]
         let constraintVertical = NSLayoutConstraint.constraints(withVisualFormat: "V:[pageControl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
         let constraintCenterX  = NSLayoutConstraint.constraints(withVisualFormat: "H:|[pageControl]|", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
         view.addConstraints(constraintVertical)

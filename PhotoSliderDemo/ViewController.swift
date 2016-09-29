@@ -119,7 +119,7 @@ extension ViewController: UICollectionViewDelegate {
         //photoSlider.visibleCloseButton = false
         //photoSlider.visiblePageControl = false
         
-        // ZoomingAnimationControllerTransitioning
+        // UIViewControllerTransitioningDelegate
         photoSlider.transitioningDelegate = self
         
         // Here implemention is better if you want to use ZoomingAnimationControllerTransitioning.
@@ -271,8 +271,8 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
 
 extension ViewController: UIViewControllerTransitioningDelegate {
 
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    
         let animationController = PhotoSlider.ZoomingAnimationController(present: false)
         animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
         animationController.destinationTransition = self
@@ -286,9 +286,9 @@ extension ViewController: UIViewControllerTransitioningDelegate {
         return animationController
         
     }
-    
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
+
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+
         let animationController = PhotoSlider.ZoomingAnimationController(present: true)
         animationController.sourceTransition = source as? ZoomingAnimationControllerTransitioning
         animationController.destinationTransition = presented as? ZoomingAnimationControllerTransitioning
