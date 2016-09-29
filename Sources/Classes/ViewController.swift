@@ -80,14 +80,10 @@ public class ViewController:UIViewController {
         backgroundView = UIView(frame: view.bounds)
         backgroundView.backgroundColor = backgroundViewColor
 
-        if floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1 {
-            view.addSubview(backgroundView)
-        } else {
-            effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-            effectView.frame = view.bounds
-            view.addSubview(effectView)
-            effectView.addSubview(backgroundView)
-        }
+        effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        effectView.frame = view.bounds
+        view.addSubview(effectView)
+        effectView.addSubview(backgroundView)
 
         // scrollview setting for Item
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
@@ -461,9 +457,6 @@ extension ViewController {
         
         // Background View
         backgroundView.frame = contentViewBounds
-        if floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1 {
-            effectView.frame = contentViewBounds
-        }
         
         // Scroll View
         scrollView.contentSize = CGSize(
