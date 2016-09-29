@@ -277,11 +277,7 @@ extension ViewController: UIViewControllerTransitioningDelegate {
         animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
         animationController.destinationTransition = self
         
-        // for orientation (UIViewControllerTransitioningDelegate)
-        if responds(to: #selector(UIViewControllerTransitioningDelegate.animationController(forDismissed:))) {
-        
-            self.view.frame = dismissed.view.bounds
-        }
+        self.view.frame = dismissed.view.bounds
         
         return animationController
         

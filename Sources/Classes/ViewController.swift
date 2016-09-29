@@ -27,7 +27,7 @@ public class ViewController:UIViewController {
     var imageURLs: [URL]?
     var images: [UIImage]?
     var photos: [PhotoSlider.Photo]?
-    var usingImageType = PhotoSliderControllerUsingImageType.None
+    var usingImageType: PhotoSliderControllerUsingImageType = .None
     var backgroundView: UIView!
     var effectView: UIVisualEffectView!
     var closeButton: UIButton?
@@ -41,7 +41,7 @@ public class ViewController:UIViewController {
     // For ScrollViewDelegate
     var scrollPreviewPoint = CGPoint.zero
 
-    public var delegate: PhotoSliderDelegate? = nil
+    public var delegate: PhotoSliderDelegate?
     public var visiblePageControl = true
     public var visibleCloseButton = true
     public var currentPage = 0
