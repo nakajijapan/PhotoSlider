@@ -66,6 +66,7 @@ class ViewController: UIViewController {
     // MARK: - UITraitEnvironment
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
 
         if self.collectionView != nil {
             let indexPath = self.collectionView.indexPathsForVisibleItems.first!
@@ -76,9 +77,10 @@ class ViewController: UIViewController {
     
     // MARK: - UIContentContainer
     
-    func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
         self.tableView.reloadData()
-        
     }
 }
 
@@ -248,7 +250,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
 
             if image.size.height < image.size.width {
                 let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
-                let x = width * 0.5 - cell.imageView.bounds.width * 0.5
+                let x = width * 0.5 - cell.imageView.bounds.height * 0.5
                 frame = CGRect(x: -1.0 * x, y: statusBarHeight, width: width, height: cell.imageView.bounds.height)
             } else {
                 frame = CGRect(x: 0.0, y: statusBarHeight, width: cell.imageView.bounds.width, height: cell.imageView.bounds.height)
