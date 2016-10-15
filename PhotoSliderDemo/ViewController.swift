@@ -44,6 +44,8 @@ class ViewController: UIViewController {
         PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image008.jpg")!, caption: "Japan. \nRice paddy."),
     ]
     
+    var currentRow = 0
+    
     override var prefersStatusBarHidden: Bool {
         return false
     }
@@ -69,10 +71,20 @@ class ViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if self.collectionView != nil {
-            let indexPath = self.collectionView.indexPathsForVisibleItems.first!
-            self.collectionView.contentOffset = CGPoint(x: CGFloat(indexPath.row) * self.view.bounds.width, y: 0.0)
+            self.collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * view.bounds.width, y: 0.0)
         }
 
+    }
+    
+    func updateCurrentRow(to size: CGSize) {
+
+
+        var row = Int(round(collectionView.contentOffset.x / collectionView.bounds.width))
+        if row < 0 {
+            row = 0
+        }
+        currentRow = row
+        
     }
     
     // MARK: - UIContentContainer
@@ -80,6 +92,7 @@ class ViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
+        updateCurrentRow(to: size)
         self.tableView.reloadData()
     }
 }
@@ -100,7 +113,6 @@ extension ViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hcell", for: indexPath) as! ImageCollectionViewCell
         let imageView = cell.imageView
         imageView!.kf.setImage(with: self.imageURLs[indexPath.row])
-        
         return cell
     }
     
@@ -121,6 +133,7 @@ extension ViewController: UICollectionViewDelegate {
         //photoSlider.visibleCloseButton = false
         //photoSlider.visiblePageControl = false
         
+       
         // UIViewControllerTransitioningDelegate
         photoSlider.transitioningDelegate = self
         
