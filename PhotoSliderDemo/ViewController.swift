@@ -70,20 +70,12 @@ class ViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        if collectionView != nil {
-            collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * view.bounds.width, y: 0.0)
+        guard let collectionView = collectionView else {
+            return
         }
-
-    }
-    
-    func updateCurrentRow(to size: CGSize) {
-
-        var row = Int(round(collectionView.contentOffset.x / collectionView.bounds.width))
-        if row < 0 {
-            row = 0
-        }
-        currentRow = row
         
+        collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * view.bounds.width, y: 0.0)
+
     }
     
     // MARK: - UIContentContainer
@@ -222,8 +214,9 @@ extension ViewController: PhotoSliderDelegate {
         
         UIApplication.shared.setStatusBarHidden(false, with: .fade)
         
-        let indexPath = IndexPath(item: viewController.currentPage, section: 0)
-        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+        currentRow = viewController.currentPage
+        let indexPath = IndexPath(item: currentRow, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
     }
 
 }
@@ -309,4 +302,18 @@ extension ViewController: UIViewControllerTransitioningDelegate {
     
 }
 
+// MARK: - Private Methods
 
+extension ViewController {
+    
+    func updateCurrentRow(to size: CGSize) {
+        
+        var row = Int(round(collectionView.contentOffset.x / collectionView.bounds.width))
+        if row < 0 {
+            row = 0
+        }
+        currentRow = row
+        
+    }
+    
+}
