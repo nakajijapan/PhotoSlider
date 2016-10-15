@@ -133,7 +133,7 @@ extension ViewController: UICollectionViewDelegate {
         //photoSlider.modalTransitionStyle   = .CrossDissolve
         
         present(photoSlider, animated: true) { () -> Void in
-            UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.fade)
+            UIApplication.shared.setStatusBarHidden(true, with: .fade)
         }
     }
     
