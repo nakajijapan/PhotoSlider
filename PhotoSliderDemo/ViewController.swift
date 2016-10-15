@@ -155,13 +155,13 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if self.view.bounds.size.width < self.view.bounds.height {
+        if view.bounds.width < view.bounds.height {
             
-            return CGSize(width:self.tableView.bounds.size.width, height:self.tableView.bounds.size.width)
+            return CGSize(width: tableView.bounds.width, height: tableView.bounds.width)
             
         } else {
             
-            return CGSize(width:self.tableView.bounds.size.width, height:collectionView.bounds.size.height)
+            return CGSize(width: tableView.bounds.width, height: view.bounds.height)
             
         }
         
@@ -199,10 +199,10 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+
         if indexPath.row == 0 {
             
-            if self.view.bounds.size.width < self.view.bounds.height {
+            if view.bounds.width < view.bounds.height {
                 return tableView.bounds.width
             } else {
                 return tableView.bounds.height
@@ -210,6 +210,7 @@ extension ViewController: UITableViewDelegate {
         }
         
         return 0.0
+
     }
     
 }
@@ -258,7 +259,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         let cell = self.collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         var frame = CGRect.zero
-        
+
         if self.view.bounds.size.width < self.view.bounds.height {
 
             if image.size.height < image.size.width {
