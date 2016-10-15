@@ -70,14 +70,13 @@ class ViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        if self.collectionView != nil {
-            self.collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * view.bounds.width, y: 0.0)
+        if collectionView != nil {
+            collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * view.bounds.width, y: 0.0)
         }
 
     }
     
     func updateCurrentRow(to size: CGSize) {
-
 
         var row = Int(round(collectionView.contentOffset.x / collectionView.bounds.width))
         if row < 0 {
@@ -93,7 +92,7 @@ class ViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
 
         updateCurrentRow(to: size)
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
 }
 
@@ -106,13 +105,13 @@ extension ViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.imageURLs.count
+        return imageURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hcell", for: indexPath) as! ImageCollectionViewCell
         let imageView = cell.imageView
-        imageView!.kf.setImage(with: self.imageURLs[indexPath.row])
+        imageView!.kf.setImage(with: imageURLs[indexPath.row])
         return cell
     }
     
@@ -125,9 +124,9 @@ extension ViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         // Using transition
-        //let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
-        //let photoSlider = PhotoSlider.ViewController(images: self.images)
-        let photoSlider = PhotoSlider.ViewController(photos: self.photos)
+        //let photoSlider = PhotoSlider.ViewController(imageURLs: imageURLs)
+        //let photoSlider = PhotoSlider.ViewController(images: images)
+        let photoSlider = PhotoSlider.ViewController(photos: photos)
         photoSlider.delegate = self
         photoSlider.currentPage = indexPath.row
         //photoSlider.visibleCloseButton = false
@@ -141,7 +140,7 @@ extension ViewController: UICollectionViewDelegate {
         //photoSlider.modalPresentationStyle = .OverCurrentContext
         //photoSlider.modalTransitionStyle   = .CrossDissolve
         
-        self.present(photoSlider, animated: true) { () -> Void in
+        present(photoSlider, animated: true) { () -> Void in
             UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.fade)
         }
     }
@@ -183,11 +182,11 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell01")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell01")!
         
-        self.collectionView = cell.viewWithTag(1) as! UICollectionView
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
+        collectionView = cell.viewWithTag(1) as! UICollectionView
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         return cell
     }
@@ -235,8 +234,8 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
     
     func transitionSourceImageView() -> UIImageView {
         
-        let indexPath = self.collectionView.indexPathsForSelectedItems?.first
-        let cell = self.collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
+        let indexPath = collectionView.indexPathsForSelectedItems?.first
+        let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
         let imageView = UIImageView(image: cell.imageView.image)
         
         var frame = cell.imageView.frame
@@ -255,12 +254,12 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
             return
         }
         
-        let indexPath = self.collectionView.indexPathsForSelectedItems?.first
-        let cell = self.collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
+        let indexPath = collectionView.indexPathsForSelectedItems?.first
+        let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         var frame = CGRect.zero
 
-        if self.view.bounds.size.width < self.view.bounds.height {
+        if view.bounds.size.width < view.bounds.height {
 
             if image.size.height < image.size.width {
                 let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
@@ -293,7 +292,7 @@ extension ViewController: UIViewControllerTransitioningDelegate {
         animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
         animationController.destinationTransition = self
         
-        self.view.frame = dismissed.view.bounds
+        view.frame = dismissed.view.bounds
         
         return animationController
         

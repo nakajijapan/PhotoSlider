@@ -260,8 +260,8 @@ extension ViewController: UIScrollViewDelegate {
         }
         
 
-        let offsetX = fabs(scrollView.contentOffset.x - self.scrollPreviewPoint.x)
-        let offsetY = fabs(scrollView.contentOffset.y - self.scrollPreviewPoint.y)
+        let offsetX = fabs(scrollView.contentOffset.x - scrollPreviewPoint.x)
+        let offsetY = fabs(scrollView.contentOffset.y - scrollPreviewPoint.y)
         
         if scrollMode == .None {
             if (offsetY > offsetX) {
@@ -271,14 +271,14 @@ extension ViewController: UIScrollViewDelegate {
             }
         }
         
-        if self.scrollMode == .Vertical {
+        if scrollMode == .Vertical {
             let offsetHeight = fabs(scrollView.frame.size.height - scrollView.contentOffset.y)
             let alpha = 1.0 - ( fabs(offsetHeight) / (scrollView.frame.size.height / 2.0) )
 
             backgroundView.alpha = alpha
             
             var contentOffset = scrollView.contentOffset
-            contentOffset.x = self.scrollPreviewPoint.x
+            contentOffset.x = scrollPreviewPoint.x
             scrollView.contentOffset = contentOffset
             
             let screenHeight = UIScreen.main.bounds.size.height
@@ -289,14 +289,14 @@ extension ViewController: UIScrollViewDelegate {
                 closePhotoSlider(up: false)
             }
             
-        } else if self.scrollMode == .Horizontal {
+        } else if scrollMode == .Horizontal {
             var contentOffset = scrollView.contentOffset
             contentOffset.y = scrollPreviewPoint.y
             scrollView.contentOffset = contentOffset
         }
         
         // Update current page index.
-        self.generateCurrentPage()
+        generateCurrentPage()
 
     }
     
@@ -452,7 +452,7 @@ extension ViewController {
         
         scrollMode = .Rotating
         
-        let contentViewBounds = self.view.bounds
+        let contentViewBounds = view.bounds
         let height = contentViewBounds.height
         
         // Background View
@@ -545,7 +545,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
 
         if usingImageType == .Photo {
             if imageResources()!.count > 0 {
-                let photo = photos![self.currentPage] as Photo
+                let photo = photos![currentPage] as Photo
                 UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                     self.captionLabel.alpha = 0.0
                     }, completion: { (completed) -> Void in
