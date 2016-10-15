@@ -267,7 +267,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
                 let x = width * 0.5 - cell.imageView.bounds.height * 0.5
                 frame = CGRect(x: -1.0 * x, y: statusBarHeight, width: width, height: cell.imageView.bounds.height)
             } else {
-                frame = CGRect(x: 0.0, y: statusBarHeight, width: cell.imageView.bounds.width, height: cell.imageView.bounds.height)
+                frame = CGRect(x: 0.0, y: statusBarHeight, width: view.bounds.width, height: view.bounds.width)
             }
             
         } else {
