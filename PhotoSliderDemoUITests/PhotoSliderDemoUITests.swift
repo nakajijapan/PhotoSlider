@@ -26,7 +26,7 @@ class PhotoSliderDemoUITests: XCTestCase {
     func existsPhotoSliderScrollView(app: XCUIApplication) {
 
         sleep(1)
-        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, false)
+        XCTAssertEqual(app.scrollViews.matching(identifier: "PhotoSliderScrollView").element.exists, false)
 
     }
     
@@ -35,18 +35,18 @@ class PhotoSliderDemoUITests: XCTestCase {
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()
 
-        XCTAssertEqual(app.scrollViews.matchingIdentifier("PhotoSliderScrollView").element.exists, true)
+        XCTAssertEqual(app.scrollViews.matching(identifier: "PhotoSliderScrollView").element.exists, true)
         
         app.buttons["PhotoSliderClose"].tap()
         
-        self.existsPhotoSliderScrollView(app)
+        self.existsPhotoSliderScrollView(app: app)
     }
     
     func testSwitchImage() {
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()
         
-        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
         element.swipeLeft()
         element.swipeLeft()
         element.swipeLeft()
@@ -55,27 +55,27 @@ class PhotoSliderDemoUITests: XCTestCase {
         element.swipeRight()
         app.buttons["PhotoSliderClose"].tap()
         
-        self.existsPhotoSliderScrollView(app)
+        self.existsPhotoSliderScrollView(app: app)
     }
     
     func testCloseWithSwipingUpImage() {
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()
         
-        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
         element.swipeUp()
         
-        self.existsPhotoSliderScrollView(app)
+        self.existsPhotoSliderScrollView(app: app)
     }
     
     func testCloseWithSwipingDownImage() {
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()
         
-        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
         element.swipeDown()
         
-        self.existsPhotoSliderScrollView(app)
+        self.existsPhotoSliderScrollView(app: app)
     }
     
     func testRightRotation() {
@@ -83,31 +83,31 @@ class PhotoSliderDemoUITests: XCTestCase {
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()
 
-        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
         element.swipeLeft()
         element.swipeLeft()
 
-        XCUIDevice.sharedDevice().orientation = .LandscapeRight
-        XCUIDevice.sharedDevice().orientation = .PortraitUpsideDown
-        XCUIDevice.sharedDevice().orientation = .LandscapeLeft
-        XCUIDevice.sharedDevice().orientation = .Portrait
+        XCUIDevice.shared().orientation = .landscapeRight
+        XCUIDevice.shared().orientation = .portraitUpsideDown
+        XCUIDevice.shared().orientation = .landscapeLeft
+        XCUIDevice.shared().orientation = .portrait
         app.buttons["PhotoSliderClose"].tap()
     }
     
     func testZooming() {
-        XCUIDevice.sharedDevice().orientation = .Portrait
+        XCUIDevice.shared().orientation = .portrait
         
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()
         
-        let element = app.scrollViews.matchingIdentifier("PhotoSliderScrollView").elementBoundByIndex(0)
+        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
         element.doubleTap()
         element.swipeUp()
         element.swipeDown()
         element.doubleTap()
         app.buttons["PhotoSliderClose"].tap()
         
-        self.existsPhotoSliderScrollView(app)
+        self.existsPhotoSliderScrollView(app: app)
     }
 
 }
