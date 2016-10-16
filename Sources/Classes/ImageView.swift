@@ -21,12 +21,12 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.initialize()
+        initialize()
     }
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.initialize()
+        initialize()
     }
     
     func initialize() {
@@ -48,22 +48,22 @@ class ImageView: UIView, UIScrollViewDelegate {
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true
 
-        addSubview(self.scrollView)
+        addSubview(scrollView)
         layoutScrollView()
 
-        scrollView.addSubview(self.imageView)
+        scrollView.addSubview(imageView)
        
         // progress view
         progressView = ProgressView(frame: CGRect.zero)
         progressView.isHidden = true
-        addSubview(self.progressView)
+        addSubview(progressView)
         layoutProgressView()
         
         let doubleTabGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
         doubleTabGesture.numberOfTapsRequired = 2
-        self.addGestureRecognizer(doubleTabGesture)
+        addGestureRecognizer(doubleTabGesture)
         
-        self.imageView.autoresizingMask = [
+        imageView.autoresizingMask = [
             .flexibleWidth,
             .flexibleLeftMargin,
             .flexibleRightMargin,
@@ -90,16 +90,13 @@ class ImageView: UIView, UIScrollViewDelegate {
         // Vertically
         if frameToCenter.size.height < boundsSize.height {
             frameToCenter.origin.y = floor((boundsSize.height - frameToCenter.size.height) / 2.0)
-            
         } else {
             frameToCenter.origin.y = 0
         }
         
         // Center
-        if !imageView.frame.equalTo(frameToCenter) {
-            
-            imageView.frame = frameToCenter;
-            
+        if !(imageView.frame.equalTo(frameToCenter)) {
+            imageView.frame = frameToCenter
         }
     }
     
@@ -107,7 +104,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     func layoutScrollView() {
         
-        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         let views: [String: UIView] = ["scrollView": scrollView]
         let constraintVertical   = NSLayoutConstraint.constraints(
             withVisualFormat: "V:|[scrollView]|",
@@ -126,7 +123,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     }
     
     func layoutProgressView() {
-        self.progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.translatesAutoresizingMaskIntoConstraints = false
         let views = ["progressView": progressView, "superView": self]
         let constraintVertical = NSLayoutConstraint.constraints(
             withVisualFormat: "V:[superView]-(<=1)-[progressView(40)]",
@@ -140,15 +137,15 @@ class ImageView: UIView, UIScrollViewDelegate {
             metrics: nil,
             views: views
         )
-        self.addConstraints(constraintVertical)
-        self.addConstraints(constraintHorizontal)
+        addConstraints(constraintVertical)
+        addConstraints(constraintHorizontal)
     }
     
     func loadImage(imageURL: URL) {
         
-        self.progressView.isHidden = false
+        progressView.isHidden = false
 
-        self.imageView.kf.setImage(
+        imageView.kf.setImage(
             with: imageURL,
             placeholder: nil,
             options: [.transition(.fade(1))],
@@ -168,10 +165,8 @@ class ImageView: UIView, UIScrollViewDelegate {
     }
     
     func setImage(image:UIImage) {
-
-        self.imageView.image = image
-        self.layoutImageView(image: image)
-        
+        imageView.image = image
+        layoutImageView(image: image)
     }
     
     func layoutImageView(image:UIImage) {
@@ -197,8 +192,8 @@ class ImageView: UIView, UIScrollViewDelegate {
 
         }
         
-        self.imageView.frame = frame
-        self.imageView.center = CGPoint(x: bounds.midX, y: bounds.midY)
+        imageView.frame = frame
+        imageView.center = CGPoint(x: bounds.midX, y: bounds.midY)
     }
     
     func layoutImageView() {
@@ -206,7 +201,7 @@ class ImageView: UIView, UIScrollViewDelegate {
         guard let image = self.imageView.image else {
             return
         }
-        self.layoutImageView(image: image)
+        layoutImageView(image: image)
     }
     
     func didDoubleTap(_ sender: UIGestureRecognizer) {
@@ -214,13 +209,11 @@ class ImageView: UIView, UIScrollViewDelegate {
         if self.scrollView.zoomScale == 1.0 {
 
             let touchPoint = sender.location(in: self)
-            self.scrollView.zoom(to: CGRect(x: touchPoint.x, y: touchPoint.y, width: 1, height: 1), animated: true)
-
-
+            scrollView.zoom(to: CGRect(x: touchPoint.x, y: touchPoint.y, width: 1, height: 1), animated: true)
             
         } else {
 
-            self.scrollView.setZoomScale(0.0, animated: true)
+            scrollView.setZoomScale(0.0, animated: true)
 
 
         }
@@ -229,16 +222,16 @@ class ImageView: UIView, UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     
     @nonobjc func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
-        return self.imageView
+        return imageView
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
+        setNeedsLayout()
+        layoutIfNeeded()
     }
     
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        self.delegate?.photoSliderImageViewDidEndZooming(viewController: self, atScale: scale)
+        delegate?.photoSliderImageViewDidEndZooming(viewController: self, atScale: scale)
     }
     
 }

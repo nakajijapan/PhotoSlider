@@ -14,17 +14,17 @@ public class ProgressView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
 
     public required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
     
     public override func draw(_ rect: CGRect) {
-        self.createInitialProgressLayer()
-        self.createProgressLayer()
+        createInitialProgressLayer()
+        createProgressLayer()
     }
     
     func createInitialProgressLayer() {
@@ -32,21 +32,21 @@ public class ProgressView: UIView {
         let endAngle = M_PI_2 * 2 + M_PI_2
         let centerPoint = CGPoint(x: frame.width / 2.0, y: frame.height / 2.0)
         
-        self.progressLayer = CAShapeLayer()
-        self.progressLayer.path = UIBezierPath(
+        progressLayer = CAShapeLayer()
+        progressLayer.path = UIBezierPath(
             arcCenter: centerPoint,
             radius: 20.0,
             startAngle: CGFloat(startAngle),
             endAngle: CGFloat(endAngle),
             clockwise: true
         ).cgPath
-        self.progressLayer.backgroundColor = UIColor.clear.cgColor
-        self.progressLayer.fillColor = UIColor.clear.cgColor
-        self.progressLayer.strokeColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2).cgColor
-        self.progressLayer.lineWidth = 4.0
-        self.progressLayer.strokeStart = 0.0
-        self.progressLayer.strokeEnd = 1.0
-        self.layer.addSublayer(self.progressLayer)
+        progressLayer.backgroundColor = UIColor.clear.cgColor
+        progressLayer.fillColor = UIColor.clear.cgColor
+        progressLayer.strokeColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2).cgColor
+        progressLayer.lineWidth = 4.0
+        progressLayer.strokeStart = 0.0
+        progressLayer.strokeEnd = 1.0
+        layer.addSublayer(progressLayer)
     }
     
     func createProgressLayer() {
@@ -54,7 +54,7 @@ public class ProgressView: UIView {
         let endAngle = M_PI_2 * 2 + M_PI_2
         let centerPoint = CGPoint(x: frame.width / 2, y: frame.height / 2)
         
-        self.progressLayer = CAShapeLayer()
+        progressLayer = CAShapeLayer()
         let bezierPath = UIBezierPath(arcCenter: centerPoint, radius: 20.0, startAngle: CGFloat(startAngle), endAngle: CGFloat(endAngle), clockwise: true)
         progressLayer.path = bezierPath.cgPath
         progressLayer.backgroundColor = UIColor.clear.cgColor
@@ -74,12 +74,12 @@ public class ProgressView: UIView {
         }
         
         let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.fromValue = NSNumber(value: Float(self.progressLayer.strokeEnd))
+        animation.fromValue = NSNumber(value: Float(progressLayer.strokeEnd))
         animation.toValue = NSNumber(value: progress)
         animation.duration = 0.05
         animation.fillMode = kCAFillModeForwards
-        self.progressLayer.strokeEnd = CGFloat(progress)
-        self.progressLayer.add(animation, forKey: "strokeEnd")
+        progressLayer.strokeEnd = CGFloat(progress)
+        progressLayer.add(animation, forKey: "strokeEnd")
     }
 
 
