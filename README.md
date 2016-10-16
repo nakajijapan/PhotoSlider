@@ -12,8 +12,8 @@ PhotoSlider can a simple photo slider and delete slider with swiping.
 
 ## Requirements
 
-- Xcode 7+
-- Swift 2.0+
+- Xcode 8+
+- Swift 3.0+
 - iOS 8+
 
 ## Installation
