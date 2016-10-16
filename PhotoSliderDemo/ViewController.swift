@@ -45,11 +45,7 @@ class ViewController: UIViewController {
     ]
     
     var currentRow = 0
-    
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -60,7 +56,7 @@ class ViewController: UIViewController {
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
-        
+
         flowLayout.invalidateLayout()
         
     }
@@ -75,6 +71,8 @@ class ViewController: UIViewController {
         }
         
         collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * view.bounds.width, y: 0.0)
+
+        UIApplication.shared.setStatusBarHidden(false, with: .fade)
 
     }
     
@@ -106,7 +104,7 @@ extension ViewController: UICollectionViewDataSource {
         imageView!.kf.setImage(with: imageURLs[indexPath.row])
         return cell
     }
-    
+
 }
 
 // MARK: - UICollectionViewDelegate
@@ -151,7 +149,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: tableView.bounds.width, height: tableView.bounds.width)
             
         } else {
-            
+
             return CGSize(width: tableView.bounds.width, height: view.bounds.height)
             
         }
@@ -232,7 +230,11 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         let imageView = UIImageView(image: cell.imageView.image)
         
         var frame = cell.imageView.frame
+
         frame.origin.y += UIApplication.shared.statusBarFrame.height
+        if view.bounds.size.width >= view.bounds.height {
+            frame.size.height -= 20.0
+        }
         
         imageView.frame = frame
         imageView.clipsToBounds = true
@@ -256,7 +258,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
 
             if image.size.height < image.size.width {
                 let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
-                let x = width * 0.5 - cell.imageView.bounds.height * 0.5
+                let x = (width - cell.imageView.bounds.height) * 0.5
                 frame = CGRect(x: -1.0 * x, y: statusBarHeight, width: width, height: cell.imageView.bounds.height)
             } else {
                 frame = CGRect(x: 0.0, y: statusBarHeight, width: view.bounds.width, height: view.bounds.width)
@@ -264,8 +266,8 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
             
         } else {
 
-            let height = (image.size.height * cell.imageView.bounds.width) / image.size.width
-            let y = height * 0.5 - cell.imageView.bounds.height * 0.5 - statusBarHeight
+            let height = (image.size.height * UIScreen.main.bounds.width) / image.size.width
+            let y = (height - UIScreen.main.bounds.height - statusBarHeight) * 0.5
             frame = CGRect(x: 0.0, y: -1.0 * y, width: view.bounds.width, height: height)
 
         }
