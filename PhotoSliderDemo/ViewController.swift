@@ -9,19 +9,19 @@
 import UIKit
 import PhotoSlider
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoSliderDelegate, UIViewControllerTransitioningDelegate, ZoomingAnimationControllerTransitioning {
+class ViewController: UIViewController {
     
     @IBOutlet var tableView:UITableView!
     var collectionView:UICollectionView!
     var imageURLs = [
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image001.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image002.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image003.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image004.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image005.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image006.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image007.jpg")!,
-        NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image008.jpg")!,
+        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image001.jpg")!,
+        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image002.jpg")!,
+        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image003.jpg")!,
+        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image004.jpg")!,
+        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image005.jpg")!,
+        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image006.jpg")!,
+        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image007.jpg")!,
+        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image008.jpg")!,
     ]
     var images = [
         UIImage(named: "image001.jpg")!,
@@ -34,19 +34,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         UIImage(named: "image008.jpg")!,
     ]
     var photos = [
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image001.jpg")!, caption: "In San Francisco, I went walking in the night. The city is still bright."),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image002.jpg")!, caption: "This is a very good photo. \nGood!"),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image003.jpg")!, caption: ""),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image004.jpg")!, caption: "Fire Alerm"),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image005.jpg")!, caption: "He is misyobun. He is from Japan."),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image006.jpg")!, caption: "Bamboo grove.\nGreen\nGood"),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image007.jpg")!, caption: "Railroad"),
-        PhotoSlider.Photo(imageURL:NSURL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image008.jpg")!, caption: "Japan. \nRice paddy."),
+        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image001.jpg")!, caption: "In San Francisco, I went walking in the night. The city is still bright."),
+        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image002.jpg")!, caption: "This is a very good photo. \nGood!"),
+        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image003.jpg")!, caption: ""),
+        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image004.jpg")!, caption: "Fire Alerm"),
+        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image005.jpg")!, caption: "He is misyobun. He is from Japan."),
+        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image006.jpg")!, caption: "Bamboo grove.\nGreen\nGood"),
+        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image007.jpg")!, caption: "Railroad"),
+        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image008.jpg")!, caption: "Japan. \nRice paddy."),
     ]
-    override func prefersStatusBarHidden() -> Bool {
-        return false
-    }
     
+    var currentRow = 0
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -57,144 +56,189 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
-        
+
         flowLayout.invalidateLayout()
         
     }
     
     // MARK: - UITraitEnvironment
     
-    override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
 
-        if self.collectionView != nil {
-            let indexPath = self.collectionView.indexPathsForVisibleItems().first!
-            self.collectionView.contentOffset = CGPoint(x: CGFloat(indexPath.row) * self.view.bounds.width, y: 0.0)
-        }
-
-    }
-    
-    // MARK: - UITableViewDataSource
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell01")!
-        
-        self.collectionView = cell.viewWithTag(1) as! UICollectionView
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if indexPath.row == 0 {
-            
-            if self.view.bounds.size.width < self.view.bounds.height {
-                return tableView.bounds.size.width
-            } else {
-                return tableView.bounds.size.height
-            }
+        guard let collectionView = collectionView else {
+            return
         }
         
-        return 0.0
+        collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * view.bounds.width, y: 0.0)
+
+        UIApplication.shared.setStatusBarHidden(false, with: .fade)
+
     }
     
-    // MARK: - UICollectionViewDataSource
+    // MARK: - UIContentContainer
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        updateCurrentRow(to: size)
+        tableView.reloadData()
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension ViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.imageURLs.count
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageURLs.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("hcell", forIndexPath: indexPath) as! ImageCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hcell", for: indexPath) as! ImageCollectionViewCell
         let imageView = cell.imageView
-        imageView!.kf_setImageWithURL(self.imageURLs[indexPath.row])
-        
+        imageView!.kf.setImage(with: imageURLs[indexPath.row])
         return cell
     }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        if self.view.bounds.size.width < self.view.bounds.height {
 
-            return CGSize(width:self.tableView.bounds.size.width, height:self.tableView.bounds.size.width)
+}
 
-        } else {
-            
-            return CGSize(width:self.tableView.bounds.size.width, height:collectionView.bounds.size.height)
+// MARK: - UICollectionViewDelegate
 
-        }
-        
-    }
+extension ViewController: UICollectionViewDelegate {
     
-    // MARK: - UICollectionViewDelegate
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         // Using transition
-        //let photoSlider = PhotoSlider.ViewController(imageURLs: self.imageURLs)
-        //let photoSlider = PhotoSlider.ViewController(images: self.images)
-        let photoSlider = PhotoSlider.ViewController(photos: self.photos)
+        //let photoSlider = PhotoSlider.ViewController(imageURLs: imageURLs)
+        //let photoSlider = PhotoSlider.ViewController(images: images)
+        let photoSlider = PhotoSlider.ViewController(photos: photos)
         photoSlider.delegate = self
         photoSlider.currentPage = indexPath.row
         //photoSlider.visibleCloseButton = false
         //photoSlider.visiblePageControl = false
         
-        // ZoomingAnimationControllerTransitioning
+       
+        // UIViewControllerTransitioningDelegate
         photoSlider.transitioningDelegate = self
         
         // Here implemention is better if you want to use ZoomingAnimationControllerTransitioning.
         //photoSlider.modalPresentationStyle = .OverCurrentContext
         //photoSlider.modalTransitionStyle   = .CrossDissolve
         
-        self.presentViewController(photoSlider, animated: true) { () -> Void in
-            UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+        present(photoSlider, animated: true) { () -> Void in
+            UIApplication.shared.setStatusBarHidden(true, with: .fade)
         }
     }
     
-    // MARK: - PhotoSliderDelegate
+}
+
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension ViewController: UICollectionViewDelegateFlowLayout {
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if view.bounds.width < view.bounds.height {
+            
+            return CGSize(width: tableView.bounds.width, height: tableView.bounds.width)
+            
+        } else {
+
+            return CGSize(width: tableView.bounds.width, height: view.bounds.height)
+            
+        }
+        
+    }
+    
+}
+
+
+// MARK: - UITableViewDataSource
+
+extension ViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell01")!
+        
+        collectionView = cell.viewWithTag(1) as! UICollectionView
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        return cell
+    }
+    
+}
+
+// MARK: - UITableViewDelegate
+
+extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        if indexPath.row == 0 {
+            
+            if view.bounds.width < view.bounds.height {
+                return tableView.bounds.width
+            } else {
+                return tableView.bounds.height
+            }
+        }
+        
+        return 0.0
+
+    }
+    
+}
+
+// MARK: - PhotoSliderDelegate
+
+extension ViewController: PhotoSliderDelegate {
+
     func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
-
-        UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
         
-        let indexPath = NSIndexPath(forItem: viewController.currentPage, inSection: 0)
-        self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
+        UIApplication.shared.setStatusBarHidden(false, with: .fade)
+        
+        currentRow = viewController.currentPage
+        let indexPath = IndexPath(item: currentRow, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
     }
 
-    // MARK: - UIContentContainer
-    
-    internal override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        self.tableView.reloadData()
-        
-    }
-    
-    // MARK: ZoomingAnimationControllerTransitioning
+}
+
+// MARK: - ZoomingAnimationControllerTransitioning
+
+extension ViewController: ZoomingAnimationControllerTransitioning {
     
     func transitionSourceImageView() -> UIImageView {
         
-        let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
-        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
+        let indexPath = collectionView.indexPathsForSelectedItems?.first
+        let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
         let imageView = UIImageView(image: cell.imageView.image)
         
         var frame = cell.imageView.frame
-        frame.origin.y += UIApplication.sharedApplication().statusBarFrame.height
+
+        frame.origin.y += UIApplication.shared.statusBarFrame.height
+        if view.bounds.size.width >= view.bounds.height {
+            frame.size.height -= 20.0
+        }
         
         imageView.frame = frame
         imageView.clipsToBounds = true
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }
@@ -205,52 +249,52 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return
         }
         
-        let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
-        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
-        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
-        var frame = CGRectZero
-        
-        if self.view.bounds.size.width < self.view.bounds.height {
+        let indexPath = collectionView.indexPathsForSelectedItems?.first
+        let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        var frame = CGRect.zero
+
+        if view.bounds.size.width < view.bounds.height {
 
             if image.size.height < image.size.width {
                 let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
-                let x = width * 0.5 - CGRectGetWidth(cell.imageView.bounds) * 0.5
-                frame = CGRectMake(-1.0 * x, statusBarHeight, width, CGRectGetHeight(cell.imageView.bounds))
+                let x = (width - cell.imageView.bounds.height) * 0.5
+                frame = CGRect(x: -1.0 * x, y: statusBarHeight, width: width, height: cell.imageView.bounds.height)
             } else {
-                frame = CGRectMake(0.0, statusBarHeight, CGRectGetWidth(cell.imageView.bounds), CGRectGetHeight(cell.imageView.bounds))
+                frame = CGRect(x: 0.0, y: statusBarHeight, width: view.bounds.width, height: view.bounds.width)
             }
             
         } else {
 
-            let height = (image.size.height * CGRectGetWidth(cell.imageView.bounds)) / image.size.width
-            let y = height * 0.5 - CGRectGetHeight(cell.imageView.bounds) * 0.5 - statusBarHeight
-            frame = CGRectMake(0.0, -1.0 * y, CGRectGetWidth(self.view.bounds), height)
+            let height = (image.size.height * UIScreen.main.bounds.width) / image.size.width
+            let y = (height - UIScreen.main.bounds.height - statusBarHeight) * 0.5
+            frame = CGRect(x: 0.0, y: -1.0 * y, width: view.bounds.width, height: height)
 
         }
         
         sourceImageView.frame = frame
         
     }
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension ViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     
-    // MARK: UIViewControllerTransitioningDelegate
-    
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
         let animationController = PhotoSlider.ZoomingAnimationController(present: false)
         animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
         animationController.destinationTransition = self
         
-        // for orientation
-        if self.respondsToSelector(#selector(UIViewControllerTransitioningDelegate.animationControllerForDismissedController(_:))) {
-            self.view.frame = dismissed.view.bounds
-        }
+        view.frame = dismissed.view.bounds
         
         return animationController
         
     }
-    
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
+
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+
         let animationController = PhotoSlider.ZoomingAnimationController(present: true)
         animationController.sourceTransition = source as? ZoomingAnimationControllerTransitioning
         animationController.destinationTransition = presented as? ZoomingAnimationControllerTransitioning
@@ -260,4 +304,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 }
 
+// MARK: - Private Methods
 
+extension ViewController {
+    
+    func updateCurrentRow(to size: CGSize) {
+        
+        var row = Int(round(collectionView.contentOffset.x / collectionView.bounds.width))
+        if row < 0 {
+            row = 0
+        }
+        currentRow = row
+        
+    }
+    
+}
