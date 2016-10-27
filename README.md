@@ -4,6 +4,8 @@
 [![Version](https://img.shields.io/cocoapods/v/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
 [![License](https://img.shields.io/cocoapods/l/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
 [![Platform](https://img.shields.io/cocoapods/p/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
+[![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)](https://swift.org)
+
 
 PhotoSlider can a simple photo slider and delete slider with swiping.
 
