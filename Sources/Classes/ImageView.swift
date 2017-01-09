@@ -223,7 +223,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     // MARK: - UIScrollViewDelegate
     
-    @nonobjc func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
     
