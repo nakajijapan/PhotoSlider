@@ -14,14 +14,16 @@ public class KingfisherImageLoader: ImageLoader {
         imageView: UIImageView?,
         fromURL url: URL?,
         progress: @escaping ImageLoader.ProgressBlock,
-        completion: @escaping ImageLoader.CompletionBlock)
-    {
+        completion: @escaping ImageLoader.CompletionBlock) {
         imageView?.kf.setImage(
             with: url,
             placeholder: nil,
             options: [.transition(.fade(1))],
             progressBlock: { (receivedSize, totalSize) in
-                progress(Int(truncatingBitPattern: receivedSize), Int(truncatingBitPattern: totalSize))
+                progress(
+                    Int(truncatingBitPattern: receivedSize),
+                    Int(truncatingBitPattern: totalSize)
+                )
             },
             completionHandler: { (image, error, _, _) in
                 if let image = image, error == nil {
