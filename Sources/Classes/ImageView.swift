@@ -18,6 +18,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     var scrollView: UIScrollView!
     var progressView: PhotoSlider.ProgressView!
     var delegate: PhotoSliderImageViewDelegate? = nil
+    weak var imageLoader: PhotoSlider.ImageLoader?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -144,26 +145,21 @@ class ImageView: UIView, UIScrollViewDelegate {
     }
     
     func loadImage(imageURL: URL) {
-        
         progressView.isHidden = false
-
-        imageView.kf.setImage(
-            with: imageURL,
-            placeholder: nil,
-            options: [.transition(.fade(1))],
-            progressBlock: { (receivedSize, totalSize) -> () in
-                
-                let progress = Float(receivedSize) / Float(totalSize)
-                self.progressView.animateCurveToProgress(progress: progress)
-
-            }) { (image, error, cacheType, imageURL) -> () in
-                self.progressView.isHidden = true
-                
-                if error == nil {
-                    self.layoutImageView(image: image!)
+        imageLoader?.load(
+            imageView: imageView,
+            fromURL: imageURL,
+            progress: { [weak self] (receivedSize, totalSize) in
+                let progress: Float = Float(receivedSize) / Float(totalSize)
+                self?.progressView.animateCurveToProgress(progress: progress)
+            },
+            completion: { [weak self] (image) in
+                self?.progressView.isHidden = true
+                if let image = image {
+                    self?.layoutImageView(image: image)
                 }
-        }
-        
+            }
+        )
     }
     
     func setImage(image:UIImage) {
