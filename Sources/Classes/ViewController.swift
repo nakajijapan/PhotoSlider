@@ -49,6 +49,9 @@ public class ViewController:UIViewController {
     public var pageControl = UIPageControl()
     public var backgroundViewColor = UIColor.black
     public var captionTextColor = UIColor.white
+
+    public var imageLoader: PhotoSlider.ImageLoader?
+
     public init(imageURLs:Array<URL>) {
         super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
@@ -108,10 +111,16 @@ public class ViewController:UIViewController {
         let height = view.bounds.height
         var frame = view.bounds
         frame.origin.y = height
+
+        if imageLoader == nil {
+            imageLoader = PhotoSlider.KingfisherImageLoader()
+        }
+
         for imageResource in imageResources()! {
             
             let imageView: PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
             imageView.delegate = self
+            imageView.imageLoader = imageLoader
             scrollView.addSubview(imageView)
             
             if imageResource is URL {

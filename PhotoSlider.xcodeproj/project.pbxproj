@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94530E041E247C6100D12C16 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94530E031E247C6100D12C16 /* ImageLoader.swift */; };
+		94530E141E247CA300D12C16 /* KingfisherImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */; };
 		DC0E42021C3182080090AC94 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0E41C71C317E850090AC94 /* ImageView.swift */; };
 		DC0E42031C3182090090AC94 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0E41C81C317E850090AC94 /* Photo.swift */; };
 		DC0E42041C31820C0090AC94 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0E41C91C317E850090AC94 /* ProgressView.swift */; };
@@ -108,6 +110,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		94530E031E247C6100D12C16 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KingfisherImageLoader.swift; sourceTree = "<group>"; };
 		DC0E41BD1C317E850090AC94 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PhotoSlider/Info.plist; sourceTree = "<group>"; };
 		DC0E41BE1C317E850090AC94 /* PhotoSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSlider.h; path = PhotoSlider/PhotoSlider.h; sourceTree = "<group>"; };
 		DC0E41C21C317E850090AC94 /* PhotoSliderClose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoSliderClose.png; sourceTree = "<group>"; };
@@ -192,6 +196,8 @@
 				DC0E41CA1C317E850090AC94 /* ViewController.swift */,
 				DC0E41CB1C317E850090AC94 /* ZoomingAnimationController.swift */,
 				DC3EE1DA1D9C96610046AFE2 /* UIImage+PhotoSlider.swift */,
+				94530E031E247C6100D12C16 /* ImageLoader.swift */,
+				94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -399,7 +405,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94530E041E247C6100D12C16 /* ImageLoader.swift in Sources */,
 				DC0E42031C3182090090AC94 /* Photo.swift in Sources */,
+				94530E141E247CA300D12C16 /* KingfisherImageLoader.swift in Sources */,
 				DC0E42021C3182080090AC94 /* ImageView.swift in Sources */,
 				DC0E42041C31820C0090AC94 /* ProgressView.swift in Sources */,
 				DC3EE1DB1D9C96610046AFE2 /* UIImage+PhotoSlider.swift in Sources */,

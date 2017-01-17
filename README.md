@@ -162,6 +162,51 @@ You can handle the following event:
 - optional func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController)
 - optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
 
+## Multiple Image Loader
+
+PhotoSlider use Kingfisher for remote image.
+If use SDWebImage in your project, image cache is not shared between Kingfisher and SDWebImage.
+In this case you can make custom ImageLoader. default ImageLoader is Kignfisher.
+
+Here is how to change SDWebImage.
+
+First, create custom ImageLoader.
+
+```swift
+import PhotoSlider
+
+class PhotoSliderSDImageLoader: PhotoSlider.ImageLoader {
+    public func load(
+        imageView: UIImageView?,
+        fromURL url: URL?,
+        progress: @escaping PhotoSlider.ImageLoader.ProgressBlock,
+        completion: @escaping PhotoSlider.ImageLoader.CompletionBlock)
+    {
+        imageView?.sd_setImage(
+            withURL: url,
+            placeholderImage: nil,
+            options: SDWebImageOptions.retryFailed,
+            progress: { (receivedSize, totalSize) in
+                progress(receivedSize, totalSize)
+            },
+            completed: { (image, _, _, _) in
+                completion(image)
+            }
+        )
+    }
+}
+```
+
+and set ImageLoader.
+
+```swift
+let slider = PhotoSlider.ViewController(imageURLs: images)
+slider.modalPresentationStyle = .OverCurrentContext
+slider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+slider.index = indexPath.row
+slider.imageLoader = PhotoSliderSDImageLoader()
+present(slider, animated: true, completion: nil)
+```
 
 ## Author
 
