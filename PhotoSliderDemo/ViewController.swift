@@ -71,9 +71,6 @@ class ViewController: UIViewController {
         }
         
         collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * view.bounds.width, y: 0.0)
-
-        UIApplication.shared.setStatusBarHidden(false, with: .fade)
-
     }
     
     // MARK: - UIContentContainer
@@ -129,10 +126,8 @@ extension ViewController: UICollectionViewDelegate {
         // Here implemention is better if you want to use ZoomingAnimationControllerTransitioning.
         //photoSlider.modalPresentationStyle = .OverCurrentContext
         //photoSlider.modalTransitionStyle   = .CrossDissolve
+        present(photoSlider, animated: true, completion: nil)
         
-        present(photoSlider, animated: true) { () -> Void in
-            UIApplication.shared.setStatusBarHidden(true, with: .fade)
-        }
     }
     
 }
@@ -209,9 +204,6 @@ extension ViewController: UITableViewDelegate {
 extension ViewController: PhotoSliderDelegate {
 
     func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
-        
-        UIApplication.shared.setStatusBarHidden(false, with: .fade)
-        
         currentRow = viewController.currentPage
         let indexPath = IndexPath(item: currentRow, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)

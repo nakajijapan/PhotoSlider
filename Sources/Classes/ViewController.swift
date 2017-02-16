@@ -69,11 +69,27 @@ public class ViewController:UIViewController {
         self.photos = photos
         usingImageType = .Photo
     }
-    
-    required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 
+    var statusBarHidden = false {
+        didSet {
+            UIView.animate(withDuration: 0.5) {
+                self.setNeedsStatusBarAppearanceUpdate()
+            }
+        }
+    }
+
+    override public var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
+
+    override public var prefersStatusBarHidden: Bool {
+        return statusBarHidden
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -178,13 +194,18 @@ public class ViewController:UIViewController {
         dissmissViewControllerAnimated(animated: true)
         
     }
-    
+
     override public func viewWillAppear(_ animated: Bool) {
         scrollView.contentOffset = CGPoint(
             x: scrollView.bounds.width * CGFloat(currentPage),
             y: scrollView.bounds.height
         )
         scrollInitalized = true
+    }
+
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        statusBarHidden = true
     }
 
     // Constraints
