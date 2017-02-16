@@ -69,11 +69,11 @@ public class ViewController:UIViewController {
         self.photos = photos
         usingImageType = .Photo
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     var statusBarHidden = false {
         didSet {
             UIView.animate(withDuration: 0.5) {
