@@ -70,13 +70,29 @@ public class ViewController:UIViewController {
         usingImageType = .Photo
     }
     
-    required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    var statusBarHidden = false {
+        didSet {
+            UIView.animate(withDuration: 0.5) {
+                self.setNeedsStatusBarAppearanceUpdate()
+            }
+        }
     }
 
+    override public var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
+
+    override public var prefersStatusBarHidden: Bool {
+        return statusBarHidden
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.frame = UIScreen.main.bounds
         view.backgroundColor = UIColor.clear
 
@@ -186,7 +202,12 @@ public class ViewController:UIViewController {
         )
         scrollInitalized = true
     }
-
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        statusBarHidden = true
+    }
+    
     // Constraints
     
     func layoutScrollView() {
