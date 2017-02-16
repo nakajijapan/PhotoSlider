@@ -219,12 +219,12 @@
 				DCA3F67E1CF3697600B261A0 /* Kingfisher.framework */,
 				DC0E42191C3184D80090AC94 /* Kingfisher-Demo.app */,
 				DC0E421F1C3184D80090AC94 /* Kingfisher-tvOS-Demo.app */,
-				DCA3F6801CF3697600B261A0 /* Kingfisher-OSX-Demo.app */,
+				DCA3F6801CF3697600B261A0 /* Kingfisher-macOS-Demo.app */,
 				DCA3F6821CF3697600B261A0 /* Kingfisher-watchOS-Demo.app */,
 				DCA3F6841CF3697600B261A0 /* Kingfisher-watchOS-Demo Extension.appex */,
 				DC0E421D1C3184D80090AC94 /* KingfisherTests.xctest */,
 				DCA3F6861CF3697600B261A0 /* KingfisherTests-tvOS.xctest */,
-				DCA3F6881CF3697600B261A0 /* KingfisherTests-OSX.xctest */,
+				DCA3F6881CF3697600B261A0 /* KingfisherTests-macOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -350,7 +350,7 @@
 			remoteRef = DCA3F67D1CF3697600B261A0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		DCA3F6801CF3697600B261A0 /* Kingfisher-OSX-Demo.app */ = {
+		DCA3F6801CF3697600B261A0 /* Kingfisher-macOS-Demo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = "Kingfisher-macOS-Demo.app";
@@ -378,7 +378,7 @@
 			remoteRef = DCA3F6851CF3697600B261A0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		DCA3F6881CF3697600B261A0 /* KingfisherTests-OSX.xctest */ = {
+		DCA3F6881CF3697600B261A0 /* KingfisherTests-macOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "KingfisherTests-macOS.xctest";
@@ -520,7 +520,7 @@
 				);
 				INFOPLIST_FILE = PhotoSlider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSlider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -547,7 +547,7 @@
 				);
 				INFOPLIST_FILE = PhotoSlider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSlider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
