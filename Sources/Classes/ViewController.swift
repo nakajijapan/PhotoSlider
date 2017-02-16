@@ -92,7 +92,7 @@ public class ViewController:UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.frame = UIScreen.main.bounds
         view.backgroundColor = UIColor.clear
 
@@ -194,7 +194,7 @@ public class ViewController:UIViewController {
         dissmissViewControllerAnimated(animated: true)
         
     }
-    
+
     override public func viewWillAppear(_ animated: Bool) {
         scrollView.contentOffset = CGPoint(
             x: scrollView.bounds.width * CGFloat(currentPage),
@@ -202,12 +202,12 @@ public class ViewController:UIViewController {
         )
         scrollInitalized = true
     }
-    
+
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         statusBarHidden = true
     }
-    
+
     // Constraints
     
     func layoutScrollView() {
