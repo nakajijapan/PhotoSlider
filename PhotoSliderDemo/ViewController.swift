@@ -9,21 +9,23 @@
 import UIKit
 import PhotoSlider
 
+let imageUrlString = "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/"
+
 class ViewController: UIViewController {
     
     @IBOutlet var tableView:UITableView!
     var collectionView:UICollectionView!
-    var imageURLs = [
-        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image001.jpg")!,
-        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image002.jpg")!,
-        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image003.jpg")!,
-        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image004.jpg")!,
-        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image005.jpg")!,
-        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image006.jpg")!,
-        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image007.jpg")!,
-        URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image008.jpg")!,
+    let imageURLs = [
+        URL(string:"\(imageUrlString)image001.jpg")!,
+        URL(string:"\(imageUrlString)image002.jpg")!,
+        URL(string:"\(imageUrlString)image003.jpg")!,
+        URL(string:"\(imageUrlString)image004.jpg")!,
+        URL(string:"\(imageUrlString)image005.jpg")!,
+        URL(string:"\(imageUrlString)image006.jpg")!,
+        URL(string:"\(imageUrlString)image007.jpg")!,
+        URL(string:"\(imageUrlString)image008.jpg")!,
     ]
-    var images = [
+    let images = [
         UIImage(named: "image001.jpg")!,
         UIImage(named: "image002.jpg")!,
         UIImage(named: "image003.jpg")!,
@@ -34,15 +36,15 @@ class ViewController: UIViewController {
         UIImage(named: "image008.jpg")!,
     ]
     
-    var photos = [
-        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image001.jpg")!, caption: "In San Francisco, I went walking in the night. The city is still bright."),
-        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image002.jpg")!, caption: "This is a very good photo. \nGood!"),
-        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image003.jpg")!, caption: ""),
-        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image004.jpg")!, caption: "Fire Alerm"),
-        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image005.jpg")!, caption: "He is misyobun. He is from Japan."),
-        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image006.jpg")!, caption: "Bamboo grove.\nGreen\nGood"),
-        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image007.jpg")!, caption: "Railroad"),
-        PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image008.jpg")!, caption: "Japan. \nRice paddy."),
+    let photos = [
+        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image001.jpg")!, caption: "In San Francisco, I went walking in the night. The city is still bright."),
+        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image002.jpg")!, caption: "This is a very good photo. \nGood!"),
+        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image003.jpg")!, caption: ""),
+        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image004.jpg")!, caption: "Fire Alerm"),
+        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image005.jpg")!, caption: "He is misyobun. He is from Japan."),
+        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image006.jpg")!, caption: "Bamboo grove.\nGreen\nGood"),
+        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image007.jpg")!, caption: "Railroad"),
+        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image008.jpg")!, caption: "Japan. \nRice paddy."),
     ]
     
     var currentRow = 0
