@@ -106,43 +106,25 @@ class ImageView: UIView {
     private func layoutScrollView() {
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        let views: [String: UIView] = ["scrollView": scrollView]
-        let constraintVertical   = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[scrollView]|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
-        let constraintHorizontal = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[scrollView]|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
-        self.addConstraints(constraintVertical)
-        self.addConstraints(constraintHorizontal)
+        let constraints = [
+            scrollView.topAnchor.constraint(equalTo: topAnchor, constant: 0.0),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0.0),
+            scrollView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0.0),
+            scrollView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0.0),
+            ].map { $0.isActive = true }
     }
     
     private func layoutProgressView() {
 
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        let views: [String: UIView] = ["progressView": progressView, "superView": self]
-        let constraintVertical = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[superView]-(<=1)-[progressView(40)]",
-            options: NSLayoutFormatOptions.alignAllCenterX,
-            metrics: nil,
-            views: views
-        )
-        let constraintHorizontal = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[superView]-(<=1)-[progressView(40)]",
-            options: NSLayoutFormatOptions.alignAllCenterY,
-            metrics: nil,
-            views: views
-        )
-        addConstraints(constraintVertical)
-        addConstraints(constraintHorizontal)
-
-    }
+        
+        let constraints = [
+            progressView.heightAnchor.constraint(equalToConstant: 40.0),
+            progressView.widthAnchor.constraint(equalToConstant: 40.0),
+            progressView.centerXAnchor.constraint(lessThanOrEqualTo: centerXAnchor, constant: 1.0),
+            progressView.centerYAnchor.constraint(lessThanOrEqualTo: centerYAnchor, constant: 1.0),
+            ].map { $0.isActive = true }
+     }
     
     func loadImage(imageURL: URL) {
         progressView.isHidden = false
@@ -171,21 +153,21 @@ class ImageView: UIView {
         var frame = CGRect.zero
         frame.origin = CGPoint.zero
         
-        let height = image.size.height * (self.bounds.width / image.size.width)
-        let width = image.size.width * (self.bounds.height / image.size.height)
+        let height = image.size.height * (bounds.width / image.size.width)
+        let width = image.size.width * (bounds.height / image.size.height)
         
         if image.size.width > image.size.height {
             
-            frame.size = CGSize(width: self.bounds.width, height: height)
-            if height >= self.bounds.height {
-                frame.size = CGSize(width: width, height: self.bounds.height)
+            frame.size = CGSize(width: bounds.width, height: height)
+            if height >= bounds.height {
+                frame.size = CGSize(width: width, height: bounds.height)
             }
             
         } else {
 
-            frame.size = CGSize(width: width, height: self.bounds.height)
-            if width >= self.bounds.width {
-                frame.size = CGSize(width: self.bounds.width, height: height)
+            frame.size = CGSize(width: width, height: bounds.height)
+            if width >= bounds.width {
+                frame.size = CGSize(width: bounds.width, height: height)
             }
 
         }
@@ -209,7 +191,7 @@ class ImageView: UIView {
 extension ImageView {
 
     func didDoubleTap(_ sender: UIGestureRecognizer) {
-        if self.scrollView.zoomScale == 1.0 {
+        if scrollView.zoomScale == 1.0 {
             let touchPoint = sender.location(in: self)
             scrollView.zoom(to: CGRect(x: touchPoint.x, y: touchPoint.y, width: 1, height: 1), animated: true)
         } else {
