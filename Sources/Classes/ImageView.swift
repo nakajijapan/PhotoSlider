@@ -9,10 +9,10 @@ import UIKit
 import Kingfisher
 
 protocol PhotoSliderImageViewDelegate {
-    func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
+    func photoSliderImageViewDidEndZooming(_ viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
 }
 
-class ImageView: UIView, UIScrollViewDelegate {
+class ImageView: UIView {
 
     var imageView: UIImageView!
     var scrollView: UIScrollView!
@@ -103,7 +103,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     // MARK: - Constraints
     
-    func layoutScrollView() {
+    private func layoutScrollView() {
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
@@ -114,7 +114,7 @@ class ImageView: UIView, UIScrollViewDelegate {
             ].map { $0.isActive = true }
     }
     
-    func layoutProgressView() {
+    private func layoutProgressView() {
 
         progressView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -184,23 +184,27 @@ class ImageView: UIView, UIScrollViewDelegate {
         layoutImageView(image: image)
     }
     
+}
+
+// MARK: - Actions
+
+extension ImageView {
+
     func didDoubleTap(_ sender: UIGestureRecognizer) {
-
         if self.scrollView.zoomScale == 1.0 {
-
             let touchPoint = sender.location(in: self)
             scrollView.zoom(to: CGRect(x: touchPoint.x, y: touchPoint.y, width: 1, height: 1), animated: true)
-            
         } else {
-
             scrollView.setZoomScale(0.0, animated: true)
-
-
         }
     }
     
-    // MARK: - UIScrollViewDelegate
-    
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension ImageView: UIScrollViewDelegate {
+
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
@@ -211,7 +215,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     }
     
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        delegate?.photoSliderImageViewDidEndZooming(viewController: self, atScale: scale)
+        delegate?.photoSliderImageViewDidEndZooming(self, atScale: scale)
     }
     
 }
