@@ -27,7 +27,7 @@ public class ProgressView: UIView {
         createProgressLayer()
     }
     
-    func createInitialProgressLayer() {
+    private func createInitialProgressLayer() {
         let startAngle = -M_PI_2
         let endAngle = M_PI_2 * 2 + M_PI_2
         let centerPoint = CGPoint(x: frame.width / 2.0, y: frame.height / 2.0)
@@ -49,7 +49,7 @@ public class ProgressView: UIView {
         layer.addSublayer(progressLayer)
     }
     
-    func createProgressLayer() {
+    private func createProgressLayer() {
         let startAngle = -M_PI_2
         let endAngle = M_PI_2 * 2 + M_PI_2
         let centerPoint = CGPoint(x: frame.width / 2, y: frame.height / 2)
@@ -81,6 +81,5 @@ public class ProgressView: UIView {
         progressLayer.strokeEnd = CGFloat(progress)
         progressLayer.add(animation, forKey: "strokeEnd")
     }
-
 
 }
