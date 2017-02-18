@@ -179,7 +179,6 @@ public class ViewController:UIViewController {
             }
             
             frame.origin.x += width
-            
             imageViews.append(imageView)
         }
         
@@ -207,10 +206,8 @@ public class ViewController:UIViewController {
     }
     
     func closeButtonDidTap(_ sender: UIButton) {
-        
         delegate?.photoSliderControllerWillDismiss?(viewController: self)
         dissmissViewControllerAnimated(animated: true)
-        
     }
 
     override public func viewWillAppear(_ animated: Bool) {

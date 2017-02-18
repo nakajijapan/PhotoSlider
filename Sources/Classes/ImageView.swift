@@ -12,7 +12,7 @@ protocol PhotoSliderImageViewDelegate {
     func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
 }
 
-class ImageView: UIView, UIScrollViewDelegate {
+class ImageView: UIView {
 
     var imageView: UIImageView!
     var scrollView: UIScrollView!
@@ -103,7 +103,7 @@ class ImageView: UIView, UIScrollViewDelegate {
     
     // MARK: - Constraints
     
-    func layoutScrollView() {
+    private func layoutScrollView() {
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         let views: [String: UIView] = ["scrollView": scrollView]
@@ -123,7 +123,7 @@ class ImageView: UIView, UIScrollViewDelegate {
         self.addConstraints(constraintHorizontal)
     }
     
-    func layoutProgressView() {
+    private func layoutProgressView() {
 
         progressView.translatesAutoresizingMaskIntoConstraints = false
         let views: [String: UIView] = ["progressView": progressView, "superView": self]
@@ -202,23 +202,27 @@ class ImageView: UIView, UIScrollViewDelegate {
         layoutImageView(image: image)
     }
     
+}
+
+// MARK: - Actions
+
+extension ImageView {
+
     func didDoubleTap(_ sender: UIGestureRecognizer) {
-
         if self.scrollView.zoomScale == 1.0 {
-
             let touchPoint = sender.location(in: self)
             scrollView.zoom(to: CGRect(x: touchPoint.x, y: touchPoint.y, width: 1, height: 1), animated: true)
-            
         } else {
-
             scrollView.setZoomScale(0.0, animated: true)
-
-
         }
     }
     
-    // MARK: - UIScrollViewDelegate
-    
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension ImageView: UIScrollViewDelegate {
+
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
