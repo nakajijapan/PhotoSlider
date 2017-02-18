@@ -106,43 +106,25 @@ class ImageView: UIView, UIScrollViewDelegate {
     func layoutScrollView() {
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        let views: [String: UIView] = ["scrollView": scrollView]
-        let constraintVertical   = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[scrollView]|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
-        let constraintHorizontal = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[scrollView]|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
-        self.addConstraints(constraintVertical)
-        self.addConstraints(constraintHorizontal)
+        let constraints = [
+            scrollView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0.0),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0.0),
+            scrollView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0.0),
+            scrollView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0.0),
+            ].map { $0.isActive = true }
     }
     
     func layoutProgressView() {
 
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        let views: [String: UIView] = ["progressView": progressView, "superView": self]
-        let constraintVertical = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[superView]-(<=1)-[progressView(40)]",
-            options: NSLayoutFormatOptions.alignAllCenterX,
-            metrics: nil,
-            views: views
-        )
-        let constraintHorizontal = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[superView]-(<=1)-[progressView(40)]",
-            options: NSLayoutFormatOptions.alignAllCenterY,
-            metrics: nil,
-            views: views
-        )
-        addConstraints(constraintVertical)
-        addConstraints(constraintHorizontal)
-
-    }
+        
+        let constraints = [
+            progressView.heightAnchor.constraint(equalToConstant: 40.0),
+            progressView.widthAnchor.constraint(equalToConstant: 40.0),
+            progressView.centerXAnchor.constraint(lessThanOrEqualTo: self.centerXAnchor, constant: 1.0),
+            progressView.centerYAnchor.constraint(lessThanOrEqualTo: self.centerYAnchor, constant: 1.0),
+            ].map { $0.isActive = true }
+     }
     
     func loadImage(imageURL: URL) {
         progressView.isHidden = false

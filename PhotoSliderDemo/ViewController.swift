@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         UIImage(named: "image007.jpg")!,
         UIImage(named: "image008.jpg")!,
     ]
+    
     var photos = [
         PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image001.jpg")!, caption: "In San Francisco, I went walking in the night. The city is still bright."),
         PhotoSlider.Photo(imageURL:URL(string:"https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/Resources/image002.jpg")!, caption: "This is a very good photo. \nGood!"),
