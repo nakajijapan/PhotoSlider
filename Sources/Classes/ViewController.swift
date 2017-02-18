@@ -69,7 +69,7 @@ public class ViewController:UIViewController {
         closeButton.imageView?.contentMode = UIViewContentMode.center
         return closeButton
     }()
-    
+
     var scrollMode: PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
@@ -92,7 +92,7 @@ public class ViewController:UIViewController {
         pageControl.isUserInteractionEnabled = false
         return pageControl
     }()
-    
+
     public var backgroundViewColor = UIColor.black
     public var captionTextColor = UIColor.white
 
