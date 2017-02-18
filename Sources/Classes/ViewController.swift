@@ -22,15 +22,41 @@ enum PhotoSliderControllerUsingImageType:UInt {
 
 public class ViewController:UIViewController {
 
-    var scrollView: UIScrollView!
-
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: CGRect(
+            x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+        )
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.delegate = self
+        scrollView.clipsToBounds = false
+        scrollView.alwaysBounceHorizontal = true
+        scrollView.alwaysBounceVertical = true
+        scrollView.isScrollEnabled = true
+        scrollView.accessibilityLabel = "PhotoSliderScrollView"
+        return scrollView
+    }()
+    
     var imageURLs: [URL]?
     var images: [UIImage]?
     var photos: [PhotoSlider.Photo]?
     var usingImageType: PhotoSliderControllerUsingImageType = .None
-    var backgroundView: UIView!
-    var effectView: UIVisualEffectView!
+
+    lazy var backgroundView: UIView = {
+        let backgroundView = UIView(frame: self.view.bounds)
+        backgroundView.backgroundColor = self.backgroundViewColor
+        return backgroundView
+    }()
+
+    lazy var effectView: UIVisualEffectView = {
+        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        effectView.frame = self.view.bounds
+        return effectView
+    }()
+
     var closeButton: UIButton?
+    
     var scrollMode: PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
@@ -46,7 +72,14 @@ public class ViewController:UIViewController {
     public var visibleCloseButton = true
     public var currentPage = 0
 
-    public var pageControl = UIPageControl()
+    lazy public var pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.frame = .zero
+        pageControl.numberOfPages = self.imageResources()!.count
+        pageControl.isUserInteractionEnabled = false
+        return pageControl
+    }()
+    
     public var backgroundViewColor = UIColor.black
     public var captionTextColor = UIColor.white
 
@@ -96,25 +129,10 @@ public class ViewController:UIViewController {
         view.frame = UIScreen.main.bounds
         view.backgroundColor = UIColor.clear
 
-        backgroundView = UIView(frame: view.bounds)
-        backgroundView.backgroundColor = backgroundViewColor
-
-        effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        effectView.frame = view.bounds
         view.addSubview(effectView)
         effectView.addSubview(backgroundView)
 
         // scrollview setting for Item
-        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
-        scrollView.isPagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.delegate = self
-        scrollView.clipsToBounds = false
-        scrollView.alwaysBounceHorizontal = true
-        scrollView.alwaysBounceVertical = true
-        scrollView.isScrollEnabled = true
-        scrollView.accessibilityLabel = "PhotoSliderScrollView"
         view.addSubview(scrollView)
         layoutScrollView()
 
@@ -159,9 +177,6 @@ public class ViewController:UIViewController {
         
         // Page Control
         if visiblePageControl {
-            pageControl.frame = CGRect.zero
-            pageControl.numberOfPages = imageResources()!.count
-            pageControl.isUserInteractionEnabled = false
             view.addSubview(pageControl)
             layoutPageControl()
         }
