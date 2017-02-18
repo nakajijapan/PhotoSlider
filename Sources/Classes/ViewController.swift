@@ -231,41 +231,41 @@ fileprivate extension ViewController {
 
     func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
+        [
             scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
             scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
             scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
-            ].map { $0.isActive = true }
+            ].forEach { $0.isActive = true }
     }
 
     func layoutCloseButton() {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
+        [
             closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
             closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
             closeButton.heightAnchor.constraint(equalToConstant: 52.0),
             closeButton.widthAnchor.constraint(equalToConstant: 52.0),
-            ].map { $0.isActive = true }
+            ].forEach { $0.isActive = true }
     }
 
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
+        [
             pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
             pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
-            ].map { $0.isActive = true }
+            ].forEach { $0.isActive = true }
     }
 
     func layoutCaptionLabel() {
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
+        [
             captionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32.0),
             captionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0),
             captionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
-            ].map { $0.isActive = true }
+            ].forEach { $0.isActive = true }
     }
 
 }

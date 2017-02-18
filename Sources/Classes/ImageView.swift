@@ -106,24 +106,22 @@ class ImageView: UIView {
     private func layoutScrollView() {
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
+        [
             scrollView.topAnchor.constraint(equalTo: topAnchor, constant: 0.0),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0.0),
             scrollView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0.0),
             scrollView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0.0),
-            ].map { $0.isActive = true }
+            ].forEach { $0.isActive = true }
     }
     
     private func layoutProgressView() {
-
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let constraints = [
+        [
             progressView.heightAnchor.constraint(equalToConstant: 40.0),
             progressView.widthAnchor.constraint(equalToConstant: 40.0),
             progressView.centerXAnchor.constraint(lessThanOrEqualTo: centerXAnchor, constant: 1.0),
             progressView.centerYAnchor.constraint(lessThanOrEqualTo: centerYAnchor, constant: 1.0),
-            ].map { $0.isActive = true }
+            ].forEach { $0.isActive = true }
      }
     
     func loadImage(imageURL: URL) {
