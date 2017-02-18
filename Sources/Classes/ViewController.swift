@@ -208,7 +208,11 @@ public class ViewController:UIViewController {
         statusBarHidden = true
     }
 
-    // Constraints
+}
+
+// MARK: - Setup Layout
+
+extension ViewController {
     
     func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -217,7 +221,7 @@ public class ViewController:UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
             scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
             scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
-        ].map { $0.isActive = true }
+            ].map { $0.isActive = true }
     }
     
     func layoutCloseButton() {
@@ -227,7 +231,7 @@ public class ViewController:UIViewController {
             closeButton?.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
             closeButton?.heightAnchor.constraint(equalToConstant: 52.0),
             closeButton?.widthAnchor.constraint(equalToConstant: 52.0),
-        ].map { $0?.isActive = true }
+            ].map { $0?.isActive = true }
     }
     
     func layoutPageControl() {
@@ -237,7 +241,7 @@ public class ViewController:UIViewController {
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
             pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
-        ].map { $0.isActive = true }
+            ].map { $0.isActive = true }
     }
     
     func layoutCaptionLabel() {
@@ -249,7 +253,9 @@ public class ViewController:UIViewController {
             ].map { $0.isActive = true }
         
     }
+
 }
+
 // MARK: - UIScrollViewDelegate
 
 extension ViewController: UIScrollViewDelegate {
