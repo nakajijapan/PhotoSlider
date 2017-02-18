@@ -307,9 +307,9 @@ extension ViewController: UIScrollViewDelegate {
             let screenHeight = UIScreen.main.bounds.size.height
             
             if scrollView.contentOffset.y > screenHeight * 1.4 {
-                closePhotoSlider(up: true)
+                closePhotoSlider(movingUp: true)
             } else if scrollView.contentOffset.y < screenHeight * 0.6  {
-                closePhotoSlider(up: false)
+                closePhotoSlider(movingUp: false)
             }
             
         } else if scrollMode == .Horizontal {
@@ -347,17 +347,17 @@ extension ViewController: UIScrollViewDelegate {
             let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView)
             if velocity.y < -500 {
                 scrollView.frame = scrollView.frame
-                closePhotoSlider(up: true)
+                closePhotoSlider(movingUp: true)
             } else if velocity.y > 500 {
                 scrollView.frame = scrollView.frame
-                closePhotoSlider(up: false)
+                closePhotoSlider(movingUp: false)
             }
             
         }
         
     }
     
-    fileprivate func closePhotoSlider(up: Bool) {
+    fileprivate func closePhotoSlider(movingUp: Bool) {
         
         if closeAnimating == true {
             return
