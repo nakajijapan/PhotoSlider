@@ -2,7 +2,6 @@ language: objective-c
 osx_image: xcode8
 
 before_install:
-  - git submodule update --init --recursive
   - gem install cocoapods
   - carthage bootstrap --platform ios
 
