@@ -13,7 +13,6 @@ public protocol ZoomingAnimationControllerTransitioning {
     func transitionDestinationImageView(sourceImageView: UIImageView)
 }
 
-
 public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
     var present = true
