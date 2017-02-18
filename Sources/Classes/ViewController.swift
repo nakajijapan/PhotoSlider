@@ -35,6 +35,12 @@ public class ViewController:UIViewController {
         scrollView.alwaysBounceVertical = true
         scrollView.isScrollEnabled = true
         scrollView.accessibilityLabel = "PhotoSliderScrollView"
+
+        scrollView.contentSize = CGSize(
+            width: self.view.bounds.width * CGFloat(self.imageResources()!.count),
+            height: self.view.bounds.height * 3.0
+        )
+
         return scrollView
     }()
     
@@ -55,7 +61,14 @@ public class ViewController:UIViewController {
         return effectView
     }()
 
-    var closeButton: UIButton?
+    lazy var closeButton: UIButton = {
+        let closeButton = UIButton(frame: CGRect.zero)
+        let imagePath = self.resourceBundle().path(forResource: "PhotoSliderClose", ofType: "png")
+        closeButton.setImage(UIImage(contentsOfFile: imagePath!), for: .normal)
+        closeButton.addTarget(self, action: #selector(closeButtonDidTap(_:)), for: .touchUpInside)
+        closeButton.imageView?.contentMode = UIViewContentMode.center
+        return closeButton
+    }()
     
     var scrollMode: PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
@@ -136,11 +149,6 @@ public class ViewController:UIViewController {
         view.addSubview(scrollView)
         layoutScrollView()
 
-        scrollView.contentSize = CGSize(
-            width: view.bounds.width * CGFloat(imageResources()!.count),
-            height: view.bounds.height * 3.0
-        )
-
         let width = view.bounds.width
         let height = view.bounds.height
         var frame = view.bounds
@@ -183,12 +191,7 @@ public class ViewController:UIViewController {
         
         // Close Button
         if visibleCloseButton {
-            closeButton = UIButton(frame: CGRect.zero)
-            let imagePath = resourceBundle().path(forResource: "PhotoSliderClose", ofType: "png")
-            closeButton!.setImage(UIImage(contentsOfFile: imagePath!), for: .normal)
-            closeButton!.addTarget(self, action: #selector(closeButtonDidTap(_:)), for: .touchUpInside)
-            closeButton!.imageView?.contentMode = UIViewContentMode.center
-            view.addSubview(closeButton!)
+            view.addSubview(closeButton)
             layoutCloseButton()
         }
         
@@ -240,13 +243,13 @@ fileprivate extension ViewController {
     }
 
     func layoutCloseButton() {
-        closeButton?.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
-            closeButton?.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
-            closeButton?.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
-            closeButton?.heightAnchor.constraint(equalToConstant: 52.0),
-            closeButton?.widthAnchor.constraint(equalToConstant: 52.0),
-            ].map { $0?.isActive = true }
+            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
+            closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
+            closeButton.heightAnchor.constraint(equalToConstant: 52.0),
+            closeButton.widthAnchor.constraint(equalToConstant: 52.0),
+            ].map { $0.isActive = true }
     }
 
     func layoutPageControl() {
@@ -398,7 +401,7 @@ extension ViewController: UIScrollViewDelegate {
             animations: { () -> Void in
                 self.scrollView.frame = CGRect(x: 0, y: movedHeight, width: screenWidth, height: screenHeight)
                 self.backgroundView.alpha = 0.0
-                self.closeButton?.alpha = 0.0
+                self.closeButton.alpha = 0.0
                 self.captionLabel.alpha = 0.0
                 self.view.alpha = 0.0
             },
@@ -436,7 +439,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
             scrollView.isScrollEnabled = true
             
             UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
-                self.closeButton?.alpha = 1.0
+                self.closeButton.alpha = 1.0
                 self.captionLabel.alpha = 1.0
                 if self.visiblePageControl {
                     self.pageControl.alpha = 1.0
@@ -447,7 +450,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
             scrollView.isScrollEnabled = false
 
             UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
-                self.closeButton?.alpha = 0.0
+                self.closeButton.alpha = 0.0
                 self.captionLabel.alpha = 0.0
                 if self.visiblePageControl {
                     self.pageControl.alpha = 0.0
