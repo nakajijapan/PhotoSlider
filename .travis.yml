@@ -4,7 +4,7 @@ osx_image: xcode8
 before_install:
   - git submodule update --init --recursive
   - gem install cocoapods
-  - carthage update --platform ios
+  - carthage bootstrap --platform ios
 
 install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
