@@ -1,4 +1,0 @@
-[submodule "Carthage/Checkouts/Kingfisher"]
-	path = Carthage/Checkouts/Kingfisher
-	url = https://github.com/onevcat/Kingfisher.git
-    ignore = dirty
