@@ -370,7 +370,7 @@ extension ViewController: UIScrollViewDelegate {
         
         delegate?.photoSliderControllerWillDismiss?(viewController: self)
         
-        if up {
+        if movingUp {
             movedHeight = -screenHeight
         } else {
             movedHeight = screenHeight
