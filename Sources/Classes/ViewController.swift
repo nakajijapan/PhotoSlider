@@ -7,9 +7,9 @@
 
 import UIKit
 
-@objc public protocol PhotoSliderDelegate:NSObjectProtocol {
-    @objc optional func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController)
-    @objc optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
+@objc public protocol PhotoSliderDelegate {
+    @objc optional func photoSliderControllerWillDismiss(_ viewController: PhotoSlider.ViewController)
+    @objc optional func photoSliderControllerDidDismiss(_ viewController: PhotoSlider.ViewController)
 }
 
 enum PhotoSliderControllerScrollMode:UInt {
@@ -206,7 +206,7 @@ public class ViewController:UIViewController {
     }
     
     func closeButtonDidTap(_ sender: UIButton) {
-        delegate?.photoSliderControllerWillDismiss?(viewController: self)
+        delegate?.photoSliderControllerWillDismiss?(self)
         dissmissViewControllerAnimated(animated: true)
     }
 
@@ -383,7 +383,7 @@ extension ViewController: UIScrollViewDelegate {
         let screenWidth = UIScreen.main.bounds.width
         var movedHeight = CGFloat(0)
         
-        delegate?.photoSliderControllerWillDismiss?(viewController: self)
+        delegate?.photoSliderControllerWillDismiss?(self)
         
         if movingUp {
             movedHeight = -screenHeight
@@ -431,7 +431,7 @@ extension ViewController: UIScrollViewDelegate {
 
 extension ViewController: PhotoSliderImageViewDelegate {
 
-    func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
+    func photoSliderImageViewDidEndZooming(_ viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
         if scale <= 1.0 {
             scrollView.isScrollEnabled = true
             
@@ -460,7 +460,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
         
         dismiss(animated: animated, completion: { () -> Void in
             
-            self.delegate?.photoSliderControllerDidDismiss?(viewController: self)
+            self.delegate?.photoSliderControllerDidDismiss?(self)
             
         })
     }

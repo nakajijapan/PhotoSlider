@@ -203,7 +203,7 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: PhotoSliderDelegate {
 
-    func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController) {
+    func photoSliderControllerWillDismiss(_ viewController: PhotoSlider.ViewController) {
         currentRow = viewController.currentPage
         let indexPath = IndexPath(item: currentRow, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)

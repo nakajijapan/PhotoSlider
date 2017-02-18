@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 protocol PhotoSliderImageViewDelegate {
-    func photoSliderImageViewDidEndZooming(viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
+    func photoSliderImageViewDidEndZooming(_ viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
 }
 
 class ImageView: UIView {
@@ -233,7 +233,7 @@ extension ImageView: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        delegate?.photoSliderImageViewDidEndZooming(viewController: self, atScale: scale)
+        delegate?.photoSliderImageViewDidEndZooming(self, atScale: scale)
     }
     
 }
