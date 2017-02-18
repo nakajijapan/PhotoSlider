@@ -212,63 +212,51 @@ public class ViewController:UIViewController {
     
     func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let views: [String: UIView] = ["scrollView": scrollView]
-        let constraintVertical   = NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        let constraintHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        view.addConstraints(constraintVertical)
-        view.addConstraints(constraintHorizontal)
+        let constraints = [
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
+            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
+            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
+        ].map { $0.isActive = true }
     }
     
     func layoutCloseButton() {
-        closeButton!.translatesAutoresizingMaskIntoConstraints = false
-        
-        let views: [String: UIView] = ["closeButton": closeButton!]
-        let constraintVertical   = NSLayoutConstraint.constraints(withVisualFormat: "V:|[closeButton(52)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        let constraintHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:[closeButton(52)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        view.addConstraints(constraintVertical)
-        view.addConstraints(constraintHorizontal)
+        closeButton?.translatesAutoresizingMaskIntoConstraints = false
+        let constraints = [
+            closeButton?.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
+            closeButton?.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
+            closeButton?.heightAnchor.constraint(equalToConstant: 52.0),
+            closeButton?.widthAnchor.constraint(equalToConstant: 52.0),
+        ].map { $0?.isActive = true }
     }
     
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        
-        let views: [String: UIView] = ["pageControl": pageControl]
-        let constraintVertical = NSLayoutConstraint.constraints(withVisualFormat: "V:[pageControl]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        let constraintCenterX  = NSLayoutConstraint.constraints(withVisualFormat: "H:|[pageControl]|", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
-        view.addConstraints(constraintVertical)
-        view.addConstraints(constraintCenterX)
+        let constraints = [
+            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
+            pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
+        ].map { $0.isActive = true }
     }
     
     func layoutCaptionLabel() {
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
-        let views = ["captionLabel": captionLabel]
-        let constraintVertical   = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[captionLabel]-32-|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
-        let constraintHorizontal = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-16-[captionLabel]-16-|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
-        view.addConstraints(constraintVertical)
-        view.addConstraints(constraintHorizontal)
+        let constraints = [
+            captionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32.0),
+            captionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0),
+            captionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
+            ].map { $0.isActive = true }
+        
     }
 }
 // MARK: - UIScrollViewDelegate
 
 extension ViewController: UIScrollViewDelegate {
 
-
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
         previousPage = currentPage
         scrollPreviewPoint = scrollView.contentOffset
-        
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
