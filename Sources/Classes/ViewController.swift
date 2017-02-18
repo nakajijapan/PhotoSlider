@@ -213,7 +213,7 @@ public class ViewController:UIViewController {
 // MARK: - Setup Layout
 
 fileprivate extension ViewController {
-    
+
     func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
@@ -223,7 +223,7 @@ fileprivate extension ViewController {
             scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
             ].map { $0.isActive = true }
     }
-    
+
     func layoutCloseButton() {
         closeButton?.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
@@ -233,7 +233,7 @@ fileprivate extension ViewController {
             closeButton?.widthAnchor.constraint(equalToConstant: 52.0),
             ].map { $0?.isActive = true }
     }
-    
+
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
@@ -243,7 +243,7 @@ fileprivate extension ViewController {
             pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
             ].map { $0.isActive = true }
     }
-    
+
     func layoutCaptionLabel() {
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
@@ -251,7 +251,6 @@ fileprivate extension ViewController {
             captionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0),
             captionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
             ].map { $0.isActive = true }
-        
     }
 
 }
@@ -358,7 +357,7 @@ extension ViewController: UIScrollViewDelegate {
         
     }
     
-    fileprivate func closePhotoSlider(up:Bool) {
+    fileprivate func closePhotoSlider(up: Bool) {
         
         if closeAnimating == true {
             return
