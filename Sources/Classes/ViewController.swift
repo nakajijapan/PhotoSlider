@@ -212,7 +212,7 @@ public class ViewController:UIViewController {
 
 // MARK: - Setup Layout
 
-extension ViewController {
+fileprivate extension ViewController {
     
     func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -324,7 +324,7 @@ extension ViewController: UIScrollViewDelegate {
 
     }
     
-    func generateCurrentPage() {
+    fileprivate func generateCurrentPage() {
 
         var page = Int(round(scrollView.contentOffset.x / scrollView.frame.size.width))
         if page < 0 {
@@ -358,7 +358,7 @@ extension ViewController: UIScrollViewDelegate {
         
     }
     
-    func closePhotoSlider(up:Bool) {
+    fileprivate func closePhotoSlider(up:Bool) {
         
         if closeAnimating == true {
             return
@@ -451,7 +451,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
         })
     }
     
-    func resourceBundle() -> Bundle {
+    fileprivate func resourceBundle() -> Bundle {
         
         let bundlePath = Bundle.main.path(
             forResource: "PhotoSlider",
@@ -552,7 +552,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
     
     // Private Method
 
-    func imageResources() -> [AnyObject]? {
+    fileprivate func imageResources() -> [AnyObject]? {
 
         if usingImageType == .URL {
             return imageURLs as [AnyObject]?
@@ -565,7 +565,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         return nil
     }
     
-    func updateCaption() {
+    fileprivate func updateCaption() {
 
         if usingImageType == .Photo {
             if imageResources()!.count > 0 {
