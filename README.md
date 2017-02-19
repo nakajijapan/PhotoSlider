@@ -16,7 +16,7 @@ PhotoSlider can a simple photo slider and delete slider with swiping.
 
 - Xcode 8+
 - Swift 3.0+
-- iOS 8+
+- iOS 9+
 
 ## Installation
 
@@ -61,7 +61,7 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
     var slider = PhotoSlider.ViewController(imageURLs: self.images)
     slider.currentPage = indexPath.row
     photoSlider.transitioningDelegate = self
-    self.presentViewController(slider, animated: true, completion: nil)
+    present(photoSlider, animated: true, completion: nil)
 
 }
 
@@ -76,17 +76,16 @@ return imageView for starting position
 
 func transitionSourceImageView() -> UIImageView {
 
-let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
-
-    let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
+    let indexPath = collectionView.indexPathsForSelectedItems?.first
+    let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
     let imageView = UIImageView(image: cell.imageView.image)
 
     var frame = cell.imageView.frame
-    frame.origin.y += UIApplication.sharedApplication().statusBarFrame.height
+    frame.origin.y += UIApplication.shared.statusBarFrame.height
 
     imageView.frame = frame
     imageView.clipsToBounds = true
-    imageView.contentMode = UIViewContentMode.ScaleAspectFill
+    imageView.contentMode = .scaleAspectFill
 
     return imageView
 
@@ -103,9 +102,9 @@ func transitionDestinationImageView(sourceImageView: UIImageView) {
         return
     }
     
-    let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
-    let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! ImageCollectionViewCell
-    let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+    let indexPath = collectionView.indexPathsForSelectedItems?.first
+    let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
+    let statusBarHeight = UIApplication.shared.statusBarFrame.height
 
     // snip..
 
@@ -120,14 +119,14 @@ func transitionDestinationImageView(sourceImageView: UIImageView) {
 ```swift
 // MARK: UIViewControllerTransitioningDelegate
 
-func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     let animationController = PhotoSlider.ZoomingAnimationController(present: false)
     animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
     animationController.destinationTransition = self
     return animationController
 }
 
-func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     let animationController = PhotoSlider.ZoomingAnimationController(present: true)
     animationController.sourceTransition = source as? ZoomingAnimationControllerTransitioning
     animationController.destinationTransition = presented as? ZoomingAnimationControllerTransitioning
