@@ -158,6 +158,10 @@ public class ViewController:UIViewController {
             closeButton!.addTarget(self, action: #selector(closeButtonDidTap(_:)), for: .touchUpInside)
             closeButton!.imageView?.contentMode = UIViewContentMode.center
             view.addSubview(closeButton!)
+            closeButton!.layer.shadowColor = UIColor.black.cgColor
+            closeButton!.layer.shadowOffset = CGSize(width: 1, height: 1)
+            closeButton!.layer.shadowRadius = 3
+            closeButton!.layer.shadowOpacity = 1
             layoutCloseButton()
         }
         
