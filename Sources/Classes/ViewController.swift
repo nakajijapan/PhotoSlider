@@ -20,7 +20,7 @@ enum PhotoSliderControllerUsingImageType:UInt {
     case None = 0, URL, Image, Photo
 }
 
-public class ViewController:UIViewController {
+public class ViewController: UIViewController {
 
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: CGRect(
@@ -75,7 +75,12 @@ public class ViewController:UIViewController {
     var closeAnimating = false
     var imageViews: [PhotoSlider.ImageView] = []
     var previousPage = 0
-    var captionLabel = UILabel(frame: CGRect.zero)
+    lazy var captionLabel: UILabel = {
+        let label = UILabel(frame: CGRect.zero)
+        label.textColor = self.captionTextColor
+        label.numberOfLines = self.captionNumberOfLines
+        return label
+    }()
 
     // For ScrollViewDelegate
     var scrollPreviewPoint = CGPoint.zero
@@ -84,6 +89,7 @@ public class ViewController:UIViewController {
     public var visiblePageControl = true
     public var visibleCloseButton = true
     public var currentPage = 0
+    public var captionNumberOfLines = 3
 
     lazy public var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
@@ -195,12 +201,10 @@ public class ViewController:UIViewController {
         }
         
         // Caption
-        captionLabel.textColor = captionTextColor
-        captionLabel.numberOfLines = 3
         view.addSubview(captionLabel)
         layoutCaptionLabel()
-        
         updateCaption()
+        
         setNeedsStatusBarAppearanceUpdate()
 
     }

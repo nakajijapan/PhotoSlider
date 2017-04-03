@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image003.jpg")!, caption: ""),
         PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image004.jpg")!, caption: "Fire Alerm"),
         PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image005.jpg")!, caption: "He is misyobun. He is from Japan."),
-        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image006.jpg")!, caption: "Bamboo grove.\nGreen\nGood"),
+        PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image006.jpg")!, caption: "Bamboo grove.\nGreen\nGood\nSo Good"),
         PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image007.jpg")!, caption: "Railroad"),
         PhotoSlider.Photo(imageURL: URL(string: "\(imageUrlString)image008.jpg")!, caption: "Japan. \nRice paddy."),
     ]
@@ -121,7 +121,7 @@ extension ViewController: UICollectionViewDelegate {
         photoSlider.currentPage = indexPath.row
         //photoSlider.visibleCloseButton = false
         //photoSlider.visiblePageControl = false
-        
+        photoSlider.captionNumberOfLines = 0
        
         // UIViewControllerTransitioningDelegate
         photoSlider.transitioningDelegate = self
