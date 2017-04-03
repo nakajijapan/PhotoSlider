@@ -199,12 +199,12 @@ public class ViewController: UIViewController {
             view.addSubview(closeButton)
             layoutCloseButton()
         }
-        
+
         // Caption
         view.addSubview(captionLabel)
         layoutCaptionLabel()
         updateCaption()
-        
+
         setNeedsStatusBarAppearanceUpdate()
 
     }
