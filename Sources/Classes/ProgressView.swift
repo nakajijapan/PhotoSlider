@@ -28,8 +28,8 @@ public class ProgressView: UIView {
     }
     
     private func createInitialProgressLayer() {
-        let startAngle = -M_PI_2
-        let endAngle = M_PI_2 * 2 + M_PI_2
+        let startAngle = -Double.pi / 2.0
+        let endAngle = Double.pi + 1.5
         let centerPoint = CGPoint(x: frame.width / 2.0, y: frame.height / 2.0)
         
         progressLayer = CAShapeLayer()
@@ -50,8 +50,8 @@ public class ProgressView: UIView {
     }
     
     private func createProgressLayer() {
-        let startAngle = -M_PI_2
-        let endAngle = M_PI_2 * 2 + M_PI_2
+        let startAngle = -Double.pi / 2.0
+        let endAngle = Double.pi + 1.5
         let centerPoint = CGPoint(x: frame.width / 2, y: frame.height / 2)
         
         progressLayer = CAShapeLayer()
