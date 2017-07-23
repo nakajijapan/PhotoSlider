@@ -106,22 +106,44 @@ class ImageView: UIView {
     private func layoutScrollView() {
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        [
-            scrollView.topAnchor.constraint(equalTo: topAnchor, constant: 0.0),
-            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0.0),
-            scrollView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0.0),
-            scrollView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0.0),
-            ].forEach { $0.isActive = true }
+        if #available(iOS 9.0, *) {
+            [
+                scrollView.topAnchor.constraint(equalTo: topAnchor, constant: 0.0),
+                scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0.0),
+                scrollView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0.0),
+                scrollView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0.0),
+            ]
+            .forEach { $0.isActive = true }
+        } else {
+            [
+                NSLayoutConstraint(item: scrollView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: scrollView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: scrollView, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: scrollView, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0.0),
+            ]
+            .forEach { $0.isActive = true }
+        }
     }
     
     private func layoutProgressView() {
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        [
-            progressView.heightAnchor.constraint(equalToConstant: 40.0),
-            progressView.widthAnchor.constraint(equalToConstant: 40.0),
-            progressView.centerXAnchor.constraint(lessThanOrEqualTo: centerXAnchor, constant: 1.0),
-            progressView.centerYAnchor.constraint(lessThanOrEqualTo: centerYAnchor, constant: 1.0),
-            ].forEach { $0.isActive = true }
+        if #available(iOS 9.0, *) {
+            [
+                progressView.heightAnchor.constraint(equalToConstant: 40.0),
+                progressView.widthAnchor.constraint(equalToConstant: 40.0),
+                progressView.centerXAnchor.constraint(lessThanOrEqualTo: centerXAnchor, constant: 1.0),
+                progressView.centerYAnchor.constraint(lessThanOrEqualTo: centerYAnchor, constant: 1.0),
+            ]
+            .forEach { $0.isActive = true }
+        } else {
+            [
+                NSLayoutConstraint(item: progressView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40.0),
+                NSLayoutConstraint(item: progressView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40.0),
+                NSLayoutConstraint(item: progressView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: progressView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: 0.0),
+            ]
+            .forEach { $0.isActive = true }
+        }
      }
     
     func loadImage(imageURL: URL) {
