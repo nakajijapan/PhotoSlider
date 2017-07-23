@@ -239,41 +239,84 @@ fileprivate extension ViewController {
 
     func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        [
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
-            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
-            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
-            ].forEach { $0.isActive = true }
+        if #available(iOS 9.0, *) {
+            [
+                scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
+                scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
+                scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
+                scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
+            ]
+            .forEach { $0.isActive = true }
+        } else {
+            [
+                NSLayoutConstraint(item: scrollView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: scrollView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: scrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: scrollView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0.0),
+            ]
+            .forEach { $0.isActive = true }
+        }
     }
 
     func layoutCloseButton() {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        [
-            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
-            closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
-            closeButton.heightAnchor.constraint(equalToConstant: 52.0),
-            closeButton.widthAnchor.constraint(equalToConstant: 52.0),
-            ].forEach { $0.isActive = true }
+        if #available(iOS 9.0, *) {
+            [
+                closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
+                closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
+                closeButton.heightAnchor.constraint(equalToConstant: 52.0),
+                closeButton.widthAnchor.constraint(equalToConstant: 52.0),
+            ]
+            .forEach { $0.isActive = true }
+        } else {
+            [
+                NSLayoutConstraint(item: closeButton, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: closeButton, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: closeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 52.0),
+                NSLayoutConstraint(item: closeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 52.0),
+            ]
+            .forEach { $0.isActive = true }
+        }
     }
 
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        [
-            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
-            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pageControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
-            pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
-            ].forEach { $0.isActive = true }
+        if #available(iOS 9.0, *) {
+            [
+                pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
+                pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                pageControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
+                pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
+            ]
+            .forEach { $0.isActive = true }
+        } else {
+            [
+                NSLayoutConstraint(item: pageControl, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: pageControl, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: pageControl, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: pageControl, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0.0),
+            ]
+            .forEach { $0.isActive = true }
+        }
     }
 
     func layoutCaptionLabel() {
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
-        [
-            captionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32.0),
-            captionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0),
-            captionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
-            ].forEach { $0.isActive = true }
+        if #available(iOS 9.0, *) {
+            [
+                captionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32.0),
+                captionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0),
+                captionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
+            ]
+            .forEach { $0.isActive = true }
+        } else {
+            [
+                NSLayoutConstraint(item: captionLabel, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -32.0),
+                NSLayoutConstraint(item: captionLabel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -16.0),
+                NSLayoutConstraint(item: captionLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 16.0),
+            ]
+            .forEach { $0.isActive = true }
+        }
     }
 
 }
