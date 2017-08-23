@@ -153,7 +153,7 @@ public class ViewController: UIViewController {
         view.backgroundColor = UIColor.clear
 
         view.addSubview(effectView)
-        effectView.addSubview(backgroundView)
+        effectView.contentView.addSubview(backgroundView)
 
         // scrollview setting for Item
         view.addSubview(scrollView)
