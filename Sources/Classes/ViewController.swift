@@ -41,6 +41,10 @@ public class ViewController: UIViewController {
             height: self.view.bounds.height * 3.0
         )
 
+        if #available(iOS 11.0, *) {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        }
+
         return scrollView
     }()
     
