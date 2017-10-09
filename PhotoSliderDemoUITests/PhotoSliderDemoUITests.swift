@@ -99,8 +99,8 @@ class PhotoSliderDemoUITests: XCTestCase {
         
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()
-        
-        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
+
+        let element = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element
         element.doubleTap()
         element.swipeUp()
         element.swipeDown()
@@ -108,6 +108,7 @@ class PhotoSliderDemoUITests: XCTestCase {
         app.buttons["PhotoSliderClose"].tap()
         
         self.existsPhotoSliderScrollView(app: app)
-    }
 
+        
+    }
 }
