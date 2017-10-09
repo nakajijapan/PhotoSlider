@@ -87,15 +87,15 @@ class PhotoSliderDemoUITests: XCTestCase {
         element.swipeLeft()
         element.swipeLeft()
 
-        XCUIDevice.shared().orientation = .landscapeRight
-        XCUIDevice.shared().orientation = .portraitUpsideDown
-        XCUIDevice.shared().orientation = .landscapeLeft
-        XCUIDevice.shared().orientation = .portrait
+        XCUIDevice.shared.orientation = .landscapeRight
+        XCUIDevice.shared.orientation = .portraitUpsideDown
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCUIDevice.shared.orientation = .portrait
         app.buttons["PhotoSliderClose"].tap()
     }
     
     func testZooming() {
-        XCUIDevice.shared().orientation = .portrait
+        XCUIDevice.shared.orientation = .portrait
         
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()

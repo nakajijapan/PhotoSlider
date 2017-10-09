@@ -188,7 +188,7 @@ class ImageView: UIView {
 
 extension ImageView {
 
-    func didDoubleTap(_ sender: UIGestureRecognizer) {
+    @objc func didDoubleTap(_ sender: UIGestureRecognizer) {
         if scrollView.zoomScale == 1.0 {
             let touchPoint = sender.location(in: self)
             scrollView.zoom(to: CGRect(x: touchPoint.x, y: touchPoint.y, width: 1, height: 1), animated: true)

@@ -217,7 +217,7 @@ public class ViewController: UIViewController {
 
     }
     
-    func closeButtonDidTap(_ sender: UIButton) {
+    @objc func closeButtonDidTap(_ sender: UIButton) {
         delegate?.photoSliderControllerWillDismiss?(self)
         dissmissViewControllerAnimated(animated: true)
     }

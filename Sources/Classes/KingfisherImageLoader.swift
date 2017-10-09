@@ -21,8 +21,8 @@ public class KingfisherImageLoader: ImageLoader {
             options: [.transition(.fade(1))],
             progressBlock: { (receivedSize, totalSize) in
                 progress(
-                    Int(truncatingBitPattern: receivedSize),
-                    Int(truncatingBitPattern: totalSize)
+                    Int(truncatingIfNeeded: receivedSize),
+                    Int(truncatingIfNeeded: totalSize)
                 )
             },
             completionHandler: { (image, error, _, _) in
