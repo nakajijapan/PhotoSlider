@@ -1,6 +1,11 @@
 disabled_rules:
   - trailing_whitespace
+  - identifier_name
+  - function_body_length
+  - trailing_comma
+  - force_cast
 line_length: 320
+file_length: 800
 excluded:
   - Carthage
   - Pods

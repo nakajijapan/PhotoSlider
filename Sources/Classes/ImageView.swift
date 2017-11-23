@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-protocol PhotoSliderImageViewDelegate {
+@objc protocol PhotoSliderImageViewDelegate {
     func photoSliderImageViewDidEndZooming(_ viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
 }
 
@@ -17,7 +17,7 @@ class ImageView: UIView {
     var imageView: UIImageView!
     var scrollView: UIScrollView!
     var progressView: PhotoSlider.ProgressView!
-    var delegate: PhotoSliderImageViewDelegate? = nil
+    weak var delegate: PhotoSliderImageViewDelegate?
     weak var imageLoader: PhotoSlider.ImageLoader?
     
     override init(frame: CGRect) {
@@ -142,12 +142,12 @@ class ImageView: UIView {
         )
     }
     
-    func setImage(image:UIImage) {
+    func setImage(image: UIImage) {
         imageView.image = image
         layoutImageView(image: image)
     }
     
-    func layoutImageView(image:UIImage) {
+    func layoutImageView(image: UIImage) {
         var frame = CGRect.zero
         frame.origin = CGPoint.zero
         

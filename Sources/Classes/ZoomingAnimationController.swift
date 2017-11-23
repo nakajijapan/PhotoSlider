@@ -37,7 +37,7 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
         }
     }
     
-    func animatePresenting(transitionContext:UIViewControllerContextTransitioning) {
+    func animatePresenting(transitionContext: UIViewControllerContextTransitioning) {
 
         let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
         let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
@@ -57,7 +57,6 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
         let sourceImageView = sourceTransition!.transitionSourceImageView()
         containerView.addSubview(sourceImageView)
 
-
         UIView.animate(
             withDuration: self.transitionDuration(using: transitionContext),
             delay: 0.0,
@@ -68,7 +67,7 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
                 self.destinationTransition!.transitionDestinationImageView(sourceImageView: sourceImageView)
                 backgroundView.alpha = 1.0
 
-            }) { (result) -> Void in
+        }, completion: { _ -> Void in
                 
                 sourceImageView.alpha = 0.0
                 sourceImageView.removeFromSuperview()
@@ -78,11 +77,10 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
                 
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
 
-        }
-        
+        })
     }
     
-    func animateDismiss(transitionContext:UIViewControllerContextTransitioning) {
+    func animateDismiss(transitionContext: UIViewControllerContextTransitioning) {
         
         let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
         let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
@@ -99,19 +97,15 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
             delay: 0.0,
             options: UIViewAnimationOptions.curveLinear,
             animations: { () -> Void in
-                
                 self.destinationTransition!.transitionDestinationImageView(sourceImageView: sourceImageView)
                 fromViewController.view.alpha = 0.1
-                
-            }) { (result) -> Void in
-                
+        },
+            completion: { _ -> Void in
                 sourceImageView.alpha = 0.0
                 fromViewController.view.alpha = 0.0
 
                 sourceImageView.removeFromSuperview()
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-                
-        }
+        })
     }
-
 }
