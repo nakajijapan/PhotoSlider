@@ -12,11 +12,11 @@ import UIKit
     @objc optional func photoSliderControllerDidDismiss(_ viewController: PhotoSlider.ViewController)
 }
 
-enum PhotoSliderControllerScrollMode:UInt {
+enum PhotoSliderControllerScrollMode: UInt {
     case None = 0, Vertical, Horizontal, Rotating
 }
 
-enum PhotoSliderControllerUsingImageType:UInt {
+enum PhotoSliderControllerUsingImageType: UInt {
     case None = 0, URL, Image, Photo
 }
 
@@ -93,7 +93,7 @@ public class ViewController: UIViewController {
     // For ScrollViewDelegate
     var scrollPreviewPoint = CGPoint.zero
 
-    public var delegate: PhotoSliderDelegate?
+    public weak var delegate: PhotoSliderDelegate?
     public var visiblePageControl = true
     public var visibleCloseButton = true
     public var currentPage = 0
@@ -112,7 +112,7 @@ public class ViewController: UIViewController {
 
     public var imageLoader: PhotoSlider.ImageLoader?
 
-    public init(imageURLs:Array<URL>) {
+    public init(imageURLs: [URL]) {
         super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
         usingImageType = .URL
@@ -309,12 +309,11 @@ extension ViewController: UIScrollViewDelegate {
             return
         }
         
-
         let offsetX = fabs(scrollView.contentOffset.x - scrollPreviewPoint.x)
         let offsetY = fabs(scrollView.contentOffset.y - scrollPreviewPoint.y)
         
         if scrollMode == .None {
-            if (offsetY > offsetX) {
+            if offsetY > offsetX {
                 scrollMode = .Vertical
             } else {
                 scrollMode = .Horizontal
@@ -335,7 +334,7 @@ extension ViewController: UIScrollViewDelegate {
             
             if scrollView.contentOffset.y > screenHeight * 1.4 {
                 closePhotoSlider(movingUp: true)
-            } else if scrollView.contentOffset.y < screenHeight * 0.6  {
+            } else if scrollView.contentOffset.y < screenHeight * 0.6 {
                 closePhotoSlider(movingUp: false)
             }
             
@@ -356,7 +355,7 @@ extension ViewController: UIScrollViewDelegate {
         if page < 0 {
             page = 0
         } else if page >= imageResources()!.count {
-            page = imageResources()!.count - 1;
+            page = imageResources()!.count - 1
         }
         
         currentPage = page
@@ -414,7 +413,7 @@ extension ViewController: UIScrollViewDelegate {
                 self.captionLabel.alpha = 0.0
                 self.view.alpha = 0.0
             },
-            completion: {(result) -> Void in
+            completion: { _ -> Void in
                 self.dissmissViewControllerAnimated(animated: false)
                 self.closeAnimating = false
             }
@@ -468,7 +467,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
         }
     }
     
-    func dissmissViewControllerAnimated(animated:Bool) {
+    func dissmissViewControllerAnimated(animated: Bool) {
         
         dismiss(animated: animated, completion: { () -> Void in
             
@@ -548,9 +547,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
     
     public func transitionDestinationImageView(sourceImageView: UIImageView) {
         
-        guard let sourceImage = sourceImageView.image else {
-            return
-        }
+        guard let sourceImage = sourceImageView.image else { return }
         
         var height: CGFloat = 0.0
         var width: CGFloat = 0.0
@@ -572,14 +569,10 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
             x: view.frame.width * 0.5,
             y: view.frame.height * 0.5
         )
-        
-        
     }
     
     // Private Method
-
     fileprivate func imageResources() -> [AnyObject]? {
-
         if usingImageType == .URL {
             return imageURLs as [AnyObject]?
         } else if usingImageType == .Image {
@@ -587,29 +580,26 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         } else if usingImageType == .Photo {
             return photos
         }
-        
         return nil
     }
     
     fileprivate func updateCaption() {
-
         if usingImageType == .Photo {
             if imageResources()!.count > 0 {
                 let photo = photos![currentPage] as Photo
-                UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
-                    self.captionLabel.alpha = 0.0
-                    }, completion: { (completed) -> Void in
-
-                        self.captionLabel.text = photo.caption
-                        UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
-                            self.captionLabel.alpha = 1.0
-                        }, completion: nil)
-
-                        
+                UIView.animate(
+                    withDuration: 0.1,
+                    delay: 0.0,
+                    options: .curveLinear,
+                    animations: { () -> Void in
+                        self.captionLabel.alpha = 0.0
+                }, completion: { _ -> Void in
+                    self.captionLabel.text = photo.caption
+                    UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
+                        self.captionLabel.alpha = 1.0
+                    }, completion: nil)
                 })
             }
         }
-
     }
-
 }

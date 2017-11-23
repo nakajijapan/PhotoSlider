@@ -5,7 +5,6 @@
 //  Created by nakajijapan on 2015/11/08.
 //
 //
-
 import UIKit
 
 public class Photo: NSObject {
@@ -36,5 +35,4 @@ public class Photo: NSObject {
         self.caption = caption
     }
 
-    
 }

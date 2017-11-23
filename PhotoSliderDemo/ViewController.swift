@@ -13,17 +13,17 @@ let imageUrlString = "https://raw.githubusercontent.com/nakajijapan/PhotoSlider/
 
 class ViewController: UIViewController {
     
-    @IBOutlet var tableView:UITableView!
-    var collectionView:UICollectionView!
+    @IBOutlet var tableView: UITableView!
+    var collectionView: UICollectionView!
     let imageURLs = [
-        URL(string:"\(imageUrlString)image001.jpg")!,
-        URL(string:"\(imageUrlString)image002.jpg")!,
-        URL(string:"\(imageUrlString)image003.jpg")!,
-        URL(string:"\(imageUrlString)image004.jpg")!,
-        URL(string:"\(imageUrlString)image005.jpg")!,
-        URL(string:"\(imageUrlString)image006.jpg")!,
-        URL(string:"\(imageUrlString)image007.jpg")!,
-        URL(string:"\(imageUrlString)image008.jpg")!,
+        URL(string: "\(imageUrlString)image001.jpg")!,
+        URL(string: "\(imageUrlString)image002.jpg")!,
+        URL(string: "\(imageUrlString)image003.jpg")!,
+        URL(string: "\(imageUrlString)image004.jpg")!,
+        URL(string: "\(imageUrlString)image005.jpg")!,
+        URL(string: "\(imageUrlString)image006.jpg")!,
+        URL(string: "\(imageUrlString)image007.jpg")!,
+        URL(string: "\(imageUrlString)image008.jpg")!,
     ]
     let images = [
         UIImage(named: "image001.jpg")!,
@@ -135,9 +135,7 @@ extension ViewController: UICollectionViewDelegate {
     
 }
 
-
 // MARK: - UICollectionViewDelegateFlowLayout
-
 extension ViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -156,9 +154,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
-
 // MARK: - UITableViewDataSource
-
 extension ViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {

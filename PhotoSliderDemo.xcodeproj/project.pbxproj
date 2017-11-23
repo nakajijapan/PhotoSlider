@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B01658291F83E2E90027C824 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01658281F83E2E90027C824 /* PhotoSlider.framework */; };
 		B016582A1F83E2E90027C824 /* PhotoSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B01658281F83E2E90027C824 /* PhotoSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B0A0CA661FC71B9A00D132C9 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA641FC71B9A00D132C9 /* .travis.yml */; };
+		B0A0CA671FC71B9A00D132C9 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA651FC71B9A00D132C9 /* .swiftlint.yml */; };
 		DC0E41DA1C3180290090AC94 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41D71C3180290090AC94 /* LICENSE */; };
 		DC0E41DB1C3180290090AC94 /* PhotoSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41D81C3180290090AC94 /* PhotoSlider.podspec */; };
 		DC20F45D1ADA871D009A4C64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20F45C1ADA871D009A4C64 /* AppDelegate.swift */; };
@@ -57,6 +59,8 @@
 
 /* Begin PBXFileReference section */
 		B01658281F83E2E90027C824 /* PhotoSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PhotoSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0A0CA641FC71B9A00D132C9 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		B0A0CA651FC71B9A00D132C9 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		DC0E41D71C3180290090AC94 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		DC0E41D81C3180290090AC94 /* PhotoSlider.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PhotoSlider.podspec; sourceTree = "<group>"; };
 		DC20F4571ADA871D009A4C64 /* PhotoSliderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSliderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +166,8 @@
 			children = (
 				DC0E41D71C3180290090AC94 /* LICENSE */,
 				DC0E41D81C3180290090AC94 /* PhotoSlider.podspec */,
+				B0A0CA651FC71B9A00D132C9 /* .swiftlint.yml */,
+				B0A0CA641FC71B9A00D132C9 /* .travis.yml */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
@@ -201,6 +207,7 @@
 				DC20F4541ADA871D009A4C64 /* Frameworks */,
 				DC20F4551ADA871D009A4C64 /* Resources */,
 				DC5846E31D405374003A5D23 /* Embed Frameworks */,
+				B0A0CA631FC71B1200D132C9 /* Run Script - SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -273,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0A0CA671FC71B9A00D132C9 /* .swiftlint.yml in Resources */,
 				DC20F4621ADA871D009A4C64 /* Main.storyboard in Resources */,
 				DCE8F5371B94A2EA00B2D224 /* image003.jpg in Resources */,
 				DC20F4671ADA871D009A4C64 /* LaunchScreen.xib in Resources */,
@@ -285,6 +293,7 @@
 				DC0E41DA1C3180290090AC94 /* LICENSE in Resources */,
 				DCE8F5351B94A2EA00B2D224 /* image001.jpg in Resources */,
 				DCE8F5381B94A2EA00B2D224 /* image004.jpg in Resources */,
+				B0A0CA661FC71B9A00D132C9 /* .travis.yml in Resources */,
 				DCE8F53C1B94A2EA00B2D224 /* image008.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,6 +306,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B0A0CA631FC71B1200D132C9 /* Run Script - SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - SwiftLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DC20F4531ADA871D009A4C64 /* Sources */ = {

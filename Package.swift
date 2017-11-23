@@ -27,5 +27,5 @@
 import PackageDescription
 
 let package = Package(
-  name: "PhotoSlider"
+    name: "PhotoSlider"
 )
