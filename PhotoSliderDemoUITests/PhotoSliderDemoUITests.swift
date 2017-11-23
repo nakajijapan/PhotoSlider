@@ -109,6 +109,5 @@ class PhotoSliderDemoUITests: XCTestCase {
         
         self.existsPhotoSliderScrollView(app: app)
 
-        
     }
 }

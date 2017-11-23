@@ -253,31 +253,56 @@ fileprivate extension ViewController {
 
     func layoutCloseButton() {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        [
-            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
-            closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
-            closeButton.heightAnchor.constraint(equalToConstant: 52.0),
-            closeButton.widthAnchor.constraint(equalToConstant: 52.0),
-            ].forEach { $0.isActive = true }
+        if #available(iOS 11.0, *) {
+            [
+                closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
+                closeButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0),
+                closeButton.heightAnchor.constraint(equalToConstant: 52.0),
+                closeButton.widthAnchor.constraint(equalToConstant: 52.0),
+                ].forEach { $0.isActive = true }
+        } else {
+            [
+                closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
+                closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
+                closeButton.heightAnchor.constraint(equalToConstant: 52.0),
+                closeButton.widthAnchor.constraint(equalToConstant: 52.0),
+                ].forEach { $0.isActive = true }        }
     }
 
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        [
-            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
-            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pageControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
-            pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
-            ].forEach { $0.isActive = true }
+        if #available(iOS 11.0, *) {
+            [
+                pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0.0),
+                pageControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+                pageControl.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0),
+                pageControl.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
+                ].forEach { $0.isActive = true }
+        } else {
+            [
+                pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
+                pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                pageControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
+                pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
+                ].forEach { $0.isActive = true }
+        }
     }
 
     func layoutCaptionLabel() {
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
-        [
-            captionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32.0),
-            captionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0),
-            captionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
-            ].forEach { $0.isActive = true }
+        if #available(iOS 11.0, *) {
+            [
+                captionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32.0),
+                captionLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16.0),
+                captionLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16.0),
+                ].forEach { $0.isActive = true }
+        } else {
+            [
+                captionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32.0),
+                captionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0),
+                captionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
+                ].forEach { $0.isActive = true }
+        }
     }
 
 }
