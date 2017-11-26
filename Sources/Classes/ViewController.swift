@@ -266,7 +266,9 @@ fileprivate extension ViewController {
                 closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
                 closeButton.heightAnchor.constraint(equalToConstant: 52.0),
                 closeButton.widthAnchor.constraint(equalToConstant: 52.0),
-                ].forEach { $0.isActive = true }        }
+                ].forEach { $0.isActive = true }
+
+        }
     }
 
     func layoutPageControl() {
