@@ -134,13 +134,7 @@ public class ViewController: UIViewController {
         super.init(coder: aDecoder)
     }
 
-    var statusBarHidden = false {
-        didSet {
-            UIView.animate(withDuration: 0.5) {
-                self.setNeedsStatusBarAppearanceUpdate()
-            }
-        }
-    }
+    var statusBarHidden = false
 
     override public var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
@@ -213,8 +207,11 @@ public class ViewController: UIViewController {
         layoutCaptionLabel()
         updateCaption()
 
-        setNeedsStatusBarAppearanceUpdate()
+        if width > height {
+            statusBarHidden = true
+        }
 
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     @objc func closeButtonDidTap(_ sender: UIButton) {
@@ -232,7 +229,11 @@ public class ViewController: UIViewController {
 
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
         statusBarHidden = true
+        UIView.animate(withDuration: 0.5) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
 }
@@ -554,7 +555,7 @@ extension ViewController {
             imageView.layoutImageView()
 
         }
-        
+
         scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * contentViewBounds.width, y: height)
         
         scrollMode = .None
