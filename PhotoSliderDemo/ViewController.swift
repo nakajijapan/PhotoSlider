@@ -268,17 +268,21 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
             }
             
         } else {
-            var width = view.bounds.width
-            var height: CGFloat = 0
-            var x: CGFloat = 0
+            let width: CGFloat
+            let x: CGFloat
             if #available(iOS 11.0, *) {
                 width = view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right
                 x = view.safeAreaInsets.left
+            } else {
+                width = view.bounds.width
+                x = 0
             }
 
-            height = (image.size.height * width) / image.size.width
+            let height: CGFloat
             if #available(iOS 11.0, *) {
                 height = view.safeAreaLayoutGuide.layoutFrame.height
+            } else {
+                height = (image.size.height * width) / image.size.width
             }
 
             let y: CGFloat
@@ -327,13 +331,11 @@ extension ViewController: UIViewControllerTransitioningDelegate {
 extension ViewController {
     
     func updateCurrentRow(to size: CGSize) {
-        
         var row = Int(round(collectionView.contentOffset.x / collectionView.bounds.width))
         if row < 0 {
             row = 0
         }
         currentRow = row
-        
     }
     
 }
