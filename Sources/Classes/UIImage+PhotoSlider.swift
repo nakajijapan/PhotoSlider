@@ -3,7 +3,7 @@
 //  PhotoSlider
 //
 //  Created by nakajijapan on 2016/09/29.
-//  Copyright © 2016年 nakajijapan. All rights reserved.
+//  Copyright © 2016 nakajijapan. All rights reserved.
 //
 import Foundation
 

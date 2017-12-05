@@ -72,8 +72,12 @@ class ViewController: UIViewController {
         guard let collectionView = collectionView else {
             return
         }
-        
-        collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * view.bounds.width, y: 0.0)
+
+        var width = view.bounds.width
+        if #available(iOS 11.0, *) {
+            width = view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right
+        }
+        collectionView.contentOffset = CGPoint(x: CGFloat(currentRow) * width, y: 0.0)
     }
     
     // MARK: - UIContentContainer
@@ -145,8 +149,14 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: tableView.bounds.width, height: tableView.bounds.width)
             
         } else {
+            let height: CGFloat
+            if #available(iOS 11.0, *) {
+                height = view.safeAreaLayoutGuide.layoutFrame.height
+            } else {
+                height = view.bounds.height
+            }
 
-            return CGSize(width: tableView.bounds.width, height: view.bounds.height)
+            return CGSize(width: tableView.bounds.width, height: height)
             
         }
         
@@ -221,12 +231,14 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         let imageView = UIImageView(image: cell.imageView.image)
         
         var frame = cell.imageView.frame
-
         frame.origin.y += UIApplication.shared.statusBarFrame.height
-        if view.bounds.size.width >= view.bounds.height {
-            frame.size.height -= 20.0
+        // tune in UIImageView
+        if #available(iOS 11.0, *) {
+            frame.origin.x = view.safeAreaInsets.left
+            if view.bounds.width > view.bounds.height {
+                frame.size.height = view.safeAreaLayoutGuide.layoutFrame.height
+            }
         }
-        
         imageView.frame = frame
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
@@ -242,7 +254,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         
         let indexPath = collectionView.indexPathsForSelectedItems?.first
         let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
         var frame = CGRect.zero
 
         if view.bounds.size.width < view.bounds.height {
@@ -256,13 +268,32 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
             }
             
         } else {
+            let width: CGFloat
+            let x: CGFloat
+            if #available(iOS 11.0, *) {
+                width = view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right
+                x = view.safeAreaInsets.left
+            } else {
+                width = view.bounds.width
+                x = 0
+            }
 
-            let height = (image.size.height * UIScreen.main.bounds.width) / image.size.width
-            let y = (height - UIScreen.main.bounds.height - statusBarHeight) * 0.5
-            frame = CGRect(x: 0.0, y: -1.0 * y, width: view.bounds.width, height: height)
+            let height: CGFloat
+            if #available(iOS 11.0, *) {
+                height = view.safeAreaLayoutGuide.layoutFrame.height
+            } else {
+                height = (image.size.height * width) / image.size.width
+            }
 
+            let y: CGFloat
+            if #available(iOS 11.0, *) {
+                y = (height - view.safeAreaLayoutGuide.layoutFrame.height - statusBarHeight) * 0.5
+            } else {
+                y = (height - UIScreen.main.bounds.height - statusBarHeight) * 0.5
+            }
+
+            frame = CGRect(x: x, y: -1.0 * y, width: width, height: height)
         }
-        
         sourceImageView.frame = frame
         
     }
@@ -300,13 +331,11 @@ extension ViewController: UIViewControllerTransitioningDelegate {
 extension ViewController {
     
     func updateCurrentRow(to size: CGSize) {
-        
         var row = Int(round(collectionView.contentOffset.x / collectionView.bounds.width))
         if row < 0 {
             row = 0
         }
         currentRow = row
-        
     }
     
 }
