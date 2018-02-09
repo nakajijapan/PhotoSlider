@@ -60,9 +60,18 @@ public class ViewController: UIViewController {
     }()
     
     lazy var captionBackgroundView: UIView = {
-        let y = view.bounds.height - 135
-        let frame = CGRect(x: 0, y: y, width: view.bounds.width, height: view.bounds.height)
-        let captionBackgroundView = UIView(frame: frame)
+        var captionBackgroundView = UIView()
+        if let captionHeight = captionHeight {
+            var y = view.bounds.height - captionHeight - 32.0
+            var height = captionHeight + 32.0
+            if #available(iOS 11.0, *), let window = UIApplication.shared.keyWindow {
+                let bottomSafeInsetSpacing = window.safeAreaInsets.bottom
+                height += bottomSafeInsetSpacing
+                y -= bottomSafeInsetSpacing
+            }
+            let frame = CGRect(x: 0, y: y, width: view.bounds.width, height: height)
+            captionBackgroundView = UIView(frame: frame)
+        }
         captionBackgroundView.backgroundColor = captionBackgroundViewColor
         return captionBackgroundView
     }()
@@ -115,6 +124,7 @@ public class ViewController: UIViewController {
         return pageControl
     }()
 
+    public var captionHeight: CGFloat?
     public var captionBackgroundViewColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
     public var backgroundViewColor = UIColor.black
     public var captionTextColor = UIColor.white
@@ -199,25 +209,29 @@ public class ViewController: UIViewController {
             imageViews.append(imageView)
         }
         
-        // Page Control
-        if visiblePageControl {
-            view.addSubview(pageControl)
-            layoutPageControl()
-        }
-        
         // Close Button
         if visibleCloseButton {
             view.addSubview(closeButton)
             layoutCloseButton()
         }
-
+        
         // Caption Background
         view.addSubview(captionBackgroundView)
+        
+        // Page Control
+        if visiblePageControl {
+            captionBackgroundView.addSubview(pageControl)
+            layoutPageControl()
+        }
         
         // Caption
         captionBackgroundView.addSubview(captionLabel)
         layoutCaptionLabel()
         updateCaption()
+        
+        if captionHeight == nil {
+            layoutCaptionBackgroundView()
+        }
 
         if width > height {
             statusBarHidden = true
@@ -318,6 +332,19 @@ fileprivate extension ViewController {
                 captionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
                 ].forEach { $0.isActive = true }
         }
+        
+        if let captionHeight = captionHeight {
+            captionLabel.heightAnchor.constraint(equalToConstant: captionHeight).isActive = true
+        }
+    }
+    
+    func layoutCaptionBackgroundView() {
+        captionBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        [captionBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+         captionBackgroundView.rightAnchor.constraint(equalTo: view.rightAnchor),
+         captionBackgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
+         captionBackgroundView.topAnchor.constraint(equalTo: captionLabel.topAnchor, constant: -16.0)
+        ].forEach { $0.isActive = true }
     }
 
 }
@@ -490,7 +517,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
                 self.closeButton.alpha = 1.0
                 self.captionLabel.alpha = 1.0
                 if let captionText = self.captionLabel.text, !captionText.isEmpty {
-                    self.captionBackgroundView.alpha = 1.0
+                    self.captionBackgroundView.backgroundColor = self.captionBackgroundViewColor
                 }
                 if self.visiblePageControl {
                     self.pageControl.alpha = 1.0
@@ -503,7 +530,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
             UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                 self.closeButton.alpha = 0.0
                 self.captionLabel.alpha = 0.0
-                self.captionBackgroundView.alpha = 0.0
+                self.captionBackgroundView.backgroundColor = .clear
                 if self.visiblePageControl {
                     self.pageControl.alpha = 0.0
                 }
@@ -637,13 +664,13 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
                     options: .curveLinear,
                     animations: { () -> Void in
                         self.captionLabel.alpha = 0.0
-                        self.captionBackgroundView.alpha = 0.0
+                        self.captionBackgroundView.backgroundColor = .clear
                 }, completion: { _ -> Void in
                     self.captionLabel.text = photo.caption
                     UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                         self.captionLabel.alpha = 1.0
                         if let captionText = self.captionLabel.text, !captionText.isEmpty {
-                            self.captionBackgroundView.alpha = 1.0
+                            self.captionBackgroundView.backgroundColor = self.captionBackgroundViewColor
                         }
                     }, completion: nil)
                 })
