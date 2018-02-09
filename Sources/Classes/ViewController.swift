@@ -58,6 +58,14 @@ public class ViewController: UIViewController {
         backgroundView.backgroundColor = self.backgroundViewColor
         return backgroundView
     }()
+    
+    lazy var captionBackgroundView: UIView = {
+        let y = view.bounds.height - 135
+        let frame = CGRect(x: 0, y: y, width: view.bounds.width, height: view.bounds.height)
+        let captionBackgroundView = UIView(frame: frame)
+        captionBackgroundView.backgroundColor = captionBackgroundViewColor
+        return captionBackgroundView
+    }()
 
     lazy var effectView: UIVisualEffectView = {
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -107,6 +115,7 @@ public class ViewController: UIViewController {
         return pageControl
     }()
 
+    public var captionBackgroundViewColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
     public var backgroundViewColor = UIColor.black
     public var captionTextColor = UIColor.white
 
@@ -202,8 +211,11 @@ public class ViewController: UIViewController {
             layoutCloseButton()
         }
 
+        // Caption Background
+        view.addSubview(captionBackgroundView)
+        
         // Caption
-        view.addSubview(captionLabel)
+        captionBackgroundView.addSubview(captionLabel)
         layoutCaptionLabel()
         updateCaption()
 
@@ -477,6 +489,9 @@ extension ViewController: PhotoSliderImageViewDelegate {
             UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                 self.closeButton.alpha = 1.0
                 self.captionLabel.alpha = 1.0
+                if let captionText = self.captionLabel.text, !captionText.isEmpty {
+                    self.captionBackgroundView.alpha = 1.0
+                }
                 if self.visiblePageControl {
                     self.pageControl.alpha = 1.0
                 }
@@ -488,6 +503,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
             UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                 self.closeButton.alpha = 0.0
                 self.captionLabel.alpha = 0.0
+                self.captionBackgroundView.alpha = 0.0
                 if self.visiblePageControl {
                     self.pageControl.alpha = 0.0
                 }
@@ -621,10 +637,14 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
                     options: .curveLinear,
                     animations: { () -> Void in
                         self.captionLabel.alpha = 0.0
+                        self.captionBackgroundView.alpha = 0.0
                 }, completion: { _ -> Void in
                     self.captionLabel.text = photo.caption
                     UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                         self.captionLabel.alpha = 1.0
+                        if let captionText = self.captionLabel.text, !captionText.isEmpty {
+                            self.captionBackgroundView.alpha = 1.0
+                        }
                     }, completion: nil)
                 })
             }
