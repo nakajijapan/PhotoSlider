@@ -668,7 +668,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         return nil
     }
     
-    fileprivate func setLineHeight(for text: String, with height: CGFloat) -> NSMutableAttributedString {
+    fileprivate func getAttributedString(for text: String, with height: CGFloat) -> NSMutableAttributedString {
         let attributedString = NSMutableAttributedString(string: text)
         let style = NSMutableParagraphStyle()
         style.minimumLineHeight = height
@@ -691,7 +691,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
                         
                 }, completion: { _ -> Void in
                     if let captionLineHeight = self.captionLineHeight {
-                        self.captionLabel.attributedText = self.setLineHeight(for: photo.caption, with: captionLineHeight)
+                        self.captionLabel.attributedText = self.getAttributedString(for: photo.caption, with: captionLineHeight)
                     } else {
                         self.captionLabel.text = photo.caption
                     }
