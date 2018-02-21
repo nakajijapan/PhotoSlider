@@ -125,6 +125,7 @@ public class ViewController: UIViewController {
     }()
 
     public var captionHeight: CGFloat?
+    public var hasCaptionShadow = true
     public var captionBackgroundViewColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
     public var backgroundViewColor = UIColor.black
     public var captionTextColor = UIColor.white
@@ -318,6 +319,13 @@ fileprivate extension ViewController {
     }
 
     func layoutCaptionLabel() {
+        if hasCaptionShadow {
+            let translucentBlack = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+            captionLabel.shadowColor = translucentBlack
+            captionLabel.shadowOffset = CGSize(width: 0.5, height: 0.5)
+            captionLabel.layer.shadowRadius = 1.0
+        }
+            
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
             [
