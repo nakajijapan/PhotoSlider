@@ -127,6 +127,7 @@ public class ViewController: UIViewController {
     public var captionHeight: CGFloat?
     public var hasCaptionShadow = true
     public var captionFont: UIFont?
+    public var captionLineHeight: CGFloat?
     public var captionBackgroundViewColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
     public var backgroundViewColor = UIColor.black
     public var captionTextColor = UIColor.white
@@ -667,6 +668,15 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         return nil
     }
     
+    fileprivate func setLineHeight(for text: String, with height: CGFloat) -> NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString(string: text)
+        let style = NSMutableParagraphStyle()
+        style.minimumLineHeight = height
+        attributedString.addAttributes([NSAttributedStringKey.paragraphStyle: style], range: NSRange(location: 0, length: text.count))
+        
+        return attributedString
+    }
+    
     fileprivate func updateCaption() {
         if usingImageType == .Photo {
             if imageResources()!.count > 0 {
@@ -678,8 +688,14 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
                     animations: { () -> Void in
                         self.captionLabel.alpha = 0.0
                         self.captionBackgroundView.backgroundColor = .clear
+                        
                 }, completion: { _ -> Void in
-                    self.captionLabel.text = photo.caption
+                    if let captionLineHeight = self.captionLineHeight {
+                        self.captionLabel.attributedText = self.setLineHeight(for: photo.caption, with: captionLineHeight)
+                    } else {
+                        self.captionLabel.text = photo.caption
+                    }
+                    
                     UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
                         self.captionLabel.alpha = 1.0
                         if let captionText = self.captionLabel.text, !captionText.isEmpty {
