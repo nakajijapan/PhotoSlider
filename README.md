@@ -12,9 +12,9 @@ PhotoSlider is a simple photo slider and can delete slider with swiping.
 
 ## Requirements
 
-- Xcode 8+
-- Swift 3.0+
-- iOS 9+
+- Xcode 9+
+- Swift 4.0+
+- iOS 10+
 
 ## Installation
 
@@ -36,13 +36,13 @@ $ brew update
 $ brew install carthage
 ```
 
-To integrate Kingfisher into your Xcode project using Carthage, specify it in your `Cartfile`:
+To integrate PhotoSlider into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ``` ogdl
 github "nakajijapan/PhotoSlider"
 ```
 
-Then, run the following command to build the Kingfisher framework:
+Then, run the following command to build the PhotoSlider framework:
 
 ``` bash
 $ carthage update
@@ -163,7 +163,7 @@ You can handle the following event:
 
 PhotoSlider use Kingfisher for remote image.
 If use SDWebImage in your project, image cache is not shared between Kingfisher and SDWebImage.
-In this case you can make custom ImageLoader. default ImageLoader is Kignfisher.
+In this case you can make custom ImageLoader. default ImageLoader is Kingfisher.
 
 Here is how to change SDWebImage.
 
