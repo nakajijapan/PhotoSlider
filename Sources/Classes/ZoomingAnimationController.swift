@@ -45,15 +45,22 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
 
         let snapShotImageView = UIImageView(image: fromViewController.view.toImage())
         containerView.addSubview(snapShotImageView)
-        
+
         toViewController.view.alpha = 0.0
         containerView.addSubview(toViewController.view)
-        
-        let backgroundView = UIView(frame: fromViewController.view.frame)
-        backgroundView.backgroundColor = UIColor.black
+
+        guard let viewController = toViewController as? ViewController else {
+            fatalError("Invalid ViewController")
+        }
+
+        let effectView = NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: viewController.effectView))  as! UIView
+        effectView.alpha = 0.0
+        containerView.addSubview(effectView)
+
+        let backgroundView = NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: viewController.backgroundView))  as! UIView
         backgroundView.alpha = 0.0
         containerView.addSubview(backgroundView)
-        
+
         let sourceImageView = sourceTransition!.transitionSourceImageView()
         containerView.addSubview(sourceImageView)
 
@@ -62,21 +69,23 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
             delay: 0.0,
             options: UIViewAnimationOptions.curveEaseOut,
             animations: { () -> Void in
-                
+
                 containerView.alpha = 1.0
                 self.destinationTransition!.transitionDestinationImageView(sourceImageView: sourceImageView)
                 backgroundView.alpha = 1.0
+                effectView.alpha = 1.0
 
         }, completion: { _ -> Void in
-                
-                sourceImageView.alpha = 0.0
-                sourceImageView.removeFromSuperview()
-                
-                toViewController.view.alpha = 1.0
-                backgroundView.removeFromSuperview()
-                
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
 
+            sourceImageView.alpha = 0.0
+            sourceImageView.removeFromSuperview()
+
+            toViewController.view.alpha = 1.0
+            effectView.removeFromSuperview()
+
+            backgroundView.removeFromSuperview()
+
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
     }
     

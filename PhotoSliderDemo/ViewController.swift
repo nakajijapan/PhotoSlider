@@ -121,6 +121,7 @@ extension ViewController: UICollectionViewDelegate {
         //let photoSlider = PhotoSlider.ViewController(imageURLs: imageURLs)
         //let photoSlider = PhotoSlider.ViewController(images: images)
         let photoSlider = PhotoSlider.ViewController(photos: photos)
+        photoSlider.backgroundViewColor = .clear
         photoSlider.delegate = self
         photoSlider.currentPage = indexPath.row
         //photoSlider.visibleCloseButton = false
