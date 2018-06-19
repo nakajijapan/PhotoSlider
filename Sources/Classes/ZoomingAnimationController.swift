@@ -25,7 +25,7 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
     }
     
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.2
+        return 0.25
     }
     
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -39,27 +39,24 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
     
     func animatePresenting(transitionContext: UIViewControllerContextTransitioning) {
 
-        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
         let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
         let containerView = transitionContext.containerView
 
-        let snapShotImageView = UIImageView(image: fromViewController.view.toImage())
-        containerView.addSubview(snapShotImageView)
-
-        toViewController.view.alpha = 0.0
-        containerView.addSubview(toViewController.view)
-
-        guard let viewController = toViewController as? ViewController else {
-            fatalError("Invalid ViewController")
+        guard let photoSliderViewController = toViewController as? ViewController else {
+            return
         }
 
-        let effectView = NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: viewController.effectView))  as! UIView
-        effectView.alpha = 0.0
-        containerView.addSubview(effectView)
+        let scrollView = photoSliderViewController.scrollView
+        scrollView.alpha = 0.0
 
-        let backgroundView = NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: viewController.backgroundView))  as! UIView
-        backgroundView.alpha = 0.0
-        containerView.addSubview(backgroundView)
+        let captionBackgroundView = photoSliderViewController.captionBackgroundView
+        captionBackgroundView.alpha = 0.0
+
+        let closeButton = photoSliderViewController.closeButton
+        closeButton.alpha = 0.0
+
+        containerView.addSubview(toViewController.view)
+        toViewController.view.alpha = 0.0
 
         let sourceImageView = sourceTransition!.transitionSourceImageView()
         containerView.addSubview(sourceImageView)
@@ -69,35 +66,36 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
             delay: 0.0,
             options: UIViewAnimationOptions.curveEaseOut,
             animations: { () -> Void in
-
                 containerView.alpha = 1.0
                 self.destinationTransition!.transitionDestinationImageView(sourceImageView: sourceImageView)
-                backgroundView.alpha = 1.0
-                effectView.alpha = 1.0
+                toViewController.view.alpha = 1.0
 
         }, completion: { _ -> Void in
-
             sourceImageView.alpha = 0.0
             sourceImageView.removeFromSuperview()
-
+            scrollView.alpha = 1.0
             toViewController.view.alpha = 1.0
-            effectView.removeFromSuperview()
 
-            backgroundView.removeFromSuperview()
+            UIView.animate(withDuration: 0.15, animations: {
+                captionBackgroundView.alpha = 1.0
+                closeButton.alpha = 1.0
+            }, completion: { _ in
+                captionBackgroundView.alpha = 1.0
+                closeButton.alpha = 1.0
+            })
 
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
+
     }
     
     func animateDismiss(transitionContext: UIViewControllerContextTransitioning) {
         
         let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
-        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
         let containerView = transitionContext.containerView
-        
-        containerView.addSubview(toViewController.view)
+
         containerView.addSubview(fromViewController.view)
-        
+
         let sourceImageView = self.sourceTransition!.transitionSourceImageView()
         containerView.addSubview(sourceImageView)
 
@@ -107,12 +105,10 @@ public class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTrans
             options: UIViewAnimationOptions.curveLinear,
             animations: { () -> Void in
                 self.destinationTransition!.transitionDestinationImageView(sourceImageView: sourceImageView)
-                fromViewController.view.alpha = 0.1
+                fromViewController.view.alpha = 0.0
         },
             completion: { _ -> Void in
                 sourceImageView.alpha = 0.0
-                fromViewController.view.alpha = 0.0
-
                 sourceImageView.removeFromSuperview()
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
