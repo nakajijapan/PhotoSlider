@@ -121,6 +121,7 @@ extension ViewController: UICollectionViewDelegate {
         //let photoSlider = PhotoSlider.ViewController(imageURLs: imageURLs)
         //let photoSlider = PhotoSlider.ViewController(images: images)
         let photoSlider = PhotoSlider.ViewController(photos: photos)
+        photoSlider.backgroundViewColor = .clear
         photoSlider.delegate = self
         photoSlider.currentPage = indexPath.row
         //photoSlider.visibleCloseButton = false
@@ -129,9 +130,10 @@ extension ViewController: UICollectionViewDelegate {
        
         // UIViewControllerTransitioningDelegate
         photoSlider.transitioningDelegate = self
+        photoSlider.modalPresentationStyle = .overCurrentContext
         
         // Here implemention is better if you want to use ZoomingAnimationControllerTransitioning.
-        //photoSlider.modalPresentationStyle = .OverCurrentContext
+
         //photoSlider.modalTransitionStyle   = .CrossDissolve
         present(photoSlider, animated: true, completion: nil)
         
@@ -252,8 +254,9 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
             return
         }
         
-        let indexPath = collectionView.indexPathsForSelectedItems?.first
-        let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
+        guard let cell = collectionView.visibleCells.first as? ImageCollectionViewCell else {
+            return
+        }
         let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
         var frame = CGRect.zero
 

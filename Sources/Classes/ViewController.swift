@@ -588,7 +588,10 @@ extension ViewController {
         
         let contentViewBounds = view.bounds
         let height = contentViewBounds.height
-        
+
+        // Effect View
+        effectView.frame = contentViewBounds
+
         // Background View
         backgroundView.frame = contentViewBounds
         
