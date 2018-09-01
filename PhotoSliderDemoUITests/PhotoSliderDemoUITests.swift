@@ -100,7 +100,7 @@ class PhotoSliderDemoUITests: XCTestCase {
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()
 
-        let element = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element
+        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
         element.doubleTap()
         element.swipeUp()
         element.swipeDown()
