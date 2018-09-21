@@ -21,7 +21,7 @@ enum PhotoSliderControllerUsingImageType: UInt {
 }
 
 public class ViewController: UIViewController {
-
+    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: CGRect(
             x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
@@ -35,16 +35,16 @@ public class ViewController: UIViewController {
         scrollView.alwaysBounceVertical = true
         scrollView.isScrollEnabled = true
         scrollView.accessibilityLabel = "PhotoSliderScrollView"
-
+        
         scrollView.contentSize = CGSize(
             width: self.view.bounds.width * CGFloat(self.imageResources()!.count),
             height: self.view.bounds.height * 3.0
         )
-
+        
         if #available(iOS 11.0, *) {
             scrollView.contentInsetAdjustmentBehavior = .never
         }
-
+        
         return scrollView
     }()
     
@@ -52,7 +52,7 @@ public class ViewController: UIViewController {
     var images: [UIImage]?
     var photos: [PhotoSlider.Photo]?
     var usingImageType: PhotoSliderControllerUsingImageType = .None
-
+    
     lazy var backgroundView: UIView = {
         let backgroundView = UIView(frame: self.view.bounds)
         backgroundView.backgroundColor = self.backgroundViewColor
@@ -75,26 +75,26 @@ public class ViewController: UIViewController {
         captionBackgroundView.backgroundColor = captionBackgroundViewColor
         return captionBackgroundView
     }()
-
+    
     lazy var effectView: UIVisualEffectView = {
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         effectView.frame = self.view.bounds
         return effectView
     }()
-
+    
     lazy var closeButton: UIButton = {
         let closeButton = UIButton(frame: CGRect.zero)
         let imagePath = self.resourceBundle().path(forResource: "PhotoSliderClose", ofType: "png")
         closeButton.setImage(UIImage(contentsOfFile: imagePath!), for: .normal)
         closeButton.addTarget(self, action: #selector(closeButtonDidTap(_:)), for: .touchUpInside)
-        closeButton.imageView?.contentMode = UIViewContentMode.center
+        closeButton.imageView?.contentMode = UIView.ContentMode.center
         closeButton.layer.shadowColor = UIColor.black.cgColor
         closeButton.layer.shadowOffset = CGSize(width: 1, height: 1)
         closeButton.layer.shadowRadius = 3
         closeButton.layer.shadowOpacity = 1
         return closeButton
     }()
-
+    
     var scrollMode: PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
@@ -106,16 +106,16 @@ public class ViewController: UIViewController {
         label.numberOfLines = self.captionNumberOfLines
         return label
     }()
-
+    
     // For ScrollViewDelegate
     var scrollPreviewPoint = CGPoint.zero
-
+    
     public weak var delegate: PhotoSliderDelegate?
     public var visiblePageControl = true
     public var visibleCloseButton = true
     public var currentPage = 0
     public var captionNumberOfLines = 3
-
+    
     lazy public var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.frame = .zero
@@ -123,7 +123,7 @@ public class ViewController: UIViewController {
         pageControl.isUserInteractionEnabled = false
         return pageControl
     }()
-
+    
     public var captionHeight: CGFloat?
     public var hasCaptionShadow = true
     public var captionFont: UIFont?
@@ -131,63 +131,63 @@ public class ViewController: UIViewController {
     public var captionBackgroundViewColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
     public var backgroundViewColor = UIColor.black
     public var captionTextColor = UIColor.white
-
+    
     public var imageLoader: PhotoSlider.ImageLoader?
-
+    
     public init(imageURLs: [URL]) {
         super.init(nibName: nil, bundle: nil)
         self.imageURLs = imageURLs
         usingImageType = .URL
     }
-
+    
     public init(images: [UIImage]) {
         super.init(nibName: nil, bundle: nil)
         self.images = images
         usingImageType = .Image
     }
-
+    
     public init(photos: [PhotoSlider.Photo]) {
         super.init(nibName: nil, bundle: nil)
         self.photos = photos
         usingImageType = .Photo
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     var statusBarHidden = false
-
+    
     override public var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
     }
-
+    
     override public var prefersStatusBarHidden: Bool {
         return statusBarHidden
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.frame = UIScreen.main.bounds
         view.backgroundColor = UIColor.clear
-
+        
         view.addSubview(effectView)
         effectView.contentView.addSubview(backgroundView)
-
+        
         // scrollview setting for Item
         view.addSubview(scrollView)
         layoutScrollView()
-
+        
         let width = view.bounds.width
         let height = view.bounds.height
         var frame = view.bounds
         frame.origin.y = height
-
+        
         if imageLoader == nil {
             imageLoader = PhotoSlider.KingfisherImageLoader()
         }
-
+        
         for imageResource in imageResources()! {
             
             let imageView: PhotoSlider.ImageView = PhotoSlider.ImageView(frame: frame)
@@ -235,11 +235,11 @@ public class ViewController: UIViewController {
         if captionHeight == nil {
             layoutCaptionBackgroundView()
         }
-
+        
         if width > height {
             statusBarHidden = true
         }
-
+        
         setNeedsStatusBarAppearanceUpdate()
     }
     
@@ -247,7 +247,7 @@ public class ViewController: UIViewController {
         delegate?.photoSliderControllerWillDismiss?(self)
         dissmissViewControllerAnimated(animated: true)
     }
-
+    
     override public func viewWillAppear(_ animated: Bool) {
         scrollView.contentOffset = CGPoint(
             x: scrollView.bounds.width * CGFloat(currentPage),
@@ -255,22 +255,22 @@ public class ViewController: UIViewController {
         )
         scrollInitalized = true
     }
-
+    
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         statusBarHidden = true
         UIView.animate(withDuration: 0.5) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
     }
-
+    
 }
 
 // MARK: - Setup Layout
 
 fileprivate extension ViewController {
-
+    
     func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         [
@@ -280,7 +280,7 @@ fileprivate extension ViewController {
             scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
             ].forEach { $0.isActive = true }
     }
-
+    
     func layoutCloseButton() {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
@@ -297,10 +297,10 @@ fileprivate extension ViewController {
                 closeButton.heightAnchor.constraint(equalToConstant: 52.0),
                 closeButton.widthAnchor.constraint(equalToConstant: 52.0),
                 ].forEach { $0.isActive = true }
-
+            
         }
     }
-
+    
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
@@ -319,7 +319,7 @@ fileprivate extension ViewController {
                 ].forEach { $0.isActive = true }
         }
     }
-
+    
     func layoutCaptionLabel() {
         if hasCaptionShadow {
             let translucentBlack = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
@@ -331,7 +331,7 @@ fileprivate extension ViewController {
         if let captionFont = captionFont {
             captionLabel.font = captionFont
         }
-            
+        
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
             [
@@ -358,22 +358,22 @@ fileprivate extension ViewController {
          captionBackgroundView.rightAnchor.constraint(equalTo: view.rightAnchor),
          captionBackgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
          captionBackgroundView.topAnchor.constraint(equalTo: captionLabel.topAnchor, constant: -16.0)
-        ].forEach { $0.isActive = true }
+            ].forEach { $0.isActive = true }
     }
-
+    
 }
 
 // MARK: - UIScrollViewDelegate
 
 extension ViewController: UIScrollViewDelegate {
-
+    
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         previousPage = currentPage
         scrollPreviewPoint = scrollView.contentOffset
     }
-
+    
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
+        
         if !scrollInitalized {
             generateCurrentPage()
             return
@@ -404,7 +404,7 @@ extension ViewController: UIScrollViewDelegate {
         if scrollMode == .Vertical {
             let offsetHeight = fabs(scrollView.frame.size.height - scrollView.contentOffset.y)
             let alpha = 1.0 - ( fabs(offsetHeight) / (scrollView.frame.size.height / 2.0) )
-
+            
             backgroundView.alpha = alpha
             
             var contentOffset = scrollView.contentOffset
@@ -427,11 +427,11 @@ extension ViewController: UIScrollViewDelegate {
         
         // Update current page index.
         generateCurrentPage()
-
+        
     }
     
     fileprivate func generateCurrentPage() {
-
+        
         var page = Int(round(scrollView.contentOffset.x / scrollView.frame.size.width))
         if page < 0 {
             page = 0
@@ -440,11 +440,11 @@ extension ViewController: UIScrollViewDelegate {
         }
         
         currentPage = page
-
+        
         if visiblePageControl {
             pageControl.currentPage = currentPage
         }
-
+        
     }
     
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -493,41 +493,41 @@ extension ViewController: UIScrollViewDelegate {
                 self.closeButton.alpha = 0.0
                 self.captionLabel.alpha = 0.0
                 self.view.alpha = 0.0
-            },
+        },
             completion: { _ -> Void in
                 self.dissmissViewControllerAnimated(animated: false)
                 self.closeAnimating = false
-            }
+        }
         )
     }
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-
+        
         if previousPage != currentPage {
-
+            
             // If page index has changed - reset zoom scale for previous image.
             let imageView = imageViews[previousPage]
             imageView.scrollView.zoomScale = imageView.scrollView.minimumZoomScale
             
             // Show Caption Label
             updateCaption()
-
+            
         }
         
         scrollMode = .None
-
+        
     }
 }
 
 // MARK: - PhotoSliderImageViewDelegate
 
 extension ViewController: PhotoSliderImageViewDelegate {
-
+    
     func photoSliderImageViewDidEndZooming(_ viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
         if scale <= 1.0 {
             scrollView.isScrollEnabled = true
             
-            UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
+            UIView.animate(withDuration: 0.05, delay: 0.0, options: UIView.AnimationOptions.curveLinear, animations: { () -> Void in
                 self.closeButton.alpha = 1.0
                 self.captionLabel.alpha = 1.0
                 if let captionText = self.captionLabel.text, !captionText.isEmpty {
@@ -536,19 +536,19 @@ extension ViewController: PhotoSliderImageViewDelegate {
                 if self.visiblePageControl {
                     self.pageControl.alpha = 1.0
                 }
-                }, completion: nil)
-
+            }, completion: nil)
+            
         } else {
             scrollView.isScrollEnabled = false
-
-            UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
+            
+            UIView.animate(withDuration: 0.05, delay: 0.0, options: UIView.AnimationOptions.curveLinear, animations: { () -> Void in
                 self.closeButton.alpha = 0.0
                 self.captionLabel.alpha = 0.0
                 self.captionBackgroundView.backgroundColor = .clear
                 if self.visiblePageControl {
                     self.pageControl.alpha = 0.0
                 }
-                }, completion: nil)
+            }, completion: nil)
         }
     }
     
@@ -574,7 +574,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
         }
         
         return Bundle(for: type(of: self))
-
+        
     }
 }
 
@@ -588,10 +588,10 @@ extension ViewController {
         
         let contentViewBounds = view.bounds
         let height = contentViewBounds.height
-
+        
         // Effect View
         effectView.frame = contentViewBounds
-
+        
         // Background View
         backgroundView.frame = contentViewBounds
         
@@ -605,17 +605,17 @@ extension ViewController {
         // ImageViews
         var frame = CGRect(x: 0.0, y: contentViewBounds.height, width: contentViewBounds.width, height: contentViewBounds.height)
         for i in 0..<scrollView.subviews.count {
-
+            
             let imageView = scrollView.subviews[i] as! PhotoSlider.ImageView
             
             imageView.frame = frame
             frame.origin.x += contentViewBounds.size.width
             imageView.scrollView.frame = contentViewBounds
-
+            
             imageView.layoutImageView()
-
+            
         }
-
+        
         scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * contentViewBounds.width, y: height)
         
         scrollMode = .None
@@ -629,7 +629,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
     public func transitionSourceImageView() -> UIImageView {
         let zoomingImageView = imageViews[currentPage]
         zoomingImageView.imageView.clipsToBounds = true
-        zoomingImageView.imageView.contentMode = UIViewContentMode.scaleAspectFill
+        zoomingImageView.imageView.contentMode = UIView.ContentMode.scaleAspectFill
         return zoomingImageView.imageView
     }
     
@@ -641,17 +641,17 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         var width: CGFloat = 0.0
         
         if view.bounds.width < view.bounds.height {
-
+            
             height = (view.frame.width * sourceImage.size.height) / sourceImage.size.width
             width  = view.frame.width
-
+            
         } else {
-
+            
             height = view.frame.height
             width  = (view.frame.height * sourceImage.size.width) / sourceImage.size.height
-
+            
         }
-
+        
         sourceImageView.frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
         sourceImageView.center = CGPoint(
             x: view.frame.width * 0.5,
@@ -675,7 +675,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         let attributedString = NSMutableAttributedString(string: text)
         let style = NSMutableParagraphStyle()
         style.minimumLineHeight = height
-        attributedString.addAttributes([NSAttributedStringKey.paragraphStyle: style], range: NSRange(location: 0, length: text.count))
+        attributedString.addAttributes([NSAttributedString.Key.paragraphStyle: style], range: NSRange(location: 0, length: text.count))
         
         return attributedString
     }
@@ -699,7 +699,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
                         self.captionLabel.text = photo.caption
                     }
                     
-                    UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
+                    UIView.animate(withDuration: 0.1, delay: 0.0, options: UIView.AnimationOptions.curveLinear, animations: { () -> Void in
                         self.captionLabel.alpha = 1.0
                         if let captionText = self.captionLabel.text, !captionText.isEmpty {
                             self.captionBackgroundView.backgroundColor = self.captionBackgroundViewColor
