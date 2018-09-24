@@ -9,14 +9,14 @@
 import UIKit
 
 public class ProgressView: UIView {
-
+    
     var progressLayer: CAShapeLayer!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
     }
-
+    
     public required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         backgroundColor = UIColor.clear
@@ -39,7 +39,7 @@ public class ProgressView: UIView {
             startAngle: CGFloat(startAngle),
             endAngle: CGFloat(endAngle),
             clockwise: true
-        ).cgPath
+            ).cgPath
         progressLayer.backgroundColor = UIColor.clear.cgColor
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.strokeColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2).cgColor
@@ -63,7 +63,7 @@ public class ProgressView: UIView {
         progressLayer.lineWidth = 4.0
         progressLayer.strokeStart = 0.0
         progressLayer.strokeEnd = 0.0
-        progressLayer.lineCap = kCALineCapRound
+        progressLayer.lineCap = CAShapeLayerLineCap.round
         layer.addSublayer(self.progressLayer)
     }
     
@@ -77,9 +77,9 @@ public class ProgressView: UIView {
         animation.fromValue = NSNumber(value: Float(progressLayer.strokeEnd))
         animation.toValue = NSNumber(value: progress)
         animation.duration = 0.05
-        animation.fillMode = kCAFillModeForwards
+        animation.fillMode = CAMediaTimingFillMode.forwards
         progressLayer.strokeEnd = CGFloat(progress)
         progressLayer.add(animation, forKey: "strokeEnd")
     }
-
+    
 }
