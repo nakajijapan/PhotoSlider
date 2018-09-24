@@ -180,7 +180,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell01")!
         
-        collectionView = cell.viewWithTag(1) as! UICollectionView
+        collectionView = cell.viewWithTag(1) as? UICollectionView
         collectionView.delegate = self
         collectionView.dataSource = self
         
