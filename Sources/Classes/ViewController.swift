@@ -390,8 +390,8 @@ extension ViewController: UIScrollViewDelegate {
             return
         }
         
-        let offsetX = fabs(scrollView.contentOffset.x - scrollPreviewPoint.x)
-        let offsetY = fabs(scrollView.contentOffset.y - scrollPreviewPoint.y)
+        let offsetX = abs(scrollView.contentOffset.x - scrollPreviewPoint.x)
+        let offsetY = abs(scrollView.contentOffset.y - scrollPreviewPoint.y)
         
         if scrollMode == .None {
             if offsetY > offsetX {
@@ -402,8 +402,8 @@ extension ViewController: UIScrollViewDelegate {
         }
         
         if scrollMode == .Vertical {
-            let offsetHeight = fabs(scrollView.frame.size.height - scrollView.contentOffset.y)
-            let alpha = 1.0 - ( fabs(offsetHeight) / (scrollView.frame.size.height / 2.0) )
+            let offsetHeight = abs(scrollView.frame.size.height - scrollView.contentOffset.y)
+            let alpha = 1.0 - ( abs(offsetHeight) / (scrollView.frame.size.height / 2.0) )
             
             backgroundView.alpha = alpha
             
