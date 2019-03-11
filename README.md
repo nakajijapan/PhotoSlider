@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
 [![Platform](https://img.shields.io/cocoapods/p/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
 [![Language](https://img.shields.io/badge/language-Swift%204-orange.svg)](https://swift.org)
+[![Backers on Open Collective](https://opencollective.com/PhotoSlider/backers/badge.svg)](#backers) 
+[![Sponsors on Open Collective](https://opencollective.com/PhotoSlider/sponsors/badge.svg)](#sponsors) 
 
 PhotoSlider is a simple photo slider and can delete slider with swiping.
 
@@ -215,6 +217,36 @@ nakajijapan
 - yhkaplan
 - seapy
 - antrix1989
+
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/nakajijapan/PhotoSlider/graphs/contributors"><img src="https://opencollective.com/PhotoSlider/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/PhotoSlider#backer)]
+
+<a href="https://opencollective.com/PhotoSlider#backers" target="_blank"><img src="https://opencollective.com/PhotoSlider/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/PhotoSlider#sponsor)]
+
+<a href="https://opencollective.com/PhotoSlider/sponsor/0/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/PhotoSlider/sponsor/1/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/PhotoSlider/sponsor/2/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/PhotoSlider/sponsor/3/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/PhotoSlider/sponsor/4/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/PhotoSlider/sponsor/5/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/PhotoSlider/sponsor/6/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/PhotoSlider/sponsor/7/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/PhotoSlider/sponsor/8/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/PhotoSlider/sponsor/9/website" target="_blank"><img src="https://opencollective.com/PhotoSlider/sponsor/9/avatar.svg"></a>
+
+
 
 ## License
 
