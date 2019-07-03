@@ -24,14 +24,14 @@ public class KingfisherImageLoader: ImageLoader {
                     Int(truncatingIfNeeded: receivedSize),
                     Int(truncatingIfNeeded: totalSize)
                 )
-            },
-            completionHandler: { (image, error, _, _) in
-                if let image = image, error == nil {
-                    completion(image)
-                } else {
-                    completion(nil)
-                }
+        }, completionHandler: { result in
+            switch result {
+            case .success(let value):
+                let image = value.image
+                completion(image)
+            case .failure(_):
+                completion(nil)
             }
-        )
+        })
     }
 }
