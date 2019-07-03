@@ -66,10 +66,10 @@ class ImageView: UIView {
         let doubleTabGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
         doubleTabGesture.numberOfTapsRequired = 2
         addGestureRecognizer(doubleTabGesture)
-        
+
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
         addGestureRecognizer(longPressGesture)
-        
+
         imageView.autoresizingMask = [
             .flexibleWidth,
             .flexibleLeftMargin,

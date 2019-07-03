@@ -523,6 +523,7 @@ extension ViewController: UIScrollViewDelegate {
 // MARK: - PhotoSliderImageViewDelegate
 
 extension ViewController: PhotoSliderImageViewDelegate {
+
     func photoSliderImageViewDidLongPress(_ imageView: ImageView) {
         if !openableActivityController { return }
         guard let image = imageView.imageView.image else { return }
@@ -530,8 +531,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
         let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         present(activityViewController, animated: true, completion: nil)
     }
-    
-    
+
     func photoSliderImageViewDidEndZooming(_ viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
         if scale <= 1.0 {
             scrollView.isScrollEnabled = true
