@@ -23,13 +23,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		DC0E42181C3184D80090AC94 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DC0E42101C3184D80090AC94 /* Kingfisher.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D1ED2D0B1AD2CFA600CFC3EB;
-			remoteInfo = "Kingfisher-Demo";
-		};
 		DC0E421A1C3184D80090AC94 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DC0E42101C3184D80090AC94 /* Kingfisher.xcodeproj */;
@@ -43,13 +36,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = D1ED2D3F1AD2D09F00CFC3EB;
 			remoteInfo = KingfisherTests;
-		};
-		DC0E421E1C3184D80090AC94 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DC0E42101C3184D80090AC94 /* Kingfisher.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D13F49C21BEDA53F00CE335D;
-			remoteInfo = "Kingfisher-tvOS-Demo";
 		};
 		DC0E42201C3184D80090AC94 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -71,27 +57,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = D16799EB1C4E74460020FD12;
 			remoteInfo = "Kingfisher-watchOS";
-		};
-		DCA3F67F1CF3697600B261A0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DC0E42101C3184D80090AC94 /* Kingfisher.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4B2944551C3D03880088C3E7;
-			remoteInfo = "Kingfisher-OSX-Demo";
-		};
-		DCA3F6811CF3697600B261A0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DC0E42101C3184D80090AC94 /* Kingfisher.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D1679A391C4E78B20020FD12;
-			remoteInfo = "Kingfisher-watchOS-Demo";
-		};
-		DCA3F6831CF3697600B261A0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DC0E42101C3184D80090AC94 /* Kingfisher.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D1679A451C4E78B20020FD12;
-			remoteInfo = "Kingfisher-watchOS-Demo Extension";
 		};
 		DCA3F6851CF3697600B261A0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -217,11 +182,6 @@
 				DC0E42211C3184D80090AC94 /* Kingfisher.framework */,
 				DCA3F67C1CF3697600B261A0 /* Kingfisher.framework */,
 				DCA3F67E1CF3697600B261A0 /* Kingfisher.framework */,
-				DC0E42191C3184D80090AC94 /* Kingfisher-Demo.app */,
-				DC0E421F1C3184D80090AC94 /* Kingfisher-tvOS-Demo.app */,
-				DCA3F6801CF3697600B261A0 /* Kingfisher-macOS-Demo.app */,
-				DCA3F6821CF3697600B261A0 /* Kingfisher-watchOS-Demo.app */,
-				DCA3F6841CF3697600B261A0 /* Kingfisher-watchOS-Demo Extension.appex */,
 				DC0E421D1C3184D80090AC94 /* KingfisherTests.xctest */,
 				DCA3F6861CF3697600B261A0 /* KingfisherTests-tvOS.xctest */,
 				DCA3F6881CF3697600B261A0 /* KingfisherTests-macOS.xctest */,
@@ -268,7 +228,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = nakajijapan;
 				TargetAttributes = {
 					DC0E41F91C3181EE0090AC94 = {
@@ -278,7 +238,7 @@
 			};
 			buildConfigurationList = DC0E41A21C317DD50090AC94 /* Build configuration list for PBXProject "PhotoSlider" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -301,13 +261,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		DC0E42191C3184D80090AC94 /* Kingfisher-Demo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Kingfisher-Demo.app";
-			remoteRef = DC0E42181C3184D80090AC94 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		DC0E421B1C3184D80090AC94 /* Kingfisher.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -320,13 +273,6 @@
 			fileType = wrapper.cfbundle;
 			path = KingfisherTests.xctest;
 			remoteRef = DC0E421C1C3184D80090AC94 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DC0E421F1C3184D80090AC94 /* Kingfisher-tvOS-Demo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Kingfisher-tvOS-Demo.app";
-			remoteRef = DC0E421E1C3184D80090AC94 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		DC0E42211C3184D80090AC94 /* Kingfisher.framework */ = {
@@ -348,27 +294,6 @@
 			fileType = wrapper.framework;
 			path = Kingfisher.framework;
 			remoteRef = DCA3F67D1CF3697600B261A0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DCA3F6801CF3697600B261A0 /* Kingfisher-macOS-Demo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Kingfisher-macOS-Demo.app";
-			remoteRef = DCA3F67F1CF3697600B261A0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DCA3F6821CF3697600B261A0 /* Kingfisher-watchOS-Demo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Kingfisher-watchOS-Demo.app";
-			remoteRef = DCA3F6811CF3697600B261A0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DCA3F6841CF3697600B261A0 /* Kingfisher-watchOS-Demo Extension.appex */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.app-extension";
-			path = "Kingfisher-watchOS-Demo Extension.appex";
-			remoteRef = DCA3F6831CF3697600B261A0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		DCA3F6861CF3697600B261A0 /* KingfisherTests-tvOS.xctest */ = {
@@ -423,6 +348,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -478,6 +404,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
