@@ -9,7 +9,8 @@ import UIKit
 import Kingfisher
 
 @objc protocol PhotoSliderImageViewDelegate {
-    func photoSliderImageViewDidEndZooming(_ viewController: PhotoSlider.ImageView, atScale scale: CGFloat)
+    func photoSliderImageViewDidEndZooming(_ imageView: PhotoSlider.ImageView, atScale scale: CGFloat)
+    func photoSliderImageViewDidLongPress(_ imageView: PhotoSlider.ImageView)
 }
 
 class ImageView: UIView {
@@ -65,7 +66,10 @@ class ImageView: UIView {
         let doubleTabGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
         doubleTabGesture.numberOfTapsRequired = 2
         addGestureRecognizer(doubleTabGesture)
-        
+
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
+        addGestureRecognizer(longPressGesture)
+
         imageView.autoresizingMask = [
             .flexibleWidth,
             .flexibleLeftMargin,
@@ -198,7 +202,11 @@ extension ImageView {
             scrollView.setZoomScale(0.0, animated: true)
         }
     }
-    
+
+    @objc func didLongPress(_ sender: UILongPressGestureRecognizer) {
+        delegate?.photoSliderImageViewDidLongPress(self)
+    }
+
 }
 
 // MARK: - UIScrollViewDelegate
