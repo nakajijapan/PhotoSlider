@@ -115,6 +115,7 @@ public class ViewController: UIViewController {
     public var visibleCloseButton = true
     public var currentPage = 0
     public var captionNumberOfLines = 3
+    public var openableActivityController = false
     
     lazy public var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
@@ -522,6 +523,14 @@ extension ViewController: UIScrollViewDelegate {
 // MARK: - PhotoSliderImageViewDelegate
 
 extension ViewController: PhotoSliderImageViewDelegate {
+    func photoSliderImageViewDidLongPress(_ imageView: ImageView) {
+        if !openableActivityController { return }
+        guard let image = imageView.imageView.image else { return }
+        let activityItems = [image]
+        let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        present(activityViewController, animated: true, completion: nil)
+    }
+    
     
     func photoSliderImageViewDidEndZooming(_ viewController: PhotoSlider.ImageView, atScale scale: CGFloat) {
         if scale <= 1.0 {
