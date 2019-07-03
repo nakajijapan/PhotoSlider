@@ -202,11 +202,11 @@ extension ImageView {
             scrollView.setZoomScale(0.0, animated: true)
         }
     }
-    
+
     @objc func didLongPress(_ sender: UILongPressGestureRecognizer) {
         delegate?.photoSliderImageViewDidLongPress(self)
     }
-    
+
 }
 
 // MARK: - UIScrollViewDelegate
