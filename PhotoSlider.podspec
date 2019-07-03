@@ -19,6 +19,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, '10.0'
   s.requires_arc = true
+  s.swift_versions = ['4.2']
 
   s.source_files = 'Sources/Classes/**/*'
   s.resource_bundles = {
