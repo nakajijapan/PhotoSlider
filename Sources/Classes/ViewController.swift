@@ -95,6 +95,19 @@ public class ViewController: UIViewController {
         return closeButton
     }()
     
+    lazy var shareButton: UIButton = {
+        let shareButton = UIButton(frame: CGRect.zero)
+        let imagePath = self.resourceBundle().path(forResource: "ShareiOS", ofType: "png")
+        shareButton.setImage(UIImage(contentsOfFile: imagePath!), for: .normal)
+        shareButton.addTarget(self, action: #selector(shareButtonDidTap(_:)), for: .touchUpInside)
+        shareButton.imageView?.contentMode = UIView.ContentMode.center
+        shareButton.layer.shadowColor = UIColor.black.cgColor
+        shareButton.layer.shadowOffset = CGSize(width: 1, height: 1)
+        shareButton.layer.shadowRadius = 3
+        shareButton.layer.shadowOpacity = 1
+        return shareButton
+    }()
+    
     var scrollMode: PhotoSliderControllerScrollMode = .None
     var scrollInitalized = false
     var closeAnimating = false
@@ -113,6 +126,7 @@ public class ViewController: UIViewController {
     public weak var delegate: PhotoSliderDelegate?
     public var visiblePageControl = true
     public var visibleCloseButton = true
+    public var visibleShareButton = true
     public var currentPage = 0
     public var captionNumberOfLines = 3
     public var openableActivityController = false
@@ -219,6 +233,11 @@ public class ViewController: UIViewController {
             layoutCloseButton()
         }
         
+        if visibleShareButton {
+            view.addSubview(shareButton)
+            layoutShareButton()
+        }
+        
         // Caption Background
         view.addSubview(captionBackgroundView)
         
@@ -247,6 +266,16 @@ public class ViewController: UIViewController {
     @objc func closeButtonDidTap(_ sender: UIButton) {
         delegate?.photoSliderControllerWillDismiss?(self)
         dissmissViewControllerAnimated(animated: true)
+    }
+    
+    @objc func shareButtonDidTap(_ sender: UIButton) {
+        guard let currentImage = imageViews[currentPage].imageView.image else { return }
+        
+        let imageToShare : [UIImage] = [ currentImage ]
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+
+        present(activityViewController, animated: true, completion: nil)
     }
     
     override public func viewWillAppear(_ animated: Bool) {
@@ -297,6 +326,26 @@ fileprivate extension ViewController {
                 closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
                 closeButton.heightAnchor.constraint(equalToConstant: 52.0),
                 closeButton.widthAnchor.constraint(equalToConstant: 52.0),
+                ].forEach { $0.isActive = true }
+            
+        }
+    }
+    
+    func layoutShareButton() {
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 11.0, *) {
+            [
+                shareButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
+                shareButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
+                shareButton.heightAnchor.constraint(equalToConstant: 52.0),
+                shareButton.widthAnchor.constraint(equalToConstant: 52.0),
+                ].forEach { $0.isActive = true }
+        } else {
+            [
+                shareButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
+                shareButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
+                shareButton.heightAnchor.constraint(equalToConstant: 52.0),
+                shareButton.widthAnchor.constraint(equalToConstant: 52.0),
                 ].forEach { $0.isActive = true }
             
         }
