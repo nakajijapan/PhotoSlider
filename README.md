@@ -181,6 +181,10 @@ class PhotoSliderSDImageLoader: PhotoSlider.ImageLoader {
         progress: @escaping PhotoSlider.ImageLoader.ProgressBlock,
         completion: @escaping PhotoSlider.ImageLoader.CompletionBlock)
     {
+        //Webp compatibility (optional)
+        let WebPCoder = SDImageWebPCoder.shared
+        SDImageCodersManager.shared.addCoder(WebPCoder)
+        
         imageView?.sd_setImage(
             withURL: url,
             placeholderImage: nil,
