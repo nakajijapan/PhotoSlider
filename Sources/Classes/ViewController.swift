@@ -267,7 +267,7 @@ public class ViewController: UIViewController {
     @objc func shareButtonDidTap(_ sender: UIButton) {
         guard let currentImage = imageViews[currentPage].imageView.image else { return }
 
-        let imageToShare : [UIImage] = [ currentImage ]
+        let imageToShare: [UIImage] = [ currentImage ]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
 
@@ -570,7 +570,7 @@ extension ViewController: UIScrollViewDelegate {
 
 extension ViewController: PhotoSliderImageViewDelegate {
 
-    fileprivate func toggleButtonsVisibility() {
+    func photoSliderImageViewDidSingleTap() {
 
         if visibleCloseButton {
             closeButton.isHidden = !closeButton.isHidden
@@ -579,10 +579,6 @@ extension ViewController: PhotoSliderImageViewDelegate {
         if visibleShareButton {
             shareButton.isHidden = !shareButton.isHidden
         }
-    }
-
-    func photoSliderImageViewDidSingleTap() {
-        toggleButtonsVisibility()
     }
 
 
