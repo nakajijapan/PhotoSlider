@@ -211,7 +211,7 @@ extension ImageView {
         delegate?.photoSliderImageViewDidLongPress(self)
     }
 
-    @objc func didSingleTap(_ sender: UIGestureRecognizer){
+    @objc func didSingleTap(_ sender: UIGestureRecognizer) {
         delegate?.photoSliderImageViewDidSingleTap()
     }
 
