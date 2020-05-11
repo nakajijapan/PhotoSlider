@@ -9,6 +9,6 @@ install:
   - gem install xcpretty
 
 script:
-  - rake build:ios DESTINATION='OS=10.0,name=iPhone 6s'
-  - rake build:ios DESTINATION='platform=iOS Simulator,name=iPhone 7 Plus'
+  - rake build:ios DESTINATION='OS=11,name=iPhone X'
+  - rake build:ios DESTINATION='platform=iOS Simulator,name=iPhone X Plus'
   - pod lib lint --quick
