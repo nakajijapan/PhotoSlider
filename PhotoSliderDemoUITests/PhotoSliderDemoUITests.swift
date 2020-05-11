@@ -34,7 +34,7 @@ class PhotoSliderDemoUITests: XCTestCase {
         
         let app = XCUIApplication()
         app.otherElements["rootView"].tap()
-
+        sleep(1)
         XCTAssertEqual(app.scrollViews.matching(identifier: "PhotoSliderScrollView").element.exists, true)
         
         app.buttons["PhotoSliderClose"].tap()
