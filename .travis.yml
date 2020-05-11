@@ -1,11 +1,6 @@
 language: objective-c
 osx_image: xcode11.2
 
-env:
-  matrix:
-      - DESTINATION="OS=10.0,name=iPhone 7 Plus"
-      - DESTINATION="platform=iOS Simulator,name=iPhone X"
-
 before_install:
   - gem install cocoapods
   - carthage bootstrap --platform ios
