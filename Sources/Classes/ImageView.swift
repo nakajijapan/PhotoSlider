@@ -11,6 +11,7 @@ import Kingfisher
 @objc protocol PhotoSliderImageViewDelegate {
     func photoSliderImageViewDidEndZooming(_ imageView: PhotoSlider.ImageView, atScale scale: CGFloat)
     func photoSliderImageViewDidLongPress(_ imageView: PhotoSlider.ImageView)
+    func photoSliderImageViewDidSingleTap()
 }
 
 class ImageView: UIView {
@@ -20,7 +21,7 @@ class ImageView: UIView {
     var progressView: PhotoSlider.ProgressView!
     weak var delegate: PhotoSliderImageViewDelegate?
     weak var imageLoader: PhotoSlider.ImageLoader?
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         initialize()
@@ -30,7 +31,7 @@ class ImageView: UIView {
         super.init(coder: aDecoder)!
         initialize()
     }
-    
+
     func initialize() {
 
         backgroundColor = UIColor.clear
@@ -56,19 +57,22 @@ class ImageView: UIView {
         layoutScrollView()
 
         scrollView.addSubview(imageView)
-       
+
         // progress view
         progressView = ProgressView(frame: CGRect.zero)
         progressView.isHidden = true
         addSubview(progressView)
         layoutProgressView()
-        
-        let doubleTabGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
-        doubleTabGesture.numberOfTapsRequired = 2
-        addGestureRecognizer(doubleTabGesture)
+
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        addGestureRecognizer(doubleTapGesture)
 
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
         addGestureRecognizer(longPressGesture)
+
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSingleTap(_:)))
+        addGestureRecognizer(singleTapGesture)
 
         imageView.autoresizingMask = [
             .flexibleWidth,
@@ -78,39 +82,39 @@ class ImageView: UIView {
             .flexibleHeight,
             .flexibleBottomMargin
         ]
-        
+
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
 
         let boundsSize = self.bounds.size
         var frameToCenter = self.imageView.frame
-        
+
         // Horizontally
         if frameToCenter.size.width < boundsSize.width {
             frameToCenter.origin.x = floor((boundsSize.width - frameToCenter.size.width) / 2.0)
         } else {
             frameToCenter.origin.x = 0
         }
-        
+
         // Vertically
         if frameToCenter.size.height < boundsSize.height {
             frameToCenter.origin.y = floor((boundsSize.height - frameToCenter.size.height) / 2.0)
         } else {
             frameToCenter.origin.y = 0
         }
-        
+
         // Center
         if !(imageView.frame.equalTo(frameToCenter)) {
             imageView.frame = frameToCenter
         }
     }
-    
+
     // MARK: - Constraints
-    
+
     private func layoutScrollView() {
-        
+
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         [
             scrollView.topAnchor.constraint(equalTo: topAnchor, constant: 0.0),
@@ -119,7 +123,7 @@ class ImageView: UIView {
             scrollView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0.0),
             ].forEach { $0.isActive = true }
     }
-    
+
     private func layoutProgressView() {
         progressView.translatesAutoresizingMaskIntoConstraints = false
         [
@@ -129,7 +133,7 @@ class ImageView: UIView {
             progressView.centerYAnchor.constraint(lessThanOrEqualTo: centerYAnchor, constant: 1.0),
             ].forEach { $0.isActive = true }
      }
-    
+
     func loadImage(imageURL: URL) {
         progressView.isHidden = false
         imageLoader?.load(
@@ -147,26 +151,26 @@ class ImageView: UIView {
             }
         )
     }
-    
+
     func setImage(image: UIImage) {
         imageView.image = image
         layoutImageView(image: image)
     }
-    
+
     func layoutImageView(image: UIImage) {
         var frame = CGRect.zero
         frame.origin = CGPoint.zero
-        
+
         let height = image.size.height * (bounds.width / image.size.width)
         let width = image.size.width * (bounds.height / image.size.height)
-        
+
         if image.size.width > image.size.height {
-            
+
             frame.size = CGSize(width: bounds.width, height: height)
             if height >= bounds.height {
                 frame.size = CGSize(width: width, height: bounds.height)
             }
-            
+
         } else {
 
             frame.size = CGSize(width: width, height: bounds.height)
@@ -175,19 +179,19 @@ class ImageView: UIView {
             }
 
         }
-        
+
         imageView.frame = frame
         imageView.center = CGPoint(x: bounds.midX, y: bounds.midY)
     }
-    
+
     func layoutImageView() {
-        
+
         guard let image = self.imageView.image else {
             return
         }
         layoutImageView(image: image)
     }
-    
+
 }
 
 // MARK: - Actions
@@ -207,6 +211,10 @@ extension ImageView {
         delegate?.photoSliderImageViewDidLongPress(self)
     }
 
+    @objc func didSingleTap(_ sender: UIGestureRecognizer) {
+        delegate?.photoSliderImageViewDidSingleTap()
+    }
+
 }
 
 // MARK: - UIScrollViewDelegate
@@ -216,14 +224,14 @@ extension ImageView: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
-    
+
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         setNeedsLayout()
         layoutIfNeeded()
     }
-    
+
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         delegate?.photoSliderImageViewDidEndZooming(self, atScale: scale)
     }
-    
+
 }
