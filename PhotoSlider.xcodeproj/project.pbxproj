@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		94530E041E247C6100D12C16 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94530E031E247C6100D12C16 /* ImageLoader.swift */; };
 		94530E141E247CA300D12C16 /* KingfisherImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */; };
+		B06794C92473CBC80069EE09 /* ShareiOS.png in Resources */ = {isa = PBXBuildFile; fileRef = B06794BF2473CBC80069EE09 /* ShareiOS.png */; };
+		B06794CA2473CBC80069EE09 /* ShareiOS@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06794C72473CBC80069EE09 /* ShareiOS@3x.png */; };
+		B06794CB2473CBC80069EE09 /* ShareiOS@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06794C82473CBC80069EE09 /* ShareiOS@2x.png */; };
 		DC0E42021C3182080090AC94 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0E41C71C317E850090AC94 /* ImageView.swift */; };
 		DC0E42031C3182090090AC94 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0E41C81C317E850090AC94 /* Photo.swift */; };
 		DC0E42041C31820C0090AC94 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0E41C91C317E850090AC94 /* ProgressView.swift */; };
@@ -77,6 +80,9 @@
 /* Begin PBXFileReference section */
 		94530E031E247C6100D12C16 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KingfisherImageLoader.swift; sourceTree = "<group>"; };
+		B06794BF2473CBC80069EE09 /* ShareiOS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShareiOS.png; sourceTree = "<group>"; };
+		B06794C72473CBC80069EE09 /* ShareiOS@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShareiOS@3x.png"; sourceTree = "<group>"; };
+		B06794C82473CBC80069EE09 /* ShareiOS@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShareiOS@2x.png"; sourceTree = "<group>"; };
 		DC0E41BD1C317E850090AC94 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PhotoSlider/Info.plist; sourceTree = "<group>"; };
 		DC0E41BE1C317E850090AC94 /* PhotoSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSlider.h; path = PhotoSlider/PhotoSlider.h; sourceTree = "<group>"; };
 		DC0E41C21C317E850090AC94 /* PhotoSliderClose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoSliderClose.png; sourceTree = "<group>"; };
@@ -148,6 +154,9 @@
 				DC0E41C21C317E850090AC94 /* PhotoSliderClose.png */,
 				DC0E41C31C317E850090AC94 /* PhotoSliderClose@2x.png */,
 				DC0E41C41C317E850090AC94 /* PhotoSliderClose@3x.png */,
+				B06794BF2473CBC80069EE09 /* ShareiOS.png */,
+				B06794C82473CBC80069EE09 /* ShareiOS@2x.png */,
+				B06794C72473CBC80069EE09 /* ShareiOS@3x.png */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -318,8 +327,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC0E42071C3182180090AC94 /* PhotoSliderClose.png in Resources */,
+				B06794C92473CBC80069EE09 /* ShareiOS.png in Resources */,
+				B06794CB2473CBC80069EE09 /* ShareiOS@2x.png in Resources */,
 				DC0E42081C31821B0090AC94 /* PhotoSliderClose@2x.png in Resources */,
 				DC0E42091C31821D0090AC94 /* PhotoSliderClose@3x.png in Resources */,
+				B06794CA2473CBC80069EE09 /* ShareiOS@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
