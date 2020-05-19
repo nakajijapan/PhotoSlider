@@ -122,7 +122,7 @@ public class ViewController: UIViewController {
     public weak var delegate: PhotoSliderDelegate?
     public var visiblePageControl = true
     public var visibleCloseButton = true
-    public var visibleShareButton = true
+    public var visibleShareButton = false
     public var currentPage = 0
     public var captionNumberOfLines = 3
     public var openableActivityController = false
