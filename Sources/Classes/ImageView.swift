@@ -11,7 +11,6 @@ import Kingfisher
 @objc protocol PhotoSliderImageViewDelegate {
     func photoSliderImageViewDidEndZooming(_ imageView: PhotoSlider.ImageView, atScale scale: CGFloat)
     func photoSliderImageViewDidLongPress(_ imageView: PhotoSlider.ImageView)
-    func photoSliderImageViewDidSingleTap()
 }
 
 class ImageView: UIView {
@@ -70,9 +69,6 @@ class ImageView: UIView {
 
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
         addGestureRecognizer(longPressGesture)
-
-        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSingleTap(_:)))
-        addGestureRecognizer(singleTapGesture)
 
         imageView.autoresizingMask = [
             .flexibleWidth,
@@ -209,10 +205,6 @@ extension ImageView {
 
     @objc func didLongPress(_ sender: UILongPressGestureRecognizer) {
         delegate?.photoSliderImageViewDidLongPress(self)
-    }
-
-    @objc func didSingleTap(_ sender: UIGestureRecognizer) {
-        delegate?.photoSliderImageViewDidSingleTap()
     }
 
 }

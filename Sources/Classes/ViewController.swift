@@ -97,7 +97,7 @@ public class ViewController: UIViewController {
 
     lazy var shareButton: UIButton = {
         let shareButton = UIButton(frame: CGRect.zero)
-        let imagePath = self.resourceBundle().path(forResource: "ShareiOS", ofType: "png")
+        let imagePath = self.resourceBundle().path(forResource: "PhotoSliderShare", ofType: "png")
         shareButton.setImage(UIImage(contentsOfFile: imagePath!), for: .normal)
         shareButton.addTarget(self, action: #selector(shareButtonDidTap(_:)), for: .touchUpInside)
         shareButton.imageView?.contentMode = UIView.ContentMode.center
@@ -122,7 +122,7 @@ public class ViewController: UIViewController {
     public weak var delegate: PhotoSliderDelegate?
     public var visiblePageControl = true
     public var visibleCloseButton = true
-    public var visibleShareButton = true
+    public var visibleShareButton = false
     public var currentPage = 0
     public var captionNumberOfLines = 3
     public var openableActivityController = false
@@ -569,18 +569,6 @@ extension ViewController: UIScrollViewDelegate {
 // MARK: - PhotoSliderImageViewDelegate
 
 extension ViewController: PhotoSliderImageViewDelegate {
-
-    func photoSliderImageViewDidSingleTap() {
-
-        if visibleCloseButton {
-            closeButton.isHidden = !closeButton.isHidden
-        }
-
-        if visibleShareButton {
-            shareButton.isHidden = !shareButton.isHidden
-        }
-    }
-
 
     func photoSliderImageViewDidLongPress(_ imageView: ImageView) {
         if !openableActivityController { return }
