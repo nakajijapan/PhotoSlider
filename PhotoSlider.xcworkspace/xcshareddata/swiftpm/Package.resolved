@@ -9,6 +9,15 @@
           "revision": "44450a8f564d7c0165f736ba2250649ff8d3e556",
           "version": "6.3.0"
         }
+      },
+      {
+        "package": "PhotoSlider",
+        "repositoryURL": "git@github.com:nakajijapan/PhotoSlider.git",
+        "state": {
+          "branch": "delete-xcodeproject-settings",
+          "revision": "81edef6487fedd83020be17423a2cf448ee67cde",
+          "version": null
+        }
       }
     ]
   },
