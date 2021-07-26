@@ -5,8 +5,14 @@ let package = Package(
     name: "PhotoSlider",
     platforms: [.iOS(.v13)],
     products: [
-        .library(name: "PhotoSlider", targets: [""])
+        .library(name: "PhotoSlider", targets: ["PhotoSlider"])
     ],
+    targets: [
+      .target(
+          name: "PhotoSlider",
+          path: "Sources"
+      )
+    ]
     dependencies: [
         .package(url: "git@github.com:onevcat/Kingfisher.git", from: "6.3.0")
     ]
