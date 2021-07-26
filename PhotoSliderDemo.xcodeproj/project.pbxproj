@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B05F012F26AE9BE8005519C5 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */; };
+		B05F013026AE9BE9005519C5 /* PhotoSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0A0CA661FC71B9A00D132C9 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA641FC71B9A00D132C9 /* .travis.yml */; };
 		B0A0CA671FC71B9A00D132C9 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA651FC71B9A00D132C9 /* .swiftlint.yml */; };
 		DC0E41DA1C3180290090AC94 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41D71C3180290090AC94 /* LICENSE */; };
@@ -16,8 +18,6 @@
 		DC20F4621ADA871D009A4C64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4601ADA871D009A4C64 /* Main.storyboard */; };
 		DC20F4641ADA871D009A4C64 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4631ADA871D009A4C64 /* Images.xcassets */; };
 		DC20F4671ADA871D009A4C64 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20F4651ADA871D009A4C64 /* LaunchScreen.xib */; };
-		DC5846E11D405374003A5D23 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5846E01D405374003A5D23 /* Kingfisher.framework */; };
-		DC5846E21D405374003A5D23 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DC5846E01D405374003A5D23 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DC917AC71BB29B7300031F84 /* PhotoSliderDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917AC61BB29B7300031F84 /* PhotoSliderDemoUITests.swift */; };
 		DC917AF11BB3BC5700031F84 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917AF01BB3BC5700031F84 /* ImageCollectionViewCell.swift */; };
 		DCE8F5351B94A2EA00B2D224 /* image001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F52D1B94A2EA00B2D224 /* image001.jpg */; };
@@ -28,8 +28,6 @@
 		DCE8F53A1B94A2EA00B2D224 /* image006.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F5321B94A2EA00B2D224 /* image006.jpg */; };
 		DCE8F53B1B94A2EA00B2D224 /* image007.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F5331B94A2EA00B2D224 /* image007.jpg */; };
 		DCE8F53C1B94A2EA00B2D224 /* image008.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DCE8F5341B94A2EA00B2D224 /* image008.jpg */; };
-		DCED67C5203878080017A724 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCED67C4203878080017A724 /* PhotoSlider.framework */; };
-		DCED67C6203878080017A724 /* PhotoSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DCED67C4203878080017A724 /* PhotoSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,14 +41,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		DC5846E31D405374003A5D23 /* Embed Frameworks */ = {
+		B05F012D26AE9B6B005519C5 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DCED67C6203878080017A724 /* PhotoSlider.framework in Embed Frameworks */,
-				DC5846E21D405374003A5D23 /* Kingfisher.framework in Embed Frameworks */,
+				B05F013026AE9BE9005519C5 /* PhotoSlider.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,6 +55,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B05F012A26AE9B6B005519C5 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = "<group>"; };
+		B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PhotoSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A0CA641FC71B9A00D132C9 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		B0A0CA651FC71B9A00D132C9 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		DC0E41D71C3180290090AC94 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -92,8 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCED67C5203878080017A724 /* PhotoSlider.framework in Frameworks */,
-				DC5846E11D405374003A5D23 /* Kingfisher.framework in Frameworks */,
+				B05F012F26AE9BE8005519C5 /* PhotoSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +108,8 @@
 		66A3BAA23076667DA79DC70A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */,
+				B05F012A26AE9B6B005519C5 /* Kingfisher.xcframework */,
 				DC5846E41D4053C4003A5D23 /* PhotoSlider.framework */,
 				DC5846E01D405374003A5D23 /* Kingfisher.framework */,
 			);
@@ -206,8 +206,8 @@
 				DC20F4531ADA871D009A4C64 /* Sources */,
 				DC20F4541ADA871D009A4C64 /* Frameworks */,
 				DC20F4551ADA871D009A4C64 /* Resources */,
-				DC5846E31D405374003A5D23 /* Embed Frameworks */,
 				B0A0CA631FC71B1200D132C9 /* Run Script - SwiftLint */,
+				B05F012D26AE9B6B005519C5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -321,7 +321,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

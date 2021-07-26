@@ -6,7 +6,7 @@
 //  Copyright © 2017년 nakajijapan. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public protocol ImageLoader: class {
     typealias ProgressBlock = (_ receivedSize: Int, _ totalSize: Int) -> Void
