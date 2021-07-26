@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B05F012F26AE9BE8005519C5 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */; };
-		B05F013026AE9BE9005519C5 /* PhotoSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0A0CA661FC71B9A00D132C9 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA641FC71B9A00D132C9 /* .travis.yml */; };
 		B0A0CA671FC71B9A00D132C9 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA651FC71B9A00D132C9 /* .swiftlint.yml */; };
 		DC0E41DA1C3180290090AC94 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41D71C3180290090AC94 /* LICENSE */; };
@@ -39,20 +37,6 @@
 			remoteInfo = PhotoSliderDemo;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B05F012D26AE9B6B005519C5 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B05F013026AE9BE9005519C5 /* PhotoSlider.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B05F012A26AE9B6B005519C5 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = "<group>"; };
@@ -90,7 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B05F012F26AE9BE8005519C5 /* PhotoSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,7 +188,6 @@
 				DC20F4541ADA871D009A4C64 /* Frameworks */,
 				DC20F4551ADA871D009A4C64 /* Resources */,
 				B0A0CA631FC71B1200D132C9 /* Run Script - SwiftLint */,
-				B05F012D26AE9B6B005519C5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
