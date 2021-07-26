@@ -21,7 +21,6 @@
 		DC0E42081C31821B0090AC94 /* PhotoSliderClose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41C31C317E850090AC94 /* PhotoSliderClose@2x.png */; };
 		DC0E42091C31821D0090AC94 /* PhotoSliderClose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41C41C317E850090AC94 /* PhotoSliderClose@3x.png */; };
 		DC3EE1DB1D9C96610046AFE2 /* UIImage+PhotoSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3EE1DA1D9C96610046AFE2 /* UIImage+PhotoSlider.swift */; };
-		DC5846DF1D40531E003A5D23 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0E421B1C3184D80090AC94 /* Kingfisher.framework */; };
 		DC69C9511C322595006D5347 /* PhotoSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0E41BE1C317E850090AC94 /* PhotoSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -104,7 +103,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC5846DF1D40531E003A5D23 /* Kingfisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +401,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -453,7 +451,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
