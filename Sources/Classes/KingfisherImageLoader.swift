@@ -6,7 +6,7 @@
 //  Copyright © 2017년 nakajijapan. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Kingfisher
 
 public class KingfisherImageLoader: ImageLoader {
