@@ -83,7 +83,6 @@
 		DCE8F5321B94A2EA00B2D224 /* image006.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image006.jpg; sourceTree = "<group>"; };
 		DCE8F5331B94A2EA00B2D224 /* image007.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image007.jpg; sourceTree = "<group>"; };
 		DCE8F5341B94A2EA00B2D224 /* image008.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image008.jpg; sourceTree = "<group>"; };
-		DCED67C4203878080017A724 /* PhotoSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PhotoSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +118,6 @@
 		DC20F44E1ADA871D009A4C64 = {
 			isa = PBXGroup;
 			children = (
-				DCED67C4203878080017A724 /* PhotoSlider.framework */,
 				DCE8F52C1B94A2EA00B2D224 /* Resources */,
 				DC740B151AEC6A0900079D30 /* Podspec Metadata */,
 				DC20F4591ADA871D009A4C64 /* PhotoSliderDemo */,

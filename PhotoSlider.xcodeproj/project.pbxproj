@@ -62,7 +62,6 @@
 			children = (
 				B05F013326AEA670005519C5 /* Info.plist */,
 				B05F013426AEA670005519C5 /* PhotoSlider.h */,
-				DC0E41BC1C317E850090AC94 /* PhotoSlider */,
 				DC0E41BF1C317E850090AC94 /* Sources */,
 				DC0E420F1C3184880090AC94 /* Frameworks */,
 				DC0E41A81C317DD50090AC94 /* Products */,
@@ -75,13 +74,6 @@
 				DC0E41FA1C3181EE0090AC94 /* PhotoSlider.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		DC0E41BC1C317E850090AC94 /* PhotoSlider */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = PhotoSlider;
 			sourceTree = "<group>";
 		};
 		DC0E41BF1C317E850090AC94 /* Sources */ = {
