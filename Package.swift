@@ -7,10 +7,10 @@ let package = Package(
     products: [
         .library(name: "PhotoSlider", targets: ["PhotoSlider"])
     ],
-    targets: [
-        .target(name: "PhotoSlider", path: "Sources")
-    ],
     dependencies: [
         .package(url: "git@github.com:onevcat/Kingfisher.git", from: "6.3.0")
+    ],
+    targets: [
+        .target(name: "PhotoSlider", dependencies: ["Kingfisher"], path: "Sources")
     ]
 )
