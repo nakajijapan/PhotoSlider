@@ -3,14 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		B05F012F26AE9BE8005519C5 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */; };
 		B05F013026AE9BE9005519C5 /* PhotoSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B05F013126AE9C93005519C5 /* Kingfisher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05F012A26AE9B6B005519C5 /* Kingfisher.xcframework */; };
-		B05F013226AE9C93005519C5 /* Kingfisher.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B05F012A26AE9B6B005519C5 /* Kingfisher.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0A0CA661FC71B9A00D132C9 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA641FC71B9A00D132C9 /* .travis.yml */; };
 		B0A0CA671FC71B9A00D132C9 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA651FC71B9A00D132C9 /* .swiftlint.yml */; };
 		DC0E41DA1C3180290090AC94 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41D71C3180290090AC94 /* LICENSE */; };
@@ -50,7 +48,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B05F013026AE9BE9005519C5 /* PhotoSlider.framework in Embed Frameworks */,
-				B05F013226AE9C93005519C5 /* Kingfisher.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,7 +92,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B05F012F26AE9BE8005519C5 /* PhotoSlider.framework in Frameworks */,
-				B05F013126AE9C93005519C5 /* Kingfisher.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +248,7 @@
 				TargetAttributes = {
 					DC20F4561ADA871D009A4C64 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = CNE5C4C374;
 					};
 					DC917AC31BB29B7300031F84 = {
 						CreatedOnToolsVersion = 7.0;
@@ -476,8 +473,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -496,10 +492,7 @@
 				);
 				INFOPLIST_FILE = PhotoSliderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.nakajijapan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSliderDemo/PhotoSliderDemo-Bridging-Header.h";
@@ -521,10 +514,7 @@
 				);
 				INFOPLIST_FILE = PhotoSliderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.nakajijapan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSliderDemo/PhotoSliderDemo-Bridging-Header.h";
@@ -544,11 +534,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotoSliderDemoUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSliderDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -570,11 +556,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotoSliderDemoUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSliderDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;

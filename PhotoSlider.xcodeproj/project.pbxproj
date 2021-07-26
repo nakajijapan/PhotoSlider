@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		94530E041E247C6100D12C16 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94530E031E247C6100D12C16 /* ImageLoader.swift */; };
 		94530E141E247CA300D12C16 /* KingfisherImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */; };
+		B05F013726AEA845005519C5 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = B05F013626AEA845005519C5 /* Kingfisher */; };
 		B06794C92473CBC80069EE09 /* PhotoSliderShare.png in Resources */ = {isa = PBXBuildFile; fileRef = B06794BF2473CBC80069EE09 /* PhotoSliderShare.png */; };
 		B06794CA2473CBC80069EE09 /* PhotoSliderShare@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06794C72473CBC80069EE09 /* PhotoSliderShare@3x.png */; };
 		B06794CB2473CBC80069EE09 /* PhotoSliderShare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06794C82473CBC80069EE09 /* PhotoSliderShare@2x.png */; };
@@ -49,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B05F013726AEA845005519C5 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +156,9 @@
 			dependencies = (
 			);
 			name = PhotoSlider;
+			packageProductDependencies = (
+				B05F013626AEA845005519C5 /* Kingfisher */,
+			);
 			productName = PhotoSlider;
 			productReference = DC0E41FA1C3181EE0090AC94 /* PhotoSlider.framework */;
 			productType = "com.apple.product-type.framework";
@@ -182,6 +187,9 @@
 				Base,
 			);
 			mainGroup = DC0E419E1C317DD50090AC94;
+			packageReferences = (
+				B05F013526AEA845005519C5 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = DC0E41A81C317DD50090AC94 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -326,7 +334,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -348,7 +357,11 @@
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSlider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -375,7 +388,11 @@
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSlider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -408,6 +425,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B05F013526AEA845005519C5 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B05F013626AEA845005519C5 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B05F013526AEA845005519C5 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DC0E419F1C317DD50090AC94 /* Project object */;
 }
