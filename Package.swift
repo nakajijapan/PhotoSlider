@@ -1,7 +1,7 @@
 // swift-tools-version:5.4.0
 import PackageDescription
 
-let package = PhotoSlider(
+let package = Package(
     name: "PhotoSlider",
     platforms: [.iOS(.v13)],
     products: [
