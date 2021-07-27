@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		94530E041E247C6100D12C16 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94530E031E247C6100D12C16 /* ImageLoader.swift */; };
 		94530E141E247CA300D12C16 /* KingfisherImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */; };
+		B012C99E26AFC63800914DF2 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012C99D26AFC63800914DF2 /* Bundle.swift */; };
 		B05F013726AEA845005519C5 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = B05F013626AEA845005519C5 /* Kingfisher */; };
 		B06794C92473CBC80069EE09 /* PhotoSliderShare.png in Resources */ = {isa = PBXBuildFile; fileRef = B06794BF2473CBC80069EE09 /* PhotoSliderShare.png */; };
 		B06794CA2473CBC80069EE09 /* PhotoSliderShare@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06794C72473CBC80069EE09 /* PhotoSliderShare@3x.png */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		94530E031E247C6100D12C16 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KingfisherImageLoader.swift; sourceTree = "<group>"; };
+		B012C99D26AFC63800914DF2 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B05F013326AEA670005519C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = "<group>"; };
 		B05F013426AEA670005519C5 /* PhotoSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PhotoSlider.h; path = Sources/PhotoSlider.h; sourceTree = "<group>"; };
 		B06794BF2473CBC80069EE09 /* PhotoSliderShare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoSliderShare.png; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				DC3EE1DA1D9C96610046AFE2 /* UIImage+PhotoSlider.swift */,
 				94530E031E247C6100D12C16 /* ImageLoader.swift */,
 				94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */,
+				B012C99D26AFC63800914DF2 /* Bundle.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94530E041E247C6100D12C16 /* ImageLoader.swift in Sources */,
+				B012C99E26AFC63800914DF2 /* Bundle.swift in Sources */,
 				DC0E42031C3182090090AC94 /* Photo.swift in Sources */,
 				94530E141E247CA300D12C16 /* KingfisherImageLoader.swift in Sources */,
 				DC0E42021C3182080090AC94 /* ImageView.swift in Sources */,

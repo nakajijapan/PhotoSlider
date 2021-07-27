@@ -630,7 +630,8 @@ extension ViewController: PhotoSliderImageViewDelegate {
             return Bundle(path: bundlePath!)!
         }
 */
-        return Bundle(for: Self.self)
+        return Bundle.module
+//        return Bundle(for: Self.self)
 //        return Bundle(for: type(of: self))
 
     }
