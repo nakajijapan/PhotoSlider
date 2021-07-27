@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B05F014326AF15E5005519C5 /* PhotoSlider in Frameworks */ = {isa = PBXBuildFile; productRef = B05F014226AF15E5005519C5 /* PhotoSlider */; };
+		B012C9A026AFDA3100914DF2 /* PhotoSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B012C99F26AFDA3100914DF2 /* PhotoSlider.framework */; };
+		B012C9A126AFDA3100914DF2 /* PhotoSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B012C99F26AFDA3100914DF2 /* PhotoSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0A0CA661FC71B9A00D132C9 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA641FC71B9A00D132C9 /* .travis.yml */; };
 		B0A0CA671FC71B9A00D132C9 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0A0CA651FC71B9A00D132C9 /* .swiftlint.yml */; };
 		DC0E41DA1C3180290090AC94 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DC0E41D71C3180290090AC94 /* LICENSE */; };
@@ -39,7 +40,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B012C9A226AFDA3100914DF2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B012C9A126AFDA3100914DF2 /* PhotoSlider.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		B012C99F26AFDA3100914DF2 /* PhotoSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PhotoSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B05F012A26AE9B6B005519C5 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = "<group>"; };
 		B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PhotoSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A0CA641FC71B9A00D132C9 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
@@ -75,7 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B05F014326AF15E5005519C5 /* PhotoSlider in Frameworks */,
+				B012C9A026AFDA3100914DF2 /* PhotoSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +108,7 @@
 		66A3BAA23076667DA79DC70A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B012C99F26AFDA3100914DF2 /* PhotoSlider.framework */,
 				B05F012E26AE9BE8005519C5 /* PhotoSlider.framework */,
 				B05F012A26AE9B6B005519C5 /* Kingfisher.xcframework */,
 				DC5846E41D4053C4003A5D23 /* PhotoSlider.framework */,
@@ -190,6 +207,7 @@
 				DC20F4541ADA871D009A4C64 /* Frameworks */,
 				DC20F4551ADA871D009A4C64 /* Resources */,
 				B0A0CA631FC71B1200D132C9 /* Run Script - SwiftLint */,
+				B012C9A226AFDA3100914DF2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -197,7 +215,6 @@
 			);
 			name = PhotoSliderDemo;
 			packageProductDependencies = (
-				B05F014226AF15E5005519C5 /* PhotoSlider */,
 			);
 			productName = PhotoSliderDemo;
 			productReference = DC20F4571ADA871D009A4C64 /* PhotoSliderDemo.app */;
@@ -252,7 +269,6 @@
 			);
 			mainGroup = DC20F44E1ADA871D009A4C64;
 			packageReferences = (
-				B05F013C26AF1446005519C5 /* XCRemoteSwiftPackageReference "PhotoSlider" */,
 			);
 			productRefGroup = DC20F4581ADA871D009A4C64 /* Products */;
 			projectDirPath = "";
@@ -461,8 +477,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.4;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -477,10 +492,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = PhotoSliderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.nakajijapan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSliderDemo/PhotoSliderDemo-Bridging-Header.h";
@@ -498,10 +510,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = PhotoSliderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.nakajijapan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoSliderDemo/PhotoSliderDemo-Bridging-Header.h";
@@ -517,11 +526,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotoSliderDemoUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSliderDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -539,11 +544,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotoSliderDemoUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.nakajijapan.PhotoSliderDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -584,25 +585,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		B05F013C26AF1446005519C5 /* XCRemoteSwiftPackageReference "PhotoSlider" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:nakajijapan/PhotoSlider.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		B05F014226AF15E5005519C5 /* PhotoSlider */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B05F013C26AF1446005519C5 /* XCRemoteSwiftPackageReference "PhotoSlider" */;
-			productName = PhotoSlider;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DC20F44F1ADA871D009A4C64 /* Project object */;
 }
