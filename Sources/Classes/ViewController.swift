@@ -630,7 +630,13 @@ extension ViewController: PhotoSliderImageViewDelegate {
             return Bundle(path: bundlePath!)!
         }
 */
-        return Bundle.module
+        
+        #if SWIFT_PACKAGE
+              return Bundle.module
+        #else
+              return Bundle(for: type(of: self))
+        #endif
+//        return Bundle.module
 //        return Bundle(for: Self.self)
 //        return Bundle(for: type(of: self))
 
