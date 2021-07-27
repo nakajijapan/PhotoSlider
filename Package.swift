@@ -18,6 +18,5 @@ let package = Package(
             exclude: ["PhotoSliderDemo", "PhotoSliderDemoUITests", "PhotoSliderTests"],
             resources: [.process("Sources/Assets"), .process("Sources/Assets/PhotoSlider.png")]
         )
-    ],
-
+    ]
 )
