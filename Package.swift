@@ -11,7 +11,13 @@ let package = Package(
         .package(url: "git@github.com:onevcat/Kingfisher.git", from: "6.3.0")
     ],
     targets: [
-        .target(name: "PhotoSlider", dependencies: ["Kingfisher"], path: "Sources", resources: [.process("Sources/Assets"), .process("Sources/Assets/PhotoSlider.png")])
+        .target(
+            name: "PhotoSlider",
+            dependencies: ["Kingfisher"],
+            path: "Sources",
+            exclude: ["PhotoSliderDemo", "PhotoSliderDemoUITests", "PhotoSliderTests"],
+            resources: [.process("Sources/Assets"), .process("Sources/Assets/PhotoSlider.png")]
+        )
     ],
-    exclude: ["PhotoSliderDemo", "PhotoSliderDemoUITests", "PhotoSliderTests"]
+
 )
