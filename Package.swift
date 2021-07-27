@@ -12,5 +12,6 @@ let package = Package(
     ],
     targets: [
         .target(name: "PhotoSlider", dependencies: ["Kingfisher"], path: "Sources", resources: [.process("Sources/Assets")])
-    ]
+    ],
+    exclude: ["PhotoSliderDemo", "PhotoSliderDemoUITests", "PhotoSliderTests"]
 )
