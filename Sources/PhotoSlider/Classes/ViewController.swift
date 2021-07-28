@@ -310,7 +310,7 @@ fileprivate extension ViewController {
             closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
             closeButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0),
             closeButton.heightAnchor.constraint(equalToConstant: 52.0),
-            closeButton.widthAnchor.constraint(equalToConstant: 52.0),
+            closeButton.widthAnchor.constraint(equalToConstant: 52.0)
         ].forEach { $0.isActive = true }
     }
 
@@ -320,17 +320,17 @@ fileprivate extension ViewController {
             shareButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
             shareButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
             shareButton.heightAnchor.constraint(equalToConstant: 52.0),
-            shareButton.widthAnchor.constraint(equalToConstant: 52.0),
+            shareButton.widthAnchor.constraint(equalToConstant: 52.0)
         ].forEach { $0.isActive = true }
     }
-    
+
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         [
             pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0.0),
             pageControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             pageControl.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0),
-            pageControl.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
+            pageControl.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0)
         ].forEach { $0.isActive = true }
     }
 
@@ -349,7 +349,7 @@ fileprivate extension ViewController {
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
         [   captionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32.0),
             captionLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16.0),
-            captionLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16.0),
+            captionLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16.0)
         ].forEach { $0.isActive = true }
 
         if let captionHeight = captionHeight {
@@ -365,7 +365,6 @@ fileprivate extension ViewController {
          captionBackgroundView.topAnchor.constraint(equalTo: captionLabel.topAnchor, constant: -16.0)
             ].forEach { $0.isActive = true }
     }
-
 }
 
 // MARK: - UIScrollViewDelegate

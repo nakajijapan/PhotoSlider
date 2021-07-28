@@ -125,7 +125,7 @@ class ImageView: UIView {
             progressView.heightAnchor.constraint(equalToConstant: 40.0),
             progressView.widthAnchor.constraint(equalToConstant: 40.0),
             progressView.centerXAnchor.constraint(lessThanOrEqualTo: centerXAnchor, constant: 1.0),
-            progressView.centerYAnchor.constraint(lessThanOrEqualTo: centerYAnchor, constant: 1.0),
+            progressView.centerYAnchor.constraint(lessThanOrEqualTo: centerYAnchor, constant: 1.0)
             ].forEach { $0.isActive = true }
      }
 
