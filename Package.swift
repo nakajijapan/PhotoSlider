@@ -14,9 +14,8 @@ let package = Package(
         .target(
             name: "PhotoSlider",
             dependencies: ["Kingfisher"],
-            path: "Sources/Classes",
-            exclude: ["PhotoSliderDemo", "PhotoSliderDemoUITests", "PhotoSliderTests"],
-            resources: [.process("Sources/Assets"), .process("Sources/Assets/PhotoSlider.png")]
+            path: "Sources",
+            resources: [.process("Sources/PhotoSlider/Assets"), .process("Sources/PhotoSlider/Assets/PhotoSlider.png")]
         )
     ]
 )

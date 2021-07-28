@@ -27,6 +27,7 @@
 /* Begin PBXFileReference section */
 		94530E031E247C6100D12C16 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		94530E131E247CA300D12C16 /* KingfisherImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KingfisherImageLoader.swift; sourceTree = "<group>"; };
+		B012C9C626B0E4D800914DF2 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		B05F013326AEA670005519C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = "<group>"; };
 		B05F013426AEA670005519C5 /* PhotoSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PhotoSlider.h; path = Sources/PhotoSlider.h; sourceTree = "<group>"; };
 		B06794BF2473CBC80069EE09 /* PhotoSliderShare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoSliderShare.png; sourceTree = "<group>"; };
@@ -57,11 +58,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B012C9C726B0E70600914DF2 /* PhotoSlider */ = {
+			isa = PBXGroup;
+			children = (
+				DC0E41C01C317E850090AC94 /* Assets */,
+				DC0E41C51C317E850090AC94 /* Classes */,
+			);
+			path = PhotoSlider;
+			sourceTree = "<group>";
+		};
 		DC0E419E1C317DD50090AC94 = {
 			isa = PBXGroup;
 			children = (
 				B05F013326AEA670005519C5 /* Info.plist */,
 				B05F013426AEA670005519C5 /* PhotoSlider.h */,
+				B012C9C626B0E4D800914DF2 /* Package.swift */,
 				DC0E41BF1C317E850090AC94 /* Sources */,
 				DC0E420F1C3184880090AC94 /* Frameworks */,
 				DC0E41A81C317DD50090AC94 /* Products */,
@@ -79,8 +90,7 @@
 		DC0E41BF1C317E850090AC94 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				DC0E41C01C317E850090AC94 /* Assets */,
-				DC0E41C51C317E850090AC94 /* Classes */,
+				B012C9C726B0E70600914DF2 /* PhotoSlider */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
