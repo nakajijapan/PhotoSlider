@@ -17,8 +17,8 @@ let package = Package(
             path: "Sources",
             resources: [
                 //.process("Sources/PhotoSlider/Assets"),
-                .process("Sources/PhotoSlider/Assets/PhotoSlider.xcassets"),
-                .process("Sources/PhotoSlider/Assets/PhotoSlider.png")
+                .process("PhotoSlider.xcassets"),
+                .process("PhotoSlider.png")
             ]
         )
     ]
