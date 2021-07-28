@@ -225,7 +225,7 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         let imageView = UIImageView(image: cell.imageView.image)
         
         var frame = cell.imageView.frame
-        frame.origin.y += UIApplication.shared.statusBarFrame.height
+        frame.origin.y += view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         // tune in UIImageView
         frame.origin.x = view.safeAreaInsets.left
         if view.bounds.width > view.bounds.height {
@@ -248,17 +248,17 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         guard let cell = collectionView.visibleCells.first as? ImageCollectionViewCell else {
             return
         }
-        let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+        let statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        let topPosition: CGFloat = view.safeAreaLayoutGuide.layoutFrame.origin.y
         var frame = CGRect.zero
 
         if view.bounds.size.width < view.bounds.height {
-
             if image.size.height < image.size.width {
                 let width = (sourceImageView.image!.size.width * sourceImageView.bounds.size.width) / sourceImageView.image!.size.height
                 let x = (width - cell.imageView.bounds.height) * 0.5
-                frame = CGRect(x: -1.0 * x, y: statusBarHeight, width: width, height: cell.imageView.bounds.height)
+                frame = CGRect(x: -1.0 * x, y: topPosition, width: width, height: cell.imageView.bounds.height)
             } else {
-                frame = CGRect(x: 0.0, y: statusBarHeight, width: view.bounds.width, height: view.bounds.width)
+                frame = CGRect(x: 0.0, y: topPosition, width: view.bounds.width, height: view.bounds.width)
             }
             
         } else {
