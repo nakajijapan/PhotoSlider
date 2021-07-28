@@ -126,6 +126,7 @@ extension ViewController: UICollectionViewDelegate {
         photoSlider.currentPage = indexPath.row
         //photoSlider.visibleCloseButton = false
         //photoSlider.visiblePageControl = false
+        photoSlider.visibleShareButton = true
         photoSlider.captionNumberOfLines = 0
        
         // UIViewControllerTransitioningDelegate
