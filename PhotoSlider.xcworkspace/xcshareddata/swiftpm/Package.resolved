@@ -14,8 +14,8 @@
         "package": "PhotoSlider",
         "repositoryURL": "git@github.com:nakajijapan/PhotoSlider.git",
         "state": {
-          "branch": "use-pdf-format",
-          "revision": "fa15b0156fef487d74921376b4cb558c0416362d",
+          "branch": "master",
+          "revision": "42c0a5f37155224df2358457bfa99e66908a3ac7",
           "version": null
         }
       }
