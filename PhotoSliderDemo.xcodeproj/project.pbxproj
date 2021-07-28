@@ -594,7 +594,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:nakajijapan/PhotoSlider.git";
 			requirement = {
-				branch = "use-swift-package-in-demo-app";
+				branch = master;
 				kind = branch;
 			};
 		};

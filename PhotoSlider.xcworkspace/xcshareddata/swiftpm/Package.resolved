@@ -14,8 +14,8 @@
         "package": "PhotoSlider",
         "repositoryURL": "git@github.com:nakajijapan/PhotoSlider.git",
         "state": {
-          "branch": "use-swift-package-in-demo-app",
-          "revision": "1a99b9387b59a9218909aebd2803523aa7043b60",
+          "branch": "master",
+          "revision": "80c85fdea102d80f80a051009e9f6aa60364ed18",
           "version": null
         }
       }
