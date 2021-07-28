@@ -44,9 +44,8 @@ class ImageView: UIView {
         scrollView.maximumZoomScale = 3.0
         scrollView.delegate  = self
         scrollView.alwaysBounceVertical = true
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        }
+        scrollView.contentInsetAdjustmentBehavior = .never
+
         // image
         imageView = UIImageView(frame: CGRect.zero)
         imageView.contentMode = .scaleAspectFit

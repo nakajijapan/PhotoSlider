@@ -41,10 +41,7 @@ public class ViewController: UIViewController {
             height: self.view.bounds.height * 3.0
         )
 
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        }
-
+        scrollView.contentInsetAdjustmentBehavior = .never
         return scrollView
     }()
 
@@ -64,7 +61,7 @@ public class ViewController: UIViewController {
         if let captionHeight = captionHeight {
             var y = view.bounds.height - captionHeight - 32.0
             var height = captionHeight + 32.0
-            if #available(iOS 11.0, *), let window = UIApplication.shared.keyWindow {
+            if let window = UIApplication.shared.keyWindow {
                 let bottomSafeInsetSpacing = window.safeAreaInsets.bottom
                 height += bottomSafeInsetSpacing
                 y -= bottomSafeInsetSpacing
@@ -309,61 +306,32 @@ fileprivate extension ViewController {
 
     func layoutCloseButton() {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 11.0, *) {
-            [
-                closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
-                closeButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0),
-                closeButton.heightAnchor.constraint(equalToConstant: 52.0),
-                closeButton.widthAnchor.constraint(equalToConstant: 52.0),
-                ].forEach { $0.isActive = true }
-        } else {
-            [
-                closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
-                closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
-                closeButton.heightAnchor.constraint(equalToConstant: 52.0),
-                closeButton.widthAnchor.constraint(equalToConstant: 52.0),
-                ].forEach { $0.isActive = true }
-
-        }
+        [
+            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
+            closeButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0),
+            closeButton.heightAnchor.constraint(equalToConstant: 52.0),
+            closeButton.widthAnchor.constraint(equalToConstant: 52.0),
+        ].forEach { $0.isActive = true }
     }
 
     func layoutShareButton() {
         shareButton.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 11.0, *) {
-            [
-                shareButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
-                shareButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
-                shareButton.heightAnchor.constraint(equalToConstant: 52.0),
-                shareButton.widthAnchor.constraint(equalToConstant: 52.0),
-                ].forEach { $0.isActive = true }
-        } else {
-            [
-                shareButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
-                shareButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
-                shareButton.heightAnchor.constraint(equalToConstant: 52.0),
-                shareButton.widthAnchor.constraint(equalToConstant: 52.0),
-                ].forEach { $0.isActive = true }
-
-        }
+        [
+            shareButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
+            shareButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
+            shareButton.heightAnchor.constraint(equalToConstant: 52.0),
+            shareButton.widthAnchor.constraint(equalToConstant: 52.0),
+        ].forEach { $0.isActive = true }
     }
-
+    
     func layoutPageControl() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 11.0, *) {
-            [
-                pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0.0),
-                pageControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-                pageControl.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0),
-                pageControl.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
-                ].forEach { $0.isActive = true }
-        } else {
-            [
-                pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
-                pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                pageControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0),
-                pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0),
-                ].forEach { $0.isActive = true }
-        }
+        [
+            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0.0),
+            pageControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            pageControl.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0),
+            pageControl.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0),
+        ].forEach { $0.isActive = true }
     }
 
     func layoutCaptionLabel() {
@@ -379,19 +347,10 @@ fileprivate extension ViewController {
         }
 
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 11.0, *) {
-            [
-                captionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32.0),
-                captionLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16.0),
-                captionLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16.0),
-                ].forEach { $0.isActive = true }
-        } else {
-            [
-                captionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32.0),
-                captionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0),
-                captionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
-                ].forEach { $0.isActive = true }
-        }
+        [   captionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32.0),
+            captionLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16.0),
+            captionLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16.0),
+        ].forEach { $0.isActive = true }
 
         if let captionHeight = captionHeight {
             captionLabel.heightAnchor.constraint(equalToConstant: captionHeight).isActive = true
