@@ -84,8 +84,8 @@ public class ViewController: UIViewController {
 
     lazy var closeButton: UIButton = {
         let closeButton = UIButton(frame: CGRect.zero)
-        let imagePath = self.resourceBundle().path(forResource: "PhotoSliderClose", ofType: "png")
-        closeButton.setImage(UIImage(contentsOfFile: imagePath!), for: .normal)
+        let image = UIImage(named: "PhotoSliderClose", in: resourceBundle(), compatibleWith: nil)
+        closeButton.setImage(image, for: .normal)
         closeButton.addTarget(self, action: #selector(closeButtonDidTap(_:)), for: .touchUpInside)
         closeButton.imageView?.contentMode = UIView.ContentMode.center
         closeButton.layer.shadowColor = UIColor.black.cgColor
@@ -97,8 +97,8 @@ public class ViewController: UIViewController {
 
     lazy var shareButton: UIButton = {
         let shareButton = UIButton(frame: CGRect.zero)
-        let imagePath = self.resourceBundle().path(forResource: "PhotoSliderShare", ofType: "png")
-        shareButton.setImage(UIImage(contentsOfFile: imagePath!), for: .normal)
+        let image = UIImage(named: "PhotoSliderShare", in: resourceBundle(), compatibleWith: nil)
+        shareButton.setImage(image, for: .normal)
         shareButton.addTarget(self, action: #selector(shareButtonDidTap(_:)), for: .touchUpInside)
         shareButton.imageView?.contentMode = UIView.ContentMode.center
         return shareButton
@@ -618,18 +618,12 @@ extension ViewController: PhotoSliderImageViewDelegate {
         })
     }
 
-    fileprivate func resourceBundle() -> Bundle {
-        let bundlePath = Bundle.main.path(
-            forResource: "PhotoSlider",
-            ofType: "bundle",
-            inDirectory: "Frameworks/PhotoSlider.framework"
-        )
-
-        if bundlePath != nil {
-            return Bundle(path: bundlePath!)!
-        }
-        
-        return Bundle(for: type(of: self))
+    private func resourceBundle() -> Bundle {
+        #if SWIFT_PACKAGE
+              return Bundle.module
+        #else
+              return Bundle(for: type(of: self))
+        #endif
     }
 }
 
