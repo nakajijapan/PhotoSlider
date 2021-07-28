@@ -85,7 +85,7 @@ public class ViewController: UIViewController {
     lazy var closeButton: UIButton = {
         let closeButton = UIButton(frame: CGRect.zero)
         let image = UIImage(named: "PhotoSliderClose", in: resourceBundle(), compatibleWith: nil)
-        closeButton.setImage(image for: .normal)
+        closeButton.setImage(image, for: .normal)
         closeButton.addTarget(self, action: #selector(closeButtonDidTap(_:)), for: .touchUpInside)
         closeButton.imageView?.contentMode = UIView.ContentMode.center
         closeButton.layer.shadowColor = UIColor.black.cgColor
@@ -98,7 +98,7 @@ public class ViewController: UIViewController {
     lazy var shareButton: UIButton = {
         let shareButton = UIButton(frame: CGRect.zero)
         let image = UIImage(named: "PhotoSliderShare", in: resourceBundle(), compatibleWith: nil)
-        shareButton.setImage(UIImage(contentsOfFile: imagePath!), for: .normal)
+        shareButton.setImage(image, for: .normal)
         shareButton.addTarget(self, action: #selector(shareButtonDidTap(_:)), for: .touchUpInside)
         shareButton.imageView?.contentMode = UIView.ContentMode.center
         return shareButton
@@ -622,7 +622,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
         #if SWIFT_PACKAGE
               return Bundle.module
         #else
-              return Bundle(for: HogeViewController.self)
+              return Bundle(for: type(of: self))
         #endif
     }
 }
