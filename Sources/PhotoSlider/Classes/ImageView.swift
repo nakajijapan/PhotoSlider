@@ -44,9 +44,8 @@ class ImageView: UIView {
         scrollView.maximumZoomScale = 3.0
         scrollView.delegate  = self
         scrollView.alwaysBounceVertical = true
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        }
+        scrollView.contentInsetAdjustmentBehavior = .never
+
         // image
         imageView = UIImageView(frame: CGRect.zero)
         imageView.contentMode = .scaleAspectFit
@@ -126,7 +125,7 @@ class ImageView: UIView {
             progressView.heightAnchor.constraint(equalToConstant: 40.0),
             progressView.widthAnchor.constraint(equalToConstant: 40.0),
             progressView.centerXAnchor.constraint(lessThanOrEqualTo: centerXAnchor, constant: 1.0),
-            progressView.centerYAnchor.constraint(lessThanOrEqualTo: centerYAnchor, constant: 1.0),
+            progressView.centerYAnchor.constraint(lessThanOrEqualTo: centerYAnchor, constant: 1.0)
             ].forEach { $0.isActive = true }
      }
 
