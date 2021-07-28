@@ -619,6 +619,7 @@ extension ViewController: PhotoSliderImageViewDelegate {
     }
 
     fileprivate func resourceBundle() -> Bundle {
+        /*
         let bundlePath = Bundle.main.path(
             forResource: "PhotoSlider",
             ofType: "bundle",
@@ -630,6 +631,12 @@ extension ViewController: PhotoSliderImageViewDelegate {
         }
         
         return Bundle(for: type(of: self))
+ */
+        #if SWIFT_PACKAGE
+              return Bundle.module
+        #else
+              return Bundle(for: HogeViewController.self)
+        #endif
     }
 }
 
