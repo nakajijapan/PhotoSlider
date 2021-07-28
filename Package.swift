@@ -15,7 +15,11 @@ let package = Package(
             name: "PhotoSlider",
             dependencies: ["Kingfisher"],
             path: "Sources",
-            resources: [.process("Sources/PhotoSlider/Assets"), .process("Sources/PhotoSlider/Assets/PhotoSlider.png")]
+            resources: [
+                //.process("Sources/PhotoSlider/Assets"),
+                .process("Sources/PhotoSlider/Assets/PhotoSlider.xcassets"),
+                .process("Sources/PhotoSlider/Assets/PhotoSlider.png")
+            ]
         )
     ]
 )
