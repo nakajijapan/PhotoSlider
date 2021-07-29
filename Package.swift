@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "PhotoSlider", targets: ["PhotoSlider"])
     ],
     dependencies: [
-        .package(url: "git@github.com:onevcat/Kingfisher.git", from: "6.3.0")
+        .package(url: "https://github.com/onevcat/Kingfisher.git", from: "6.3.0")
     ],
     targets: [
         .target(
