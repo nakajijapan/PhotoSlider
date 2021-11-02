@@ -8,13 +8,14 @@ let package = Package(
         .library(name: "PhotoSlider", targets: ["PhotoSlider"])
     ],
     dependencies: [
-        .package(url: "git@github.com:onevcat/Kingfisher.git", from: "6.3.0")
+        .package(url: "https://github.com/onevcat/Kingfisher.git", from: "7.0.0")
     ],
     targets: [
         .target(
             name: "PhotoSlider",
             dependencies: ["Kingfisher"],
             path: "Sources",
+            exclude: ["Support"],
             resources: [
                 .process("PhotoSlider.xcassets")
             ]
