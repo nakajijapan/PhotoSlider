@@ -15,6 +15,7 @@ let package = Package(
             name: "PhotoSlider",
             dependencies: ["Kingfisher"],
             path: "Sources",
+            exclude: ["Info.plist"],
             resources: [
                 .process("PhotoSlider.xcassets")
             ]
