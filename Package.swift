@@ -1,4 +1,4 @@
-// swift-tools-version:5.4.0
+// swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "PhotoSlider", targets: ["PhotoSlider"])
     ],
     dependencies: [
-        .package(url: "git@github.com:onevcat/Kingfisher.git", from: "6.3.0")
+        .package(url: "git@github.com:onevcat/Kingfisher.git", from: "7.1.2")
     ],
     targets: [
         .target(
