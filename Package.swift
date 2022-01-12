@@ -14,7 +14,7 @@ let package = Package(
         .target(
             name: "PhotoSlider",
             dependencies: ["Kingfisher"],
-            path: "Sources",
+            path: "Sources/PhotoSlider",
             resources: [
                 .process("PhotoSlider.xcassets")
             ]
