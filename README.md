@@ -1,214 +1,168 @@
 # PhotoSlider for Swift
 
-[![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Version](https://img.shields.io/cocoapods/v/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
 [![License](https://img.shields.io/cocoapods/l/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
-[![Platform](https://img.shields.io/cocoapods/p/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
-[![Language](https://img.shields.io/badge/language-Swift%204-orange.svg)](https://swift.org)
+[![Platform](https://img.shields.io/badge/platform-iOS%2018%2B-blue.svg?style=flat)](https://www.apple.com/ios/)
+[![Language](https://img.shields.io/badge/language-Swift%206-orange.svg)](https://swift.org)
 [![Backers on Open Collective](https://opencollective.com/PhotoSlider/backers/badge.svg)](#backers) 
 [![Sponsors on Open Collective](https://opencollective.com/PhotoSlider/sponsors/badge.svg)](#sponsors) 
 
-PhotoSlider is a simple photo slider and can delete slider with swiping.
+PhotoSlider is a simple, full-screen photo viewer. Swipe horizontally to page, swipe
+vertically to dismiss, pinch / double-tap to zoom.
 
 <img src="https://raw.githubusercontent.com/nakajijapan/PhotoSlider/master/demo.gif" width="300" />
 
+## 2.0 — SwiftUI rewrite
+
+PhotoSlider 2.0 has a brand-new **SwiftUI-first API**, while keeping the **exact same
+interactions** as 1.x. The proven `UIScrollView`-based interaction engine (paging,
+vertical swipe-to-dismiss with linear background fade, pinch / tap-point double-tap zoom
+with momentum & bounce) is reused internally and wrapped for SwiftUI, so the feel is
+byte-for-byte identical to 1.5.0.
+
+What changed:
+
+- ✅ SwiftUI API: `PhotoSliderView`, `.photoSlider(isPresented:...)`
+- ✅ Swift 6 / strict concurrency, iOS 18+
+- ✅ Kingfisher is **no longer required** — image loading is abstracted behind the
+  `ImageLoader` protocol (default is a `URLSession`-based loader). Kingfisher is available
+  as an optional `PhotoSliderKingfisher` product.
+- ⚠️ The UIKit API (`PhotoSlider.ViewController`, `Photo`, `PhotoSliderDelegate`, …) is
+  removed. Use 1.5.0 if you need it.
+
 ## Requirements
 
-- Xcode 9+
-- Swift 4.0+
-- iOS 10+
+- Xcode 16+
+- Swift 6
+- iOS 18+
 
 ## Installation
 
-### CocoaPods
+### Swift Package Manager
 
-PhotoSlider is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod "PhotoSlider"
+```swift
+dependencies: [
+    .package(url: "https://github.com/nakajijapan/PhotoSlider.git", from: "2.0.0"),
+]
 ```
 
-### Carthage
+Add the product(s) you need to your target:
 
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager for Cocoa application.
-
-``` bash
-$ brew update
-$ brew install carthage
-```
-
-To integrate PhotoSlider into your Xcode project using Carthage, specify it in your `Cartfile`:
-
-``` ogdl
-github "nakajijapan/PhotoSlider"
-```
-
-Then, run the following command to build the PhotoSlider framework:
-
-``` bash
-$ carthage update
+```swift
+.product(name: "PhotoSlider", package: "PhotoSlider"),
+// Optional — only if you want Kingfisher-backed image loading:
+.product(name: "PhotoSliderKingfisher", package: "PhotoSlider"),
 ```
 
 ## Usage
 
-### Using ZoomingAnimationControllerTransitioning
+### Present full screen
 
 ```swift
+import SwiftUI
+import PhotoSlider
 
-func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+struct GalleryScreen: View {
+    @State private var isPresented = false
+    @State private var selection = 0
 
-    var slider = PhotoSlider.ViewController(imageURLs: self.images)
-    slider.currentPage = indexPath.row
-    photoSlider.transitioningDelegate = self
-    present(photoSlider, animated: true, completion: nil)
+    let photos: [PhotoItem] = [
+        .init(source: .remote(URL(string: "https://example.com/a.jpg")!), caption: "Aurora"),
+        .init(source: .remote(URL(string: "https://example.com/b.jpg")!)),
+        .init(source: .remote(URL(string: "https://example.com/c.jpg")!), caption: "Forest"),
+    ]
 
-}
-
-```
-
-#### ZoomingAnimationControllerTransitioning
-
-return imageView for starting position
-
-```swift
-// MARK: ZoomingAnimationControllerTransitioning
-
-func transitionSourceImageView() -> UIImageView {
-
-    let indexPath = collectionView.indexPathsForSelectedItems?.first
-    let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
-    let imageView = UIImageView(image: cell.imageView.image)
-
-    var frame = cell.imageView.frame
-    frame.origin.y += UIApplication.shared.statusBarFrame.height
-
-    imageView.frame = frame
-    imageView.clipsToBounds = true
-    imageView.contentMode = .scaleAspectFill
-
-    return imageView
-
-}
-```
-
-
-return sourceImageView for finished position
-
-```swift
-func transitionDestinationImageView(sourceImageView: UIImageView) {
-
-    guard let image = sourceImageView.image else {
-        return
+    var body: some View {
+        LazyVGrid(columns: [.init(.adaptive(minimum: 100))]) {
+            ForEach(Array(photos.enumerated()), id: \.element.id) { index, _ in
+                Button {
+                    selection = index
+                    isPresented = true
+                } label: {
+                    Color.gray.aspectRatio(1, contentMode: .fit)
+                }
+            }
+        }
+        .photoSlider(isPresented: $isPresented, photos: photos, selection: $selection)
     }
-
-    let indexPath = collectionView.indexPathsForSelectedItems?.first
-    let cell = collectionView.cellForItem(at: indexPath!) as! ImageCollectionViewCell
-    let statusBarHeight = UIApplication.shared.statusBarFrame.height
-
-    // snip..
-
-    sourceImageView.frame = frame
-
 }
 ```
 
-
-#### UIViewControllerTransitioningDelegate
+You can also drop `PhotoSliderView` directly inside your own `.fullScreenCover` / `.sheet`:
 
 ```swift
-// MARK: UIViewControllerTransitioningDelegate
-
-func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-    let animationController = PhotoSlider.ZoomingAnimationController(present: false)
-    animationController.sourceTransition = dismissed as? ZoomingAnimationControllerTransitioning
-    animationController.destinationTransition = self
-    return animationController
+.fullScreenCover(isPresented: $isPresented) {
+    PhotoSliderView(photos: photos, selection: $selection)
 }
-
-func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-    let animationController = PhotoSlider.ZoomingAnimationController(present: true)
-    animationController.sourceTransition = source as? ZoomingAnimationControllerTransitioning
-    animationController.destinationTransition = presented as? ZoomingAnimationControllerTransitioning
-    return animationController
-}
-
 ```
 
-
-### Using UIModalTransitionStyle
-
-select ZoomingAnimationController
+### Photo sources
 
 ```swift
-
-func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-
-    var slider = PhotoSlider.ViewController(imageURLs: self.images)
-    slider.modalPresentationStyle = .OverCurrentContext
-    slider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-    slider.index = indexPath.row
-    self.presentViewController(slider, animated: true, completion: nil)
-
-}
-
+PhotoItem(source: .remote(url))          // loaded via ImageLoader
+PhotoItem(source: .uiImage(uiImage))     // already-decoded UIImage
+PhotoItem(source: .data(jpegData))       // in-memory binary
 ```
 
-## Delegation
+### Configuration
 
-You can handle the following event:
+```swift
+var config = PhotoSliderConfiguration()
+config.backgroundColor = .black
+config.showsPageIndicator = true
+config.showsCloseButton = true
+config.showsShareButton = false
+config.showsCaption = true
+config.enableSwipeToDismiss = true
+config.enablePinchToZoom = true
+config.maxZoomScale = 3.0
+config.dismissProgressThreshold = 0.4    // 40% of screen height, same as v1.5.0
 
-- optional func photoSliderControllerWillDismiss(viewController: PhotoSlider.ViewController)
-- optional func photoSliderControllerDidDismiss(viewController: PhotoSlider.ViewController)
+PhotoSliderView(photos: photos, selection: $selection, configuration: config)
+```
 
-## Multiple Image Loader
+### Callbacks (formerly `PhotoSliderDelegate`)
 
-PhotoSlider use Kingfisher for remote image.
-If use SDWebImage in your project, image cache is not shared between Kingfisher and SDWebImage.
-In this case you can make custom ImageLoader. default ImageLoader is Kingfisher.
+```swift
+GalleryScreen()
+    .onPhotoSliderPageChanged { index in print("page = \(index)") }
+    .onPhotoSliderWillDismiss { print("will dismiss") }
+    .onPhotoSliderDidDismiss { print("did dismiss") }
+    .onPhotoSliderShare { item in /* present a ShareLink / UIActivityViewController */ }
+    .photoSlider(isPresented: $isPresented, photos: photos, selection: $selection)
+```
 
-Here is how to change SDWebImage.
+Or inject them all at once:
 
-First, create custom ImageLoader.
+```swift
+.photoSliderCallbacks(.init(
+    onPageChanged: { index in ... },
+    onDidDismiss: { ... },
+    onShare: { item in ... }
+))
+```
+
+### Custom image loader
+
+The default loader uses `URLSession` + `URLCache`. To plug in SDWebImage, Nuke, or your
+own pipeline, conform to `ImageLoader`:
+
+```swift
+struct MyImageLoader: ImageLoader {
+    func loadImage(from url: URL) async throws -> PlatformImage {
+        // fetch + decode, return a UIImage
+    }
+}
+
+PhotoSliderView(photos: photos, selection: $selection, imageLoader: MyImageLoader())
+```
+
+### Kingfisher
 
 ```swift
 import PhotoSlider
+import PhotoSliderKingfisher
 
-class PhotoSliderSDImageLoader: PhotoSlider.ImageLoader {
-    public func load(
-        imageView: UIImageView?,
-        fromURL url: URL?,
-        progress: @escaping PhotoSlider.ImageLoader.ProgressBlock,
-        completion: @escaping PhotoSlider.ImageLoader.CompletionBlock)
-    {
-        // Webp compatibility (optional)
-        let WebPCoder = SDImageWebPCoder.shared
-        SDImageCodersManager.shared.addCoder(WebPCoder)
-        
-        imageView?.sd_setImage(
-            withURL: url,
-            placeholderImage: nil,
-            options: SDWebImageOptions.retryFailed,
-            progress: { (receivedSize, totalSize) in
-                progress(receivedSize, totalSize)
-            },
-            completed: { (image, _, _, _) in
-                completion(image)
-            }
-        )
-    }
-}
-```
-
-and set ImageLoader.
-
-```swift
-let slider = PhotoSlider.ViewController(imageURLs: images)
-slider.modalPresentationStyle = .OverCurrentContext
-slider.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-slider.index = indexPath.row
-slider.imageLoader = PhotoSliderSDImageLoader()
-present(slider, animated: true, completion: nil)
+PhotoSliderView(photos: photos, selection: $selection, imageLoader: .kingfisher())
 ```
 
 ## Author

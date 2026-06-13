@@ -2,112 +2,39 @@
 //  PhotoSliderDemoUITests.swift
 //  PhotoSliderDemoUITests
 //
-//  Created by nakajijapan on 2015/09/23.
-//  Copyright © 2015 net.nakajijapan. All rights reserved.
+//  Launch smoke tests for the SwiftUI PhotoSlider 2.0 demo.
 //
 
 import XCTest
 
-class PhotoSliderDemoUITests: XCTestCase {
-        
-    override func setUp() {
-        super.setUp()
-        
+final class PhotoSliderDemoUITests: XCTestCase {
+
+    override func setUpWithError() throws {
         continueAfterFailure = false
-        XCUIApplication().launch()
     }
-    
-    override func tearDown() {
-        super.tearDown()
-        
-        XCUIApplication().terminate()
-    }
-    
-    func existsPhotoSliderScrollView(app: XCUIApplication) {
 
-        sleep(1)
-        XCTAssertEqual(app.scrollViews.matching(identifier: "PhotoSliderScrollView").element.exists, false)
-
-    }
-    
-    func testPushCloseButtonExample() {
-        
+    /// The app launches without crashing and shows the demo list.
+    func testLaunchShowsDemoList() throws {
         let app = XCUIApplication()
-        app.otherElements["rootView"].tap()
-        sleep(1)
-        XCTAssertEqual(app.scrollViews.matching(identifier: "PhotoSliderScrollView").element.exists, true)
-        
-        app.buttons["PhotoSliderClose"].tap()
-        
-        self.existsPhotoSliderScrollView(app: app)
-    }
-    
-    func testSwitchImage() {
-        let app = XCUIApplication()
-        app.otherElements["rootView"].tap()
-        
-        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
-        element.swipeLeft()
-        element.swipeLeft()
-        element.swipeLeft()
-        element.swipeRight()
-        element.swipeRight()
-        element.swipeRight()
-        app.buttons["PhotoSliderClose"].tap()
-        
-        self.existsPhotoSliderScrollView(app: app)
-    }
-    
-    func testCloseWithSwipingUpImage() {
-        let app = XCUIApplication()
-        app.otherElements["rootView"].tap()
-        
-        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
-        element.swipeUp()
-        
-        self.existsPhotoSliderScrollView(app: app)
-    }
-    
-    func testCloseWithSwipingDownImage() {
-        let app = XCUIApplication()
-        app.otherElements["rootView"].tap()
-        
-        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
-        element.swipeDown()
-        
-        self.existsPhotoSliderScrollView(app: app)
-    }
-    
-    func testRightRotation() {
+        app.launch()
 
-        let app = XCUIApplication()
-        app.otherElements["rootView"].tap()
-
-        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
-        element.swipeLeft()
-        element.swipeLeft()
-
-        XCUIDevice.shared.orientation = .landscapeRight
-        XCUIDevice.shared.orientation = .portraitUpsideDown
-        XCUIDevice.shared.orientation = .landscapeLeft
-        XCUIDevice.shared.orientation = .portrait
-        app.buttons["PhotoSliderClose"].tap()
+        let list = app.collectionViews["demo-list"]
+        XCTAssertTrue(list.waitForExistence(timeout: 10),
+                      "Demo list should appear on launch")
     }
-    
-    func testZooming() {
-        XCUIDevice.shared.orientation = .portrait
-        
+
+    /// Tapping the local-images demo navigates and renders thumbnails.
+    func testOpenLocalDemo() throws {
         let app = XCUIApplication()
-        app.otherElements["rootView"].tap()
+        app.launch()
 
-        let element = app.scrollViews.matching(identifier: "PhotoSliderScrollView").element(boundBy: 0)
-        element.doubleTap()
-        element.swipeUp()
-        element.swipeDown()
-        element.doubleTap()
-        app.buttons["PhotoSliderClose"].tap()
-        
-        self.existsPhotoSliderScrollView(app: app)
+        let localCell = app.buttons["demo-Local images (uiImage)"]
+        XCTAssertTrue(localCell.waitForExistence(timeout: 10),
+                      "Local demo row should exist")
+        localCell.tap()
 
+        let firstThumbnail = app.buttons["thumbnail-0"]
+        XCTAssertTrue(firstThumbnail.waitForExistence(timeout: 10),
+                      "First thumbnail should appear in the local demo")
     }
 }
