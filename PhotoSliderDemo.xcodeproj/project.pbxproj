@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		A1000020000000000000006 /* RemotePhotosDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000010000000000000006 /* RemotePhotosDemoView.swift */; };
 		A1000020000000000000007 /* KingfisherDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000010000000000000007 /* KingfisherDemoView.swift */; };
 		A1000020000000000000008 /* CallbacksDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000010000000000000008 /* CallbacksDemoView.swift */; };
+		A1000020000000000000015 /* CarouselDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000010000000000000015 /* CarouselDemoView.swift */; };
 		A1000020000000000000009 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000010000000000000009 /* Images.xcassets */; };
 		A100002000000000000000A /* image001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A100001000000000000000A /* image001.jpg */; };
 		A100002000000000000000B /* image002.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A100001000000000000000B /* image002.jpg */; };
@@ -49,6 +50,7 @@
 		A1000010000000000000006 /* RemotePhotosDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePhotosDemoView.swift; sourceTree = "<group>"; };
 		A1000010000000000000007 /* KingfisherDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherDemoView.swift; sourceTree = "<group>"; };
 		A1000010000000000000008 /* CallbacksDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbacksDemoView.swift; sourceTree = "<group>"; };
+		A1000010000000000000015 /* CarouselDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselDemoView.swift; sourceTree = "<group>"; };
 		A1000010000000000000009 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A100001000000000000000A /* image001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image001.jpg; sourceTree = "<group>"; };
 		A100001000000000000000B /* image002.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image002.jpg; sourceTree = "<group>"; };
@@ -62,9 +64,6 @@
 		A1000040000000000000001 /* PhotoSliderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSliderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000040000000000000002 /* PhotoSliderDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoSliderDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A1000070000000000000001 /* Frameworks */ = {
@@ -87,7 +86,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A1000080000000000000000 /* Root */ = {
+		A1000080000000000000000 = {
 			isa = PBXGroup;
 			children = (
 				A1000080000000000000001 /* PhotoSliderDemo */,
@@ -107,25 +106,11 @@
 				A1000010000000000000006 /* RemotePhotosDemoView.swift */,
 				A1000010000000000000007 /* KingfisherDemoView.swift */,
 				A1000010000000000000008 /* CallbacksDemoView.swift */,
+				A1000010000000000000015 /* CarouselDemoView.swift */,
 				A1000010000000000000009 /* Images.xcassets */,
 				A1000080000000000000004 /* Resources */,
 			);
 			path = PhotoSliderDemo;
-			sourceTree = "<group>";
-		};
-		A1000080000000000000004 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A100001000000000000000A /* image001.jpg */,
-				A100001000000000000000B /* image002.jpg */,
-				A100001000000000000000C /* image003.jpg */,
-				A100001000000000000000D /* image004.jpg */,
-				A100001000000000000000E /* image005.jpg */,
-				A100001000000000000000F /* image006.jpg */,
-				A1000010000000000000010 /* image007.jpg */,
-				A1000010000000000000011 /* image008.jpg */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		A1000080000000000000002 /* PhotoSliderDemoUITests */ = {
@@ -143,6 +128,21 @@
 				A1000040000000000000002 /* PhotoSliderDemoUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A1000080000000000000004 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A100001000000000000000A /* image001.jpg */,
+				A100001000000000000000B /* image002.jpg */,
+				A100001000000000000000C /* image003.jpg */,
+				A100001000000000000000D /* image004.jpg */,
+				A100001000000000000000E /* image005.jpg */,
+				A100001000000000000000F /* image006.jpg */,
+				A1000010000000000000010 /* image007.jpg */,
+				A1000010000000000000011 /* image008.jpg */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,7 +215,7 @@
 				en,
 				Base,
 			);
-			mainGroup = A1000080000000000000000 /* Root */;
+			mainGroup = A1000080000000000000000;
 			packageReferences = (
 				A1000051000000000000001 /* XCLocalSwiftPackageReference "." */,
 			);
@@ -261,6 +261,7 @@
 				A1000020000000000000006 /* RemotePhotosDemoView.swift in Sources */,
 				A1000020000000000000007 /* KingfisherDemoView.swift in Sources */,
 				A1000020000000000000008 /* CallbacksDemoView.swift in Sources */,
+				A1000020000000000000015 /* CarouselDemoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,15 +470,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A1000091000000000000001 /* Build configuration list for PBXProject "PhotoSliderDemo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A1000092000000000000001 /* Debug */,
-				A1000092000000000000002 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		A1000090000000000000001 /* Build configuration list for PBXNativeTarget "PhotoSliderDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -492,6 +484,15 @@
 			buildConfigurations = (
 				A1000094000000000000001 /* Debug */,
 				A1000094000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1000091000000000000001 /* Build configuration list for PBXProject "PhotoSliderDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000092000000000000001 /* Debug */,
+				A1000092000000000000002 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

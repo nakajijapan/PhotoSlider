@@ -38,25 +38,29 @@ enum Demo: String, CaseIterable, Identifiable {
 struct ContentView: View {
     var body: some View {
         NavigationStack {
-            List(Demo.allCases) { demo in
-                NavigationLink(value: demo) {
-                    Label {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(demo.rawValue)
-                            Text(demo.subtitle)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    } icon: {
-                        Image(systemName: demo.systemImage)
+            CarouselDemoView()
+                .navigationDestination(for: Demo.self, destination: destination)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        demoMenu
                     }
+                }
+        }
+    }
+
+    /// Right-bar menu giving access to the original four 2.0 demos.
+    private var demoMenu: some View {
+        Menu {
+            ForEach(Demo.allCases) { demo in
+                NavigationLink(value: demo) {
+                    Label(demo.rawValue, systemImage: demo.systemImage)
                 }
                 .accessibilityIdentifier("demo-\(demo.rawValue)")
             }
-            .navigationTitle("PhotoSlider 2.0")
-            .navigationDestination(for: Demo.self, destination: destination)
-            .accessibilityIdentifier("demo-list")
+        } label: {
+            Image(systemName: "list.bullet")
         }
+        .accessibilityIdentifier("demo-menu")
     }
 
     @ViewBuilder
