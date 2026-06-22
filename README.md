@@ -95,6 +95,59 @@ You can also drop `PhotoSliderView` directly inside your own `.fullScreenCover` 
 }
 ```
 
+### Hero (zoom) transition
+
+Use the `sourceFrame:` overload to present with a thumbnail ⇄ full-screen **hero (zoom)
+transition** instead of a cross-fade. On present, the image zooms up from the tapped
+thumbnail; **on dismiss it zooms back down to the thumbnail of the current page** — so if
+the user swipes to another page inside the viewer, it returns to *that* thumbnail's slot.
+
+`sourceFrame(index)` returns the `CGRect` the thumbnail occupies in the **global**
+coordinate space (`proxy.frame(in: .global)`). Record each thumbnail's frame as it lays
+out, then return it from the closure. Return `nil` (or an empty / off-screen rect) to fall
+back to the cross-fade transition for that page.
+
+```swift
+struct CarouselScreen: View {
+    let photos: [PhotoItem]
+    @State private var selection = 0
+    @State private var isPresented = false
+    // Frame each thumbnail occupies in global coordinates, keyed by index.
+    @State private var frames: [Int: CGRect] = [:]
+
+    var body: some View {
+        TabView(selection: $selection) {
+            ForEach(Array(photos.enumerated()), id: \.element.id) { index, photo in
+                Button { isPresented = true } label: {
+                    thumbnail(for: photo)
+                }
+                .background(
+                    GeometryReader { proxy in
+                        Color.clear
+                            .onAppear { frames[index] = proxy.frame(in: .global) }
+                            .onChange(of: proxy.frame(in: .global)) { _, new in
+                                frames[index] = new
+                            }
+                    }
+                )
+                .tag(index)
+            }
+        }
+        .tabViewStyle(.page)
+        .photoSlider(
+            isPresented: $isPresented,
+            photos: photos,
+            selection: $selection,
+            sourceFrame: { index in frames[index] } // nil → cross-fade fallback
+        )
+    }
+}
+```
+
+`selection` is the source of truth for the hero target on both present and dismiss: the
+dismiss target is re-evaluated against the current `selection`, so the zoom-out always
+lands on whatever page is showing when the viewer closes.
+
 ### Photo sources
 
 ```swift

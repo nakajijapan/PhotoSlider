@@ -2,10 +2,12 @@
 //  ZoomingAnimationController.swift
 //  PhotoSlider
 //
-//  Ported from v1.5.0. Kept internal to preserve the hero (thumbnail <-> fullscreen)
-//  zoom transition capability. It is NOT wired into the default SwiftUI presentation
-//  in v2.0 (which uses `.fullScreenCover`); a future minor can expose a custom
-//  presentation path that drives this controller.
+//  Ported from v1.5.0. Kept internal to drive the hero (thumbnail <-> fullscreen) zoom
+//  transition. As of v2.0 it is wired into the `photoSlider(...:sourceFrame:)` overload via
+//  `PhotoSliderZoomTransitioningDelegate`, which presents `PhotoSliderViewController`
+//  directly with UIKit (`.overFullScreen`) so that `.to` / `.from` cast to
+//  `PhotoSliderViewController` here. (The default `sourceFrame`-less overload still uses
+//  `.fullScreenCover` and does not run this controller -- it would not satisfy the cast.)
 //
 
 import UIKit
@@ -19,7 +21,10 @@ protocol ZoomingAnimationControllerTransitioning {
 @MainActor
 final class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
-    private let present: Bool
+    /// `true` when this controller drives the presenting animation, `false` for dismissal.
+    /// Exposed (internal, read-only) so the transitioning delegate's factory branches can be
+    /// asserted in unit tests without running a real transition.
+    let present: Bool
     var sourceTransition: ZoomingAnimationControllerTransitioning?
     var destinationTransition: ZoomingAnimationControllerTransitioning?
 
