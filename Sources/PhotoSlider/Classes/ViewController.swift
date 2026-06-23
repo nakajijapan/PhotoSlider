@@ -110,6 +110,11 @@ public class ViewController: UIViewController {
         let label = UILabel(frame: CGRect.zero)
         label.textColor = self.captionTextColor
         label.numberOfLines = self.captionNumberOfLines
+        // Respect the design system: fall back to a Dynamic Type text style when no
+        // font is supplied, and let the caption scale with the user's preferred
+        // content size category (accessibility).
+        label.font = self.captionFont ?? UIFont.preferredFont(forTextStyle: .body)
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
 
@@ -682,7 +687,17 @@ extension ViewController: ZoomingAnimationControllerTransitioning {
         let attributedString = NSMutableAttributedString(string: text)
         let style = NSMutableParagraphStyle()
         style.minimumLineHeight = height
-        attributedString.addAttributes([NSAttributedString.Key.paragraphStyle: style], range: NSRange(location: 0, length: text.count))
+        // Preserve the caption font (including its size). Assigning `attributedText`
+        // ignores the label's `font` property for ranges without an explicit font
+        // attribute, so apply it here to keep `captionFont` effective alongside the
+        // custom line height.
+        attributedString.addAttributes(
+            [
+                .paragraphStyle: style,
+                .font: captionLabel.font as Any
+            ],
+            range: NSRange(location: 0, length: text.count)
+        )
 
         return attributedString
     }

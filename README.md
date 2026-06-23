@@ -154,6 +154,28 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
 
 ```
 
+## Caption
+
+When you use `PhotoSlider.Photo`, its `caption` is shown over the image. The
+caption respects the system design language: by default it uses a Dynamic Type
+text style and scales with the user's preferred content size category.
+
+```swift
+let slider = PhotoSlider.ViewController(photos: photos)
+
+// Optional customization
+slider.captionTextColor = .white
+slider.captionFont = .preferredFont(forTextStyle: .footnote) // scales with Dynamic Type
+slider.captionLineHeight = 22.0
+slider.captionNumberOfLines = 3
+```
+
+`captionFont` and `captionLineHeight` can be combined; the configured font
+(including its size) is preserved when a custom line height is applied.
+
+To opt out of Dynamic Type scaling, pass a fixed-size font such as
+`UIFont.systemFont(ofSize: 14.0)`.
+
 ## Delegation
 
 You can handle the following event:
