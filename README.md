@@ -148,6 +148,59 @@ struct CarouselScreen: View {
 dismiss target is re-evaluated against the current `selection`, so the zoom-out always
 lands on whatever page is showing when the viewer closes.
 
+#### Hide the source thumbnail during the transition
+
+During a hero transition the image zooms from the source thumbnail, but **your original
+thumbnail stays on screen** — so for a moment the same photo is visible twice (the moving
+hero image *and* the thumbnail underneath it). Use
+`onPhotoSliderSourceVisibilityChange` to hide your thumbnail while the viewer is up and
+show it again once the close animation finishes.
+
+The closure is called with `(index, isHidden: true)` once the present zoom has reached the
+centre (transition complete), and `(index, isHidden: false)` only **after** the dismiss
+animation has fully zoomed back down — so the thumbnail never re-appears while the image is
+still shrinking toward it. The `index` passed back on restore is the same one you hid, so
+even if the user swiped to another page inside the viewer the right thumbnail is always
+restored. The callback fires **only** on the hero (`sourceFrame:`) path; it is never called
+for the cross-fade present or when `sourceFrame` falls back to a fade. Add it **before**
+`photoSlider(...)`.
+
+```swift
+struct CarouselScreen: View {
+    let photos: [PhotoItem]
+    @State private var selection = 0
+    @State private var isPresented = false
+    @State private var frames: [Int: CGRect] = [:]
+    // The page index to hide during the hero transition (nil = nothing hidden).
+    @State private var hiddenIndex: Int?
+
+    var body: some View {
+        TabView(selection: $selection) {
+            ForEach(Array(photos.enumerated()), id: \.element.id) { index, photo in
+                Button { isPresented = true } label: {
+                    thumbnail(for: photo)
+                }
+                // Hide this page's thumbnail while it's the hero source.
+                .opacity(hiddenIndex == index ? 0 : 1)
+                .tag(index)
+            }
+        }
+        .tabViewStyle(.page)
+        // Must come before `.photoSlider(...)`.
+        .onPhotoSliderSourceVisibilityChange { index, isHidden in
+            // present complete: (index, true) → hide / dismiss done: (index, false) → restore
+            hiddenIndex = isHidden ? index : nil
+        }
+        .photoSlider(
+            isPresented: $isPresented,
+            photos: photos,
+            selection: $selection,
+            sourceFrame: { index in frames[index] }
+        )
+    }
+}
+```
+
 ### Photo sources
 
 ```swift

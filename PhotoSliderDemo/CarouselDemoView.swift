@@ -57,6 +57,20 @@ struct CarouselDemoView: View {
     /// stays non-nil even after swiping inside the viewer to an off-screen page.
     @State private var carouselFrame: CGRect?
 
+    /// The carousel page index that must stay hidden while the hero (zoom)
+    /// transition is in flight, or `nil` when nothing is hidden.
+    ///
+    /// Set from ``onPhotoSliderSourceVisibilityChange(_:)``: PhotoSlider sends
+    /// `(index, isHidden: true)` once the present zoom has reached the centre
+    /// (transition complete), and `(index, isHidden: false)` only *after* the
+    /// close animation has fully returned. Driving the page image's `opacity`
+    /// off this avoids the "double image" where the still-on-screen carousel
+    /// thumbnail and the moving hero image overlap during present/dismiss.
+    /// Because every page uses the *same* `carouselFrame`, only the page
+    /// matching this index is faded — the one whose square the hero image grows
+    /// from / shrinks into.
+    @State private var hiddenIndex: Int?
+
     var body: some View {
         VStack(spacing: 0) {
             squareCarousel
@@ -67,6 +81,16 @@ struct CarouselDemoView: View {
         .navigationTitle("Carousel")
         .navigationBarTitleDisplayMode(.inline)
         .accessibilityIdentifier("carousel")
+        // Must be attached *before* `.photoSlider(...)` so it's injected into the
+        // presentation path via the environment. PhotoSlider notifies us when to
+        // hide (after the present zoom completes) and when to restore (after the
+        // close animation has fully settled). Mapping straight to a single
+        // `hiddenIndex` keeps the restore correct even if the viewer was swiped to
+        // another page before closing: the index passed back on `isHidden == false`
+        // is the one we originally hid, so the right thumbnail always reappears.
+        .onPhotoSliderSourceVisibilityChange { index, isHidden in
+            hiddenIndex = isHidden ? index : nil
+        }
         .photoSlider(
             isPresented: $isPresented,
             photos: photos,
@@ -109,6 +133,10 @@ struct CarouselDemoView: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        // Hide *this* page's thumbnail while it's the hero source/target so it
+        // doesn't double up with the moving hero image during present/dismiss.
+        // `hiddenIndex` is set/cleared by `onPhotoSliderSourceVisibilityChange`.
+        .opacity(hiddenIndex == index ? 0 : 1)
         .accessibilityLabel(photo.caption ?? "Photo")
         .accessibilityHint("Opens the photo full screen")
     }

@@ -15,6 +15,7 @@ final class PhotoSliderCallbacksTests: XCTestCase {
         XCTAssertNil(callbacks.onPageChanged)
         XCTAssertNil(callbacks.onShare)
         XCTAssertNil(callbacks.onRequestDelete)
+        XCTAssertNil(callbacks.onSourceVisibilityChange)
     }
 
     @MainActor
@@ -31,7 +32,28 @@ final class PhotoSliderCallbacksTests: XCTestCase {
     }
 
     @MainActor
+    func testSourceVisibilityChangeFires() {
+        let expectation = expectation(description: "onSourceVisibilityChange")
+        let collected = VisibilityCollector()
+        let callbacks = PhotoSliderCallbacks(onSourceVisibilityChange: { index, isHidden in
+            collected.index = index
+            collected.isHidden = isHidden
+            expectation.fulfill()
+        })
+        callbacks.onSourceVisibilityChange?(7, true)
+        wait(for: [expectation], timeout: 1.0)
+        XCTAssertEqual(collected.index, 7)
+        XCTAssertEqual(collected.isHidden, true)
+    }
+
+    @MainActor
     final class Collector {
         var value: Int = -1
+    }
+
+    @MainActor
+    final class VisibilityCollector {
+        var index: Int = -1
+        var isHidden: Bool?
     }
 }

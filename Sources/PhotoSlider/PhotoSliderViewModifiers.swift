@@ -200,4 +200,75 @@ public extension View {
     ) -> some View {
         transformEnvironment(\.photoSliderCallbacks) { $0.onRequestDelete = action }
     }
+
+    /// ヒーロー(ズーム)遷移中に、呼び出し側の元サムネイルの可視状態を切り替えるためのクロージャを登録します。
+    ///
+    /// ヒーロー遷移では、タップしたサムネイルの位置から全画面ビューアへ画像が拡大移動します。
+    /// このとき呼び出し側の元サムネイル（カルーセルのページ画像など）は画面に残ったままなので、
+    /// 移動中のヒーロー画像と重なって**二重表示**になります。この modifier はその「隠す/戻す」べき
+    /// タイミングを通知し、実際の可視切替え（`opacity` 等）は呼び出し側に委ねます。
+    ///
+    /// - present のズーム完了後（画像が中央へ拡大し切って遷移が完了した時点）に `(index, isHidden: true)` が **1 回**呼ばれます。
+    /// - dismiss 完了後（縮小アニメが戻り切った後）に `(index, isHidden: false)` が **1 回**呼ばれます。
+    ///   この `index` は present 時に隠したのと**同じ index** です。ビューア内で別ページにスワイプして
+    ///   閉じても、最初に隠したサムネが必ず再表示されます（隠れっぱなしになりません）。
+    ///
+    /// `sourceFrame` 付きの
+    /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:sourceFrame:)``
+    /// でヒーロー経路が成立したときのみ発火します。`sourceFrame` を持たない
+    /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:)`` のクロスフェード提示や、
+    /// `sourceFrame(index)` が `nil`・空矩形・画面外でフェードへフォールバックした提示では
+    /// **呼ばれません**（ヒーロー画像が存在せず二重表示が起きないため）。
+    ///
+    /// 登録は任意（オプトイン）です。登録しなくても提示・解除の挙動は変わりません
+    /// （その場合は遷移中の二重表示が残ります）。この modifier は `photoSlider(...)` より**前**に
+    /// 付けてください（環境値として提示パスへ引き継がれます）。
+    ///
+    /// ## 使用例
+    ///
+    /// 単一の `hiddenIndex` State を `isHidden ? index : nil` で切り替え、対象ページのサムネを透明にします。
+    ///
+    /// ```swift
+    /// struct CarouselScreen: View {
+    ///     let photos: [PhotoItem]
+    ///     @State private var selection = 0
+    ///     @State private var isPresented = false
+    ///     @State private var frames: [Int: CGRect] = [:]
+    ///     // ヒーロー遷移中に隠すページ index（隠す対象が無ければ nil）。
+    ///     @State private var hiddenIndex: Int?
+    ///
+    ///     var body: some View {
+    ///         TabView(selection: $selection) {
+    ///             ForEach(Array(photos.enumerated()), id: \.element.id) { index, photo in
+    ///                 Button { isPresented = true } label: {
+    ///                     thumbnail(for: photo)
+    ///                 }
+    ///                 // 遷移中はこのページのサムネを透明にして二重表示を防ぐ。
+    ///                 .opacity(hiddenIndex == index ? 0 : 1)
+    ///                 .tag(index)
+    ///             }
+    ///         }
+    ///         .tabViewStyle(.page)
+    ///         // photoSlider(...) より前に付ける。
+    ///         .onPhotoSliderSourceVisibilityChange { index, isHidden in
+    ///             // present 完了: (index, true) で隠す / dismiss 完了: (index, false) で戻す。
+    ///             hiddenIndex = isHidden ? index : nil
+    ///         }
+    ///         .photoSlider(
+    ///             isPresented: $isPresented,
+    ///             photos: photos,
+    ///             selection: $selection,
+    ///             sourceFrame: { index in frames[index] }
+    ///         )
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// - Parameter action: 可視状態を切り替えるクロージャ。第 1 引数は対象サムネイルの index、
+    ///   第 2 引数 `isHidden` は `true` のとき隠す（present のズーム完了後）、`false` のとき再表示する（dismiss 完了後）。
+    func onPhotoSliderSourceVisibilityChange(
+        _ action: @escaping @MainActor @Sendable (_ index: Int, _ isHidden: Bool) -> Void
+    ) -> some View {
+        transformEnvironment(\.photoSliderCallbacks) { $0.onSourceVisibilityChange = action }
+    }
 }

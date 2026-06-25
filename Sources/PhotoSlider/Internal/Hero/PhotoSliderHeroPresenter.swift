@@ -81,6 +81,31 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
         private var isPresenting = false
         private var isDismissing = false
 
+        /// The source index hidden when the hero path was taken on present, or `nil` when no
+        /// thumbnail was hidden (fade fallback / no source-visibility callback registered).
+        /// Doubles as the "did we hide something?" flag for the dismiss-completion notification.
+        private var hiddenSourceIndex: Int?
+
+        /// The visibility callback captured at present time, retained so dismiss completion can
+        /// restore the *same* thumbnail that was hidden (the present-time callback may differ
+        /// from the latest one re-injected via the environment by dismiss time).
+        private var sourceVisibilityChange: (@MainActor @Sendable (Int, Bool) -> Void)?
+
+        /// The freshest `sourceFrame` / `selection` from the most recent `update(...)`. The
+        /// present is deferred one runloop tick (see `presentIfNeeded`), by which point a later
+        /// `update(...)` may have delivered a newer (non-`nil`) source frame; resolving against
+        /// these avoids reading the stale value captured in the pass that triggered the present.
+        private var latestSourceFrame: ((Int) -> CGRect?)?
+        private var latestSelection: Int?
+
+        /// The window-space frame the present hero actually grew from. Reused as the dismiss
+        /// return target *only* when the live `sourceFrame` momentarily returns `nil` at dismiss
+        /// time -- while the viewer is presented `.overFullScreen` the carousel's
+        /// `GeometryReader` can be detached, so `update(...)` is not re-run with a fresh frame
+        /// and the live provider would otherwise yield `nil` and fall back to a fade. The live
+        /// provider is still tried first, so swiping to another page returns to that page.
+        private var lastResolvedPresentFrame: CGRect?
+
         init(isPresented: Binding<Bool>, selection: Binding<Int>) {
             _isPresented = isPresented
             _selection = selection
@@ -96,6 +121,10 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
             callbacks: PhotoSliderCallbacks,
             sourceFrame: @escaping (Int) -> CGRect?
         ) {
+            // Keep the freshest source-frame provider / page for the deferred present read.
+            latestSourceFrame = sourceFrame
+            latestSelection = selection
+
             if isPresented {
                 presentIfNeeded(
                     from: bridgeView,
@@ -139,41 +168,91 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
             viewer.modalPresentationStyle = .overFullScreen
 
             configureCallbacks(on: viewer, callbacks: callbacks)
-
-            // Resolve the source frame for the page being presented (the truth source).
-            let presentFrame = resolvedThumbnail(
-                forIndex: selection,
-                photos: photos,
-                window: window,
-                sourceFrame: sourceFrame
-            )
-
-            if let presentFrame {
-                // Hero path: keep a strong reference to the delegate (it is `weak` on the VC).
-                let delegate = PhotoSliderZoomTransitioningDelegate(
-                    viewer: viewer,
-                    presentThumbnail: presentFrame,
-                    dismissThumbnailProvider: { [weak self, weak window] in
-                        guard let self, let window else { return nil }
-                        return self.resolvedThumbnail(
-                            forIndex: self.selection,
-                            photos: photos,
-                            window: window,
-                            sourceFrame: sourceFrame
-                        )
-                    }
-                )
-                transitioningDelegate = delegate
-                viewer.transitioningDelegate = delegate
-            } else {
-                // Fallback: no valid source frame -> plain cross-dissolve, no white backdrop.
-                transitioningDelegate = nil
-                viewer.modalTransitionStyle = .crossDissolve
-            }
-
             presentedViewer = viewer
-            presenter.present(viewer, animated: true) { [weak self] in
-                self?.isPresenting = false
+
+            // Defer the source-frame resolution and the actual present to the next runloop tick.
+            //
+            // `updateUIView` runs *inside* SwiftUI's layout/update pass. When `isPresented`
+            // flips to true (e.g. a thumbnail tap), the `sourceFrame` closure captured for this
+            // very pass can still read a *stale* value (commonly `nil`) for a frame that a
+            // sibling `GeometryReader` only just produced -- so `resolvedThumbnail` returns
+            // `nil` and presentation silently falls back to a cross-dissolve. Hopping to the
+            // next main-runloop tick lets SwiftUI commit the freshest `carouselFrame` before we
+            // read it, and lets UIKit run the custom hero transition cleanly outside the layout
+            // pass. `latestSourceFrame`/`latestSelection` are kept current by every `update(...)`.
+            DispatchQueue.main.async { [weak self, weak viewer, weak window] in
+                guard let self, let viewer, let window else { return }
+                let sourceFrame = self.latestSourceFrame ?? sourceFrame
+                let page = self.latestSelection ?? selection
+
+                let presentFrame = self.resolvedThumbnail(
+                    forIndex: page,
+                    photos: photos,
+                    window: window,
+                    sourceFrame: sourceFrame
+                )
+
+                if let presentFrame {
+                    self.lastResolvedPresentFrame = presentFrame.windowFrame
+                    // Hero path: keep a strong reference to the delegate (it is `weak` on the VC).
+                    let delegate = PhotoSliderZoomTransitioningDelegate(
+                        viewer: viewer,
+                        presentThumbnail: presentFrame,
+                        dismissThumbnailProvider: { [weak self, weak window] in
+                            guard let self, let window else { return nil }
+                            let sf = self.latestSourceFrame ?? sourceFrame
+                            // Prefer the live frame for the current page (so swiping returns to
+                            // that page). If it is momentarily `nil` -- the carousel can be
+                            // detached while presented `.overFullScreen`, so `update(...)` is not
+                            // re-run with a fresh frame -- fall back to the frame the present grew
+                            // from so dismissal still zooms back instead of fading.
+                            if let resolved = self.resolvedThumbnail(
+                                forIndex: self.selection,
+                                photos: photos,
+                                window: window,
+                                sourceFrame: sf
+                            ) {
+                                return resolved
+                            }
+                            guard let cached = self.lastResolvedPresentFrame else { return nil }
+                            let image = photos.indices.contains(self.selection)
+                                ? self.synchronousImage(for: photos[self.selection])
+                                : nil
+                            return PhotoSliderThumbnailTransition(image: image, windowFrame: cached)
+                        }
+                    )
+                    self.transitioningDelegate = delegate
+                    viewer.transitioningDelegate = delegate
+
+                    // Hero path only: remember the index + callback so the present-completion
+                    // closure below can hide the caller's source thumbnail (the moving hero image
+                    // must not overlap it) and dismiss completion can restore the *same* thumbnail
+                    // (even if the viewer swiped pages). `page` is the index the present frame was
+                    // resolved for. Do NOT fire the hide here -- the zoom has not reached the
+                    // centre yet, and the callback mutates caller `@State`.
+                    self.hiddenSourceIndex = page
+                    self.sourceVisibilityChange = callbacks.onSourceVisibilityChange
+                } else {
+                    // Fallback: no valid source frame -> plain cross-dissolve, no white backdrop.
+                    // No thumbnail is hidden, so dismiss must not emit a "restore" notification.
+                    // Clear any stale hero state so dismiss completion does not restore a thumbnail.
+                    self.transitioningDelegate = nil
+                    viewer.modalTransitionStyle = .crossDissolve
+                    self.hiddenSourceIndex = nil
+                    self.sourceVisibilityChange = nil
+                }
+
+                presenter.present(viewer, animated: true) { [weak self] in
+                    guard let self else { return }
+                    self.isPresenting = false
+                    // Hero path only: now that the zoom has reached the centre and the transition
+                    // has finished (so we're outside the SwiftUI update cycle), ask the caller to
+                    // hide its source thumbnail. The viewer fully covers it by this point, so there
+                    // is no visible flash before it disappears.
+                    if let index = self.hiddenSourceIndex {
+                        self.sourceVisibilityChange?(index, true)
+                    }
+                }
             }
         }
 
@@ -220,10 +299,21 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
             // blur + black background. Close-button / tap dismissal keeps the hero zoom-out.
             let animated = !viewer.isDismissingViaSwipe
 
+            // The completion runs for both `animated` and non-animated (swipe) dismissals, so
+            // restoring the hidden thumbnail here guarantees it always comes back, only once,
+            // and only after the zoom-out animation has fully settled.
             viewer.dismiss(animated: animated) { [weak self] in
-                self?.presentedViewer = nil
-                self?.transitioningDelegate = nil
-                self?.isDismissing = false
+                guard let self else { return }
+                self.presentedViewer = nil
+                self.transitioningDelegate = nil
+                self.lastResolvedPresentFrame = nil
+                self.isDismissing = false
+
+                if let index = self.hiddenSourceIndex {
+                    self.sourceVisibilityChange?(index, false)
+                    self.hiddenSourceIndex = nil
+                    self.sourceVisibilityChange = nil
+                }
             }
         }
 
