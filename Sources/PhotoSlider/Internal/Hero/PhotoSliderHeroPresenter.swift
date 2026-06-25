@@ -224,14 +224,18 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
                     self.transitioningDelegate = delegate
                     viewer.transitioningDelegate = delegate
 
-                    // Hero path only: remember the index + callback so the present-completion
-                    // closure below can hide the caller's source thumbnail (the moving hero image
-                    // must not overlap it) and dismiss completion can restore the *same* thumbnail
-                    // (even if the viewer swiped pages). `page` is the index the present frame was
-                    // resolved for. Do NOT fire the hide here -- the zoom has not reached the
-                    // centre yet, and the callback mutates caller `@State`.
+                    // Hero path only: remember the index + callback so dismiss completion can
+                    // restore the *same* thumbnail (even if the viewer swiped pages). `page` is the
+                    // index the present frame was resolved for.
                     self.hiddenSourceIndex = page
                     self.sourceVisibilityChange = callbacks.onSourceVisibilityChange
+                    // Hide the caller's source thumbnail *before* the zoom grows, so the moving
+                    // hero image starts from an already-empty square instead of revealing the
+                    // thumbnail underneath it as it expands. This fires in the deferred block (the
+                    // next runloop tick, *outside* `updateUIView`), so mutating the caller's
+                    // `@State` here does not trigger "Modifying state during view update" and does
+                    // not disturb the hero zoom.
+                    self.sourceVisibilityChange?(page, true)
                 } else {
                     // Fallback: no valid source frame -> plain cross-dissolve, no white backdrop.
                     // No thumbnail is hidden, so dismiss must not emit a "restore" notification.
@@ -243,15 +247,7 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
                 }
 
                 presenter.present(viewer, animated: true) { [weak self] in
-                    guard let self else { return }
-                    self.isPresenting = false
-                    // Hero path only: now that the zoom has reached the centre and the transition
-                    // has finished (so we're outside the SwiftUI update cycle), ask the caller to
-                    // hide its source thumbnail. The viewer fully covers it by this point, so there
-                    // is no visible flash before it disappears.
-                    if let index = self.hiddenSourceIndex {
-                        self.sourceVisibilityChange?(index, true)
-                    }
+                    self?.isPresenting = false
                 }
             }
         }

@@ -61,11 +61,11 @@ struct CarouselDemoView: View {
     /// transition is in flight, or `nil` when nothing is hidden.
     ///
     /// Set from ``onPhotoSliderSourceVisibilityChange(_:)``: PhotoSlider sends
-    /// `(index, isHidden: true)` once the present zoom has reached the centre
-    /// (transition complete), and `(index, isHidden: false)` only *after* the
-    /// close animation has fully returned. Driving the page image's `opacity`
-    /// off this avoids the "double image" where the still-on-screen carousel
-    /// thumbnail and the moving hero image overlap during present/dismiss.
+    /// `(index, isHidden: true)` *before* the present zoom grows (at the start of
+    /// presentation), and `(index, isHidden: false)` only *after* the close
+    /// animation has fully returned. Driving the page image's `opacity` off this
+    /// avoids the "double image" where the still-on-screen carousel thumbnail and
+    /// the moving hero image overlap during present/dismiss.
     /// Because every page uses the *same* `carouselFrame`, only the page
     /// matching this index is faded — the one whose square the hero image grows
     /// from / shrinks into.
@@ -83,7 +83,7 @@ struct CarouselDemoView: View {
         .accessibilityIdentifier("carousel")
         // Must be attached *before* `.photoSlider(...)` so it's injected into the
         // presentation path via the environment. PhotoSlider notifies us when to
-        // hide (after the present zoom completes) and when to restore (after the
+        // hide (before the present zoom grows) and when to restore (after the
         // close animation has fully settled). Mapping straight to a single
         // `hiddenIndex` keeps the restore correct even if the viewer was swiped to
         // another page before closing: the index passed back on `isHidden == false`
