@@ -130,6 +130,18 @@ final class HeroTransitionTests: XCTestCase {
         XCTAssertNil(delegate.animationController(forDismissed: viewer))
     }
 
+    // MARK: - swipe-vs-button dismissal flag (gates the second hero transition)
+
+    @MainActor
+    func testViewerIsNotDismissingViaSwipeByDefault() {
+        // A freshly-presented viewer (and the close-button / tap dismissal path) must leave the
+        // flag `false` so the hero presenter still runs the animated zoom-out on dismiss.
+        // Only a vertical swipe-to-dismiss flips it to `true` (then the presenter dismisses
+        // without animation, avoiding the double-dismiss blur flash).
+        let viewer = makeViewer()
+        XCTAssertFalse(viewer.isDismissingViaSwipe)
+    }
+
     // MARK: - selection as the truth source for the dismiss return target
 
     @MainActor

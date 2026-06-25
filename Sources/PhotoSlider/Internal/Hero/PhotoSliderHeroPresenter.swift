@@ -214,7 +214,13 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
             guard let viewer = presentedViewer, !isDismissing else { return }
             isDismissing = true
 
-            viewer.dismiss(animated: true) { [weak self] in
+            // Swipe-to-dismiss already ran the viewer's own 0.4s slide-out to `view.alpha == 0`,
+            // so dismiss it *without* an animated transition. Animating here would re-run the
+            // hero zoom-out, which resets `view.alpha` back to 1.0 and briefly re-reveals the
+            // blur + black background. Close-button / tap dismissal keeps the hero zoom-out.
+            let animated = !viewer.isDismissingViaSwipe
+
+            viewer.dismiss(animated: animated) { [weak self] in
                 self?.presentedViewer = nil
                 self?.transitioningDelegate = nil
                 self?.isDismissing = false

@@ -128,6 +128,14 @@ final class PhotoSliderViewController: UIViewController {
     private var scrollMode: PhotoSliderControllerScrollMode = .none
     private var scrollInitalized = false
     private var closeAnimating = false
+
+    /// `true` once a vertical swipe-to-dismiss has crossed its threshold and the controller's
+    /// own 0.4s slide-out is running (set in `closePhotoSlider`). The hero presenter reads this
+    /// when `onRequestDismiss` fires so it can dismiss *without* a second transition: the viewer
+    /// has already slid off-screen at `view.alpha == 0`, so re-running the hero shrink (which
+    /// resets `view.alpha` to 1.0) would briefly re-reveal the blur/black background.
+    /// Stays `false` for close-button / tap dismissal, which keeps the hero zoom-out.
+    private(set) var isDismissingViaSwipe = false
     private var imageViews: [PhotoSliderEngineImageView] = []
     private var previousPage = 0
     private var scrollPreviewPoint = CGPoint.zero
@@ -500,6 +508,9 @@ extension PhotoSliderViewController: UIScrollViewDelegate {
 
         if closeAnimating { return }
         closeAnimating = true
+        // Mark this as a swipe dismissal so the hero presenter skips its second (zoom-out)
+        // transition; this 0.4s slide-out already fades everything to `view.alpha == 0`.
+        isDismissingViaSwipe = true
 
         let screenHeight = view.bounds.height
         let screenWidth = view.bounds.width
