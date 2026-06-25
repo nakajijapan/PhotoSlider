@@ -1,6 +1,6 @@
 # PhotoSlider for Swift
 
-[![License](https://img.shields.io/cocoapods/l/PhotoSlider.svg?style=flat)](http://cocoapods.org/pods/PhotoSlider)
+[![License](https://img.shields.io/github/license/nakajijapan/PhotoSlider.svg?style=flat)](https://github.com/nakajijapan/PhotoSlider/blob/master/LICENSE)
 [![Platform](https://img.shields.io/badge/platform-iOS%2018%2B-blue.svg?style=flat)](https://www.apple.com/ios/)
 [![Language](https://img.shields.io/badge/language-Swift%206-orange.svg)](https://swift.org)
 [![Backers on Open Collective](https://opencollective.com/PhotoSlider/backers/badge.svg)](#backers) 
