@@ -2,33 +2,46 @@
 //  CarouselDemoView.swift
 //  PhotoSliderDemo
 //
-//  A full-width, horizontally paging carousel (Mercari-style product gallery).
-//  Swipe left/right to flip through bundled local images one at a time, and tap
-//  any image to open PhotoSlider full screen at that index. Closing PhotoSlider
-//  on a different page keeps the carousel page in sync via the shared `selection`
-//  binding (the SwiftUI replacement for the old `photoSliderControllerWillDismiss`
-//  → `currentRow` syncing in the UIKit demo).
+//  A *square* (1:1), horizontally paging carousel pinned to the top of the
+//  screen — the SwiftUI port of the original UIKit demo, where a square
+//  collection view (cell size `width × width`) sat at the top and you swiped
+//  through photos one at a time. Tapping a page opens PhotoSlider full screen at
+//  that index. Closing PhotoSlider on a different page keeps the carousel page
+//  in sync via the shared `selection` binding (the SwiftUI replacement for the
+//  old `photoSliderControllerWillDismiss` → `currentRow` syncing in UIKit).
 //
-//  This screen also wires the *hero (zoom) transition* by handing PhotoSlider the
-//  on-screen frame of each page's image via the `sourceFrame:` overload. Presenting
-//  zooms the tapped thumbnail up to full screen; closing (button or swipe-down)
-//  shrinks the current page's image back into its carousel slot instead of fading
-//  out to a blank backdrop.
+//  This screen wires the *hero (zoom) transition* by handing PhotoSlider the
+//  on-screen frame of the current page's image via the `sourceFrame:` overload.
+//  Presenting zooms the tapped thumbnail up to full screen; closing (button or
+//  swipe-down) shrinks the current page's image back into its square carousel
+//  slot instead of fading out to a blank backdrop.
+//
+//  Hero-frame strategy: every page is the *same* fixed-size square and the image
+//  is `scaledToFill`-clipped to fill it, so the painted image rect == the square
+//  carousel rect for *all* pages. We therefore record a single `.global` frame
+//  for the carousel container and return it for whatever `index` PhotoSlider
+//  asks about. This sidesteps the TabView pitfall where an off-screen page's
+//  `GeometryReader.onAppear` fires late: after swiping inside the viewer to a
+//  page whose thumbnail never laid out, `sourceFrame(selection)` is still
+//  non-nil, so the close animation always shrinks back into the square (never
+//  silently falls back to a cross-fade).
 //
 
 import SwiftUI
 import PhotoSlider
 
-/// Full-width swipeable carousel landing screen.
+/// Square swipeable carousel landing screen (top-aligned, like the 1.x demo).
 ///
-/// - Uses `TabView` + `.tabViewStyle(.page(indexDisplayMode: .always))` so each
-///   page snaps to one full-width image with a page-indicator dot row.
+/// - Uses `TabView` + `.tabViewStyle(.page)` constrained to a 1:1 square via a
+///   width-driven frame, so each page snaps to one square image with a
+///   page-indicator dot row.
 /// - Photos come from `DemoData.localPhotos()` (bundled `image001`–`image008`),
 ///   so it works fully offline.
 /// - `selection` is shared between the carousel and PhotoSlider, giving two-way
 ///   page follow without any manual delegate plumbing.
-/// - `frames` records each page's image rect in `.global` screen coordinates so
-///   the hero transition can grow from / shrink back to the right slot.
+/// - `carouselFrame` records the carousel square's rect in `.global` screen
+///   coordinates so the hero transition can grow from / shrink back to it — for
+///   the current page regardless of which page last laid out.
 struct CarouselDemoView: View {
 
     private let photos = DemoData.localPhotos()
@@ -38,13 +51,37 @@ struct CarouselDemoView: View {
     @State private var selection = 0
     @State private var isPresented = false
 
-    /// `index` → the rect (in `.global` screen coordinates) of the *visible image*
-    /// for that page. Updated on appear and whenever the page's geometry changes
-    /// (rotation, page change, safe-area updates), so the value handed to
-    /// `sourceFrame` always reflects what is currently on screen.
-    @State private var frames: [Int: CGRect] = [:]
+    /// The square carousel's rect in `.global` screen coordinates. Because every
+    /// page fills this same square (`scaledToFill` + clip), this single rect is
+    /// the hero source/target for *every* page — so `sourceFrame(selection)`
+    /// stays non-nil even after swiping inside the viewer to an off-screen page.
+    @State private var carouselFrame: CGRect?
 
     var body: some View {
+        VStack(spacing: 0) {
+            squareCarousel
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(Color(.systemBackground).ignoresSafeArea())
+        .navigationTitle("Carousel")
+        .navigationBarTitleDisplayMode(.inline)
+        .accessibilityIdentifier("carousel")
+        .photoSlider(
+            isPresented: $isPresented,
+            photos: photos,
+            selection: $selection,
+            // Every page occupies the same square, so the current page's image
+            // rect is always the recorded carousel frame. `nil` only before the
+            // carousel has laid out, in which case PhotoSlider cross-fades.
+            sourceFrame: { _ in carouselFrame }
+        )
+    }
+
+    /// The 1:1 square carousel pinned to the top. Its width drives its height so
+    /// it stays square across rotation / size classes, mirroring the old UIKit
+    /// cell size of `CGSize(width: bounds.width, height: bounds.width)`.
+    private var squareCarousel: some View {
         TabView(selection: $selection) {
             ForEach(Array(photos.enumerated()), id: \.element.id) { index, photo in
                 pageImage(for: photo, at: index)
@@ -54,20 +91,13 @@ struct CarouselDemoView: View {
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
         .indexViewStyle(.page(backgroundDisplayMode: .always))
-        .background(Color.black.ignoresSafeArea())
-        .navigationTitle("Carousel")
-        .navigationBarTitleDisplayMode(.inline)
-        .accessibilityIdentifier("carousel")
-        .photoSlider(
-            isPresented: $isPresented,
-            photos: photos,
-            selection: $selection,
-            // Return the recorded image rect for `index`; `nil` (page never laid
-            // out / off-screen) makes PhotoSlider fall back to a cross-fade.
-            sourceFrame: { index in frames[index] }
-        )
+        .aspectRatio(1, contentMode: .fit)
+        .background(Color.black)
+        .background(carouselFrameReader)
     }
 
+    /// A single page: the photo scaled to *fill* the square and clipped, wrapped
+    /// in a button that opens PhotoSlider at this index.
     @ViewBuilder
     private func pageImage(for photo: PhotoItem, at index: Int) -> some View {
         Button {
@@ -77,64 +107,36 @@ struct CarouselDemoView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .clipped()
                 .contentShape(Rectangle())
-                .background(frameReader(for: photo, at: index))
         }
         .buttonStyle(.plain)
         .accessibilityLabel(photo.caption ?? "Photo")
         .accessibilityHint("Opens the photo full screen")
     }
 
+    /// The page image, scaled to fill the square (centered, edges cropped) so it
+    /// covers the whole 1:1 slot — matching the old centered, full-bleed cell.
     @ViewBuilder
     private func carouselImage(for photo: PhotoItem) -> some View {
         if case let .uiImage(image) = photo.source {
             Image(uiImage: image)
                 .resizable()
-                .scaledToFit()
+                .scaledToFill()
         } else {
             Color.gray
         }
     }
 
-    /// Transparent geometry probe placed behind each page. It measures the page's
-    /// `.global` rect, then narrows it to the *image* rect that `scaledToFit`
-    /// actually paints (letterbox/pillarbox bars stripped), so the hero transition
-    /// shrinks back into the picture rather than the full-bleed page bounds.
-    @ViewBuilder
-    private func frameReader(for photo: PhotoItem, at index: Int) -> some View {
+    /// Transparent geometry probe behind the whole carousel. It records the
+    /// square's `.global` rect (and keeps it current across rotation / safe-area
+    /// changes) so the hero transition grows from / shrinks into the square.
+    private var carouselFrameReader: some View {
         GeometryReader { proxy in
             Color.clear
-                .onAppear {
-                    frames[index] = imageRect(in: proxy.frame(in: .global), for: photo)
-                }
-                .onChange(of: proxy.frame(in: .global)) { _, newPageRect in
-                    frames[index] = imageRect(in: newPageRect, for: photo)
+                .onAppear { carouselFrame = proxy.frame(in: .global) }
+                .onChange(of: proxy.frame(in: .global)) { _, newFrame in
+                    carouselFrame = newFrame
                 }
         }
-    }
-
-    /// Computes the rect that a `.scaledToFit()` image occupies inside `pageRect`.
-    ///
-    /// `scaledToFit` centers the image and adds letterbox/pillarbox bars, so the
-    /// page rect is wider/taller than the painted image. We shrink `pageRect` to
-    /// the aspect-fitted image rect so the hero animation lands exactly on the
-    /// picture. Falls back to the full page rect when the source isn't a `UIImage`
-    /// or has a degenerate size.
-    private func imageRect(in pageRect: CGRect, for photo: PhotoItem) -> CGRect {
-        guard case let .uiImage(image) = photo.source,
-              image.size.width > 0, image.size.height > 0,
-              pageRect.width > 0, pageRect.height > 0 else {
-            return pageRect
-        }
-
-        let scale = min(pageRect.width / image.size.width,
-                        pageRect.height / image.size.height)
-        let fittedSize = CGSize(width: image.size.width * scale,
-                                height: image.size.height * scale)
-        let origin = CGPoint(
-            x: pageRect.minX + (pageRect.width - fittedSize.width) / 2,
-            y: pageRect.minY + (pageRect.height - fittedSize.height) / 2
-        )
-        return CGRect(origin: origin, size: fittedSize)
     }
 }
 
