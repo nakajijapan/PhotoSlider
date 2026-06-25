@@ -42,6 +42,18 @@ struct CallbacksDemoView: View {
         }
         .navigationTitle("Callbacks")
         .navigationBarTitleDisplayMode(.inline)
+        .photoSlider(
+            isPresented: $isPresented,
+            photos: photos,
+            selection: $selection,
+            configuration: configuration
+        )
+        // The callback modifiers install their closures via `transformEnvironment`,
+        // which only flows down to descendants. `.photoSlider(...)` reads the
+        // callbacks from its *own* environment (ancestors), so these must be
+        // attached *after* (outside) `.photoSlider(...)` to reach it — attaching
+        // them before (inside) would leave the callbacks `nil` and they would
+        // never fire.
         .onPhotoSliderPageChanged { index in
             report("pageChanged → \(index)")
         }
@@ -58,12 +70,6 @@ struct CallbacksDemoView: View {
             report("requestDelete → \(item.caption ?? "untitled")")
             return true
         }
-        .photoSlider(
-            isPresented: $isPresented,
-            photos: photos,
-            selection: $selection,
-            configuration: configuration
-        )
     }
 
     @ViewBuilder

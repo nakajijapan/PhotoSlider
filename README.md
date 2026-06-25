@@ -162,8 +162,9 @@ animation has fully zoomed back down — so the thumbnail never re-appears while
 still shrinking toward it. The `index` passed back on restore is the same one you hid, so
 even if the user swiped to another page inside the viewer the right thumbnail is always
 restored. The callback fires **only** on the hero (`sourceFrame:`) path; it is never called
-for the cross-fade present or when `sourceFrame` falls back to a fade. Add it **before**
-`photoSlider(...)`.
+for the cross-fade present or when `sourceFrame` falls back to a fade. Add it **after**
+`photoSlider(...)` — the callback flows down to the presentation host via the environment,
+so the modifier has to wrap (be an ancestor of) `.photoSlider(...)`, not precede it.
 
 ```swift
 struct CarouselScreen: View {
@@ -186,17 +187,17 @@ struct CarouselScreen: View {
             }
         }
         .tabViewStyle(.page)
-        // Must come before `.photoSlider(...)`.
-        .onPhotoSliderSourceVisibilityChange { index, isHidden in
-            // present complete: (index, true) → hide / dismiss done: (index, false) → restore
-            hiddenIndex = isHidden ? index : nil
-        }
         .photoSlider(
             isPresented: $isPresented,
             photos: photos,
             selection: $selection,
             sourceFrame: { index in frames[index] }
         )
+        // Must come after `.photoSlider(...)`.
+        .onPhotoSliderSourceVisibilityChange { index, isHidden in
+            // present complete: (index, true) → hide / dismiss done: (index, false) → restore
+            hiddenIndex = isHidden ? index : nil
+        }
     }
 }
 ```
@@ -230,11 +231,13 @@ PhotoSliderView(photos: photos, selection: $selection, configuration: config)
 
 ```swift
 GalleryScreen()
+    .photoSlider(isPresented: $isPresented, photos: photos, selection: $selection)
+    // The callbacks must come after `.photoSlider(...)` so they wrap the
+    // presentation host that reads them from the environment.
     .onPhotoSliderPageChanged { index in print("page = \(index)") }
     .onPhotoSliderWillDismiss { print("will dismiss") }
     .onPhotoSliderDidDismiss { print("did dismiss") }
     .onPhotoSliderShare { item in /* present a ShareLink / UIActivityViewController */ }
-    .photoSlider(isPresented: $isPresented, photos: photos, selection: $selection)
 ```
 
 Or inject them all at once:

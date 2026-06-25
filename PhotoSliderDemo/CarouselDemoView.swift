@@ -60,15 +60,20 @@ struct CarouselDemoView: View {
     /// The carousel page index that must stay hidden while the hero (zoom)
     /// transition is in flight, or `nil` when nothing is hidden.
     ///
-    /// Set from ``onPhotoSliderSourceVisibilityChange(_:)``: PhotoSlider sends
-    /// `(index, isHidden: true)` *before* the present zoom grows (at the start of
-    /// presentation), and `(index, isHidden: false)` only *after* the close
-    /// animation has fully returned. Driving the page image's `opacity` off this
-    /// avoids the "double image" where the still-on-screen carousel thumbnail and
-    /// the moving hero image overlap during present/dismiss.
-    /// Because every page uses the *same* `carouselFrame`, only the page
-    /// matching this index is faded — the one whose square the hero image grows
-    /// from / shrinks into.
+    /// - Hidden **synchronously the moment a page is tapped** (inside the button
+    ///   action, before `isPresented` flips), so the page's square is already
+    ///   empty before the hero image starts growing out of it. This does not
+    ///   depend on any library callback firing, so the thumbnail is guaranteed to
+    ///   disappear ahead of the present zoom.
+    /// - Restored only **after the dismiss animation has fully settled**, via
+    ///   ``onPhotoSliderSourceVisibilityChange(_:)`` `(index, isHidden: false)`.
+    ///   Restoring the instant `isPresented` becomes `false` would expose the
+    ///   thumbnail mid-shrink and double up with the closing hero image, so we
+    ///   wait for the library's dismiss-completion notification instead.
+    ///
+    /// Because every page uses the *same* `carouselFrame`, only the page matching
+    /// this index is faded — the one whose square the hero image grows from /
+    /// shrinks into.
     @State private var hiddenIndex: Int?
 
     var body: some View {
@@ -81,16 +86,6 @@ struct CarouselDemoView: View {
         .navigationTitle("Carousel")
         .navigationBarTitleDisplayMode(.inline)
         .accessibilityIdentifier("carousel")
-        // Must be attached *before* `.photoSlider(...)` so it's injected into the
-        // presentation path via the environment. PhotoSlider notifies us when to
-        // hide (before the present zoom grows) and when to restore (after the
-        // close animation has fully settled). Mapping straight to a single
-        // `hiddenIndex` keeps the restore correct even if the viewer was swiped to
-        // another page before closing: the index passed back on `isHidden == false`
-        // is the one we originally hid, so the right thumbnail always reappears.
-        .onPhotoSliderSourceVisibilityChange { index, isHidden in
-            hiddenIndex = isHidden ? index : nil
-        }
         .photoSlider(
             isPresented: $isPresented,
             photos: photos,
@@ -100,6 +95,19 @@ struct CarouselDemoView: View {
             // carousel has laid out, in which case PhotoSlider cross-fades.
             sourceFrame: { _ in carouselFrame }
         )
+        // Must be attached *after* `.photoSlider(...)` so it ends up an ancestor of
+        // the modifier's internal presentation host. `onPhotoSliderSourceVisibility`
+        // installs the callback via `transformEnvironment`, which only flows *down*
+        // to the modified view's descendants. Attaching it *before* (inner to)
+        // `.photoSlider` leaves the host reading the callback from *its* ancestors —
+        // i.e. `nil` — so the restore notification never reaches us. We consume only
+        // the restore (`isHidden == false`) here; hiding is done synchronously in the
+        // tap action (see `pageImage`). The index returned on restore is the one we
+        // originally hid, so even if the viewer was swiped to another page before
+        // closing, the correct thumbnail reappears once the close animation settles.
+        .onPhotoSliderSourceVisibilityChange { _, isHidden in
+            if !isHidden { hiddenIndex = nil }
+        }
     }
 
     /// The 1:1 square carousel pinned to the top. Its width drives its height so
@@ -125,6 +133,13 @@ struct CarouselDemoView: View {
     @ViewBuilder
     private func pageImage(for photo: PhotoItem, at index: Int) -> some View {
         Button {
+            // Hide this page's thumbnail *synchronously, before* presenting, so its
+            // square is already empty when the hero image starts zooming out of it —
+            // no reliance on a library callback firing in time. Restoring happens
+            // later, after the dismiss animation settles (see
+            // `onPhotoSliderSourceVisibilityChange`). This runs in the button action
+            // (outside any view-update pass), so mutating `@State` here is safe.
+            hiddenIndex = index
             isPresented = true
         } label: {
             carouselImage(for: photo)
@@ -135,7 +150,8 @@ struct CarouselDemoView: View {
         .buttonStyle(.plain)
         // Hide *this* page's thumbnail while it's the hero source/target so it
         // doesn't double up with the moving hero image during present/dismiss.
-        // `hiddenIndex` is set/cleared by `onPhotoSliderSourceVisibilityChange`.
+        // `hiddenIndex` is set synchronously on tap (above) and cleared by
+        // `onPhotoSliderSourceVisibilityChange` on dismiss completion.
         .opacity(hiddenIndex == index ? 0 : 1)
         .accessibilityLabel(photo.caption ?? "Photo")
         .accessibilityHint("Opens the photo full screen")

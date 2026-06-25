@@ -41,7 +41,8 @@ public extension View {
     /// を使ってください。
     ///
     /// このビューに付与した ``photoSliderCallbacks(_:)`` や個別コールバック modifier は、
-    /// カバー内の PhotoSlider にそのまま引き継がれます（この modifier より前に付けてください）。
+    /// カバー内の PhotoSlider にそのまま引き継がれます。これらは環境値として読み取られるため、
+    /// **この modifier より後（=外側）に付けてください**（前＝内側に付けると提示パスへ伝播しません）。
     ///
     /// - Parameters:
     ///   - isPresented: 表示状態を制御する Binding。
@@ -83,7 +84,8 @@ public extension View {
     /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:)`` を使ってください。
     ///
     /// このビューに付与した ``photoSliderCallbacks(_:)`` や個別コールバック modifier は、
-    /// ヒーロー提示パスにもそのまま引き継がれます（この modifier より前に付けてください）。
+    /// ヒーロー提示パスにもそのまま引き継がれます。これらは環境値として読み取られるため、
+    /// **この modifier より後（=外側）に付けてください**（前＝内側に付けると提示パスへ伝播しません）。
     ///
     /// ## 使用例
     ///
@@ -221,8 +223,14 @@ public extension View {
     /// **呼ばれません**（ヒーロー画像が存在せず二重表示が起きないため）。
     ///
     /// 登録は任意（オプトイン）です。登録しなくても提示・解除の挙動は変わりません
-    /// （その場合は遷移中の二重表示が残ります）。この modifier は `photoSlider(...)` より**前**に
-    /// 付けてください（環境値として提示パスへ引き継がれます）。
+    /// （その場合は遷移中の二重表示が残ります）。
+    ///
+    /// > Important: この modifier は `photoSlider(...)` より**後**に付けてください。
+    /// > `transformEnvironment` で設定した環境値は「付与したビューの**子孫**」にしか流れません。
+    /// > `photoSlider(...)` は内部に提示ホスト（環境値からこのコールバックを読む）を持つため、
+    /// > この modifier を `photoSlider(...)` より**前**（=内側）に付けると提示ホストはコールバックを
+    /// > 自身の**祖先**から読みに行き `nil` になります（コールバックが一度も発火しません）。
+    /// > `photoSlider(...)` より**後**（=外側）に付けると提示ホストの祖先になり、正しく伝播します。
     ///
     /// ## 使用例
     ///
@@ -240,7 +248,11 @@ public extension View {
     ///     var body: some View {
     ///         TabView(selection: $selection) {
     ///             ForEach(Array(photos.enumerated()), id: \.element.id) { index, photo in
-    ///                 Button { isPresented = true } label: {
+    ///                 Button {
+    ///                     // タップ即・同期でこのページを隠す（ズーム拡大の前に確実に消える）。
+    ///                     hiddenIndex = index
+    ///                     isPresented = true
+    ///                 } label: {
     ///                     thumbnail(for: photo)
     ///                 }
     ///                 // 遷移中はこのページのサムネを透明にして二重表示を防ぐ。
@@ -249,17 +261,17 @@ public extension View {
     ///             }
     ///         }
     ///         .tabViewStyle(.page)
-    ///         // photoSlider(...) より前に付ける。
-    ///         .onPhotoSliderSourceVisibilityChange { index, isHidden in
-    ///             // present 完了: (index, true) で隠す / dismiss 完了: (index, false) で戻す。
-    ///             hiddenIndex = isHidden ? index : nil
-    ///         }
     ///         .photoSlider(
     ///             isPresented: $isPresented,
     ///             photos: photos,
     ///             selection: $selection,
     ///             sourceFrame: { index in frames[index] }
     ///         )
+    ///         // photoSlider(...) より後に付ける（提示ホストの祖先になり伝播する）。
+    ///         .onPhotoSliderSourceVisibilityChange { _, isHidden in
+    ///             // dismiss 完了: (index, false) で戻す（隠すのはタップ時に済ませてある）。
+    ///             if !isHidden { hiddenIndex = nil }
+    ///         }
     ///     }
     /// }
     /// ```
