@@ -28,6 +28,13 @@ final class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTransi
     var sourceTransition: ZoomingAnimationControllerTransitioning?
     var destinationTransition: ZoomingAnimationControllerTransitioning?
 
+    /// Fired (on main, since this is a `@MainActor` class) the instant the dismiss shrink
+    /// animation lands -- i.e. inside the `UIView.animate` completion, *before* the moving copy
+    /// is removed, while it still covers the source frame. Lets the bridge restore the caller's
+    /// hidden thumbnail at the moment of landing so there is no empty-slot gap between the copy
+    /// being removed and SwiftUI re-revealing the thumbnail. Only meaningful on dismiss.
+    var onDismissLanded: (() -> Void)?
+
     init(present: Bool) {
         self.present = present
         super.init()
@@ -115,7 +122,11 @@ final class ZoomingAnimationController: NSObject, UIViewControllerAnimatedTransi
                 destinationTransition.transitionDestinationImageView(sourceImageView: sourceImageView)
                 fromViewController.view.alpha = 0.0
             },
-            completion: { _ in
+            completion: { [weak self] _ in
+                // Restore the caller's source thumbnail at the *moment of landing* -- while the
+                // moving copy still covers the source frame, before it is removed -- so the
+                // thumbnail re-appears seamlessly under the copy instead of after a gap.
+                self?.onDismissLanded?()
                 sourceImageView.alpha = 0.0
                 sourceImageView.removeFromSuperview()
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)

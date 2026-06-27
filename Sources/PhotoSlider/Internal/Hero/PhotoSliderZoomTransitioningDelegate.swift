@@ -30,6 +30,10 @@ final class PhotoSliderZoomTransitioningDelegate: NSObject, UIViewControllerTran
     /// frame) and the `source` role on dismiss (current page's UIImageView).
     private weak var viewer: PhotoSliderViewController?
 
+    /// Forwarded onto the dismiss `ZoomingAnimationController` so the bridge can restore the
+    /// caller's hidden thumbnail the instant the shrink animation lands (no empty-slot gap).
+    var onDismissLanded: (() -> Void)?
+
     init(
         viewer: PhotoSliderViewController,
         presentThumbnail: PhotoSliderThumbnailTransition,
@@ -64,6 +68,7 @@ final class PhotoSliderZoomTransitioningDelegate: NSObject, UIViewControllerTran
         let controller = ZoomingAnimationController(present: false)
         controller.sourceTransition = viewer
         controller.destinationTransition = dismissThumbnail
+        controller.onDismissLanded = onDismissLanded
         return controller
     }
 }

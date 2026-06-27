@@ -221,6 +221,12 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
                             return PhotoSliderThumbnailTransition(image: image, windowFrame: cached)
                         }
                     )
+                    // Restore the caller's thumbnail the instant the dismiss shrink animation
+                    // lands (inside the zoom controller's animation completion), rather than
+                    // waiting for UIKit's post-dismiss completion -- otherwise an empty slot is
+                    // visible between landing and the thumbnail re-appearing. Idempotent, so the
+                    // dismiss-completion fallback below does not double-fire.
+                    delegate.onDismissLanded = { [weak self] in self?.restoreSourceIfNeeded() }
                     self.transitioningDelegate = delegate
                     viewer.transitioningDelegate = delegate
 
@@ -305,12 +311,21 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
                 self.lastResolvedPresentFrame = nil
                 self.isDismissing = false
 
-                if let index = self.hiddenSourceIndex {
-                    self.sourceVisibilityChange?(index, false)
-                    self.hiddenSourceIndex = nil
-                    self.sourceVisibilityChange = nil
-                }
+                // Fallback restore: the hero (animated) path already restored at landing via
+                // `onDismissLanded`, so this is a no-op there. The swipe (non-animated) path has
+                // no landing hook, so it restores here. Idempotent -> always exactly once.
+                self.restoreSourceIfNeeded()
             }
+        }
+
+        /// Restores the caller's hidden source thumbnail exactly once. Safe to call from both the
+        /// dismiss landing hook and the dismiss completion -- after the first call `hiddenSourceIndex`
+        /// is cleared, so subsequent calls are no-ops (no double reveal).
+        private func restoreSourceIfNeeded() {
+            guard let index = hiddenSourceIndex else { return }
+            sourceVisibilityChange?(index, false)
+            hiddenSourceIndex = nil
+            sourceVisibilityChange = nil
         }
 
         // MARK: Thumbnail resolution
