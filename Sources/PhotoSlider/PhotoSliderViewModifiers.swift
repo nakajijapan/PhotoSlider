@@ -27,6 +27,12 @@ private struct PhotoSliderPresentationModifier: ViewModifier {
             )
             // Re-inject the callbacks so they cross the presentation boundary.
             .environment(\.photoSliderCallbacks, callbacks)
+            // The viewer's VC view is `.clear` and its black backdrop fades to 0 on
+            // swipe-to-dismiss. Without this, the fullScreenCover's default white
+            // hosting background shows through as the cover presents/dismisses,
+            // producing a full-screen white flash. Match the viewer's backdrop color
+            // so the present/dismiss stays black instead of flashing white.
+            .presentationBackground(configuration.backgroundColor)
         }
     }
 }
