@@ -34,10 +34,16 @@ struct ThumbnailGridView: View {
         Button {
             onTap(index)
         } label: {
-            thumbnailImage(for: photo)
-                .frame(maxWidth: .infinity)
+            // A square footprint (`Color.clear` + 1:1 aspect ratio) drives the cell
+            // size, and the image fills it as an overlay and is clipped to the
+            // square. Doing it the other way round (scaledToFill *then* aspectRatio)
+            // lets the image's own landscape size leak into layout, so cells end up
+            // different sizes and overflow into their neighbours.
+            Color.clear
                 .aspectRatio(1, contentMode: .fit)
+                .overlay { thumbnailImage(for: photo) }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
+                .contentShape(RoundedRectangle(cornerRadius: 8))
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("thumbnail-\(index)")
