@@ -102,10 +102,16 @@ final class PhotoSliderViewController: UIViewController {
 
     private lazy var shareButton: UIButton = {
         let shareButton = UIButton(frame: .zero)
-        let image = UIImage(named: "PhotoSliderShare", in: .module, compatibleWith: nil)
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 22, weight: .regular)
+        let image = UIImage(systemName: "square.and.arrow.up", withConfiguration: symbolConfiguration)
         shareButton.setImage(image, for: .normal)
+        shareButton.tintColor = .white
         shareButton.addTarget(self, action: #selector(shareButtonDidTap(_:)), for: .touchUpInside)
         shareButton.imageView?.contentMode = .center
+        shareButton.layer.shadowColor = UIColor.black.cgColor
+        shareButton.layer.shadowOffset = CGSize(width: 1, height: 1)
+        shareButton.layer.shadowRadius = 3
+        shareButton.layer.shadowOpacity = 1
         shareButton.accessibilityLabel = "Share"
         return shareButton
     }()
@@ -272,6 +278,37 @@ final class PhotoSliderViewController: UIViewController {
     @objc private func shareButtonDidTap(_ sender: UIButton) {
         guard items.indices.contains(currentPage) else { return }
         onShare?(items[currentPage])
+
+        let activityItems = shareActivityItems(for: currentPage)
+        guard !activityItems.isEmpty else { return }
+
+        let activityViewController = UIActivityViewController(
+            activityItems: activityItems,
+            applicationActivities: nil
+        )
+        // iPad anchors the share sheet popover to the tapped button.
+        activityViewController.popoverPresentationController?.sourceView = sender
+        activityViewController.popoverPresentationController?.sourceRect = sender.bounds
+        present(activityViewController, animated: true)
+    }
+
+    /// Resolves the share payload for `page`: the loaded `UIImage` when available,
+    /// otherwise falls back to the item's source (image / decoded data / remote URL).
+    private func shareActivityItems(for page: Int) -> [Any] {
+        if imageViews.indices.contains(page), let image = imageViews[page].imageView.image {
+            return [image]
+        }
+
+        guard items.indices.contains(page) else { return [] }
+
+        switch items[page].source {
+        case .uiImage(let image):
+            return [image]
+        case .data(let data):
+            return UIImage(data: data).map { [$0] } ?? []
+        case .remote(let url):
+            return [url]
+        }
     }
 
     /// Hands the dismissal back to SwiftUI and fires the `didDismiss` callback.

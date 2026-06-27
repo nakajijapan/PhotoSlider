@@ -123,4 +123,48 @@ final class PhotoSliderDemoUITests: XCTestCase {
         XCTAssertTrue(viewerScroll.waitForExistence(timeout: 10),
                       "Restored carousel thumbnail should re-open the viewer when tapped")
     }
+
+    /// In the Callbacks demo (`showsShareButton = true`), tapping the Share button
+    /// presents the iOS share sheet (`UIActivityViewController`) for the current
+    /// image, rather than only firing the `onShare` callback.
+    func testSharePresentsActivitySheet() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let menu = app.buttons["demo-menu"]
+        XCTAssertTrue(menu.waitForExistence(timeout: 10),
+                      "Demo menu button should exist")
+        menu.tap()
+
+        let callbacksCell = app.buttons["demo-Configuration & callbacks"]
+        XCTAssertTrue(callbacksCell.waitForExistence(timeout: 10),
+                      "Callbacks demo row should exist in the menu")
+        callbacksCell.tap()
+
+        let firstThumbnail = app.buttons["thumbnail-0"]
+        XCTAssertTrue(firstThumbnail.waitForExistence(timeout: 10),
+                      "First thumbnail should appear in the callbacks demo")
+        firstThumbnail.tap()
+
+        let viewerScroll = app.scrollViews["PhotoSliderScrollView"]
+        XCTAssertTrue(viewerScroll.waitForExistence(timeout: 10),
+                      "PhotoSlider viewer should appear after tapping a thumbnail")
+
+        let shareButton = app.buttons["Share"]
+        XCTAssertTrue(shareButton.waitForExistence(timeout: 10),
+                      "Share button should exist in the viewer")
+        shareButton.tap()
+
+        // The system share sheet (`UIActivityViewController`) presents as the
+        // `ActivityListView` container with its standard activity collection view;
+        // either signal proves the sheet was shown. (On iOS the activities surface
+        // as cells, not buttons, so we match the container/collection identifiers.)
+        let activityListView = app.otherElements["ActivityListView"]
+        let activityCollectionView = app.collectionViews["activityCollectionView"]
+        let appeared = activityListView.waitForExistence(timeout: 10)
+            || activityCollectionView.waitForExistence(timeout: 2)
+            || app.sheets.firstMatch.waitForExistence(timeout: 2)
+        XCTAssertTrue(appeared,
+                      "Tapping Share should present the iOS activity share sheet")
+    }
 }
