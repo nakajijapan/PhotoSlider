@@ -7,12 +7,12 @@ import Kingfisher
 import PhotoSlider
 
 public extension ImageLoader where Self == KingfisherImageLoader {
-    /// Kingfisher 連携ローダーのファクトリ。
+    /// A factory for the Kingfisher-backed loader.
     ///
     /// ```swift
     /// PhotoSliderView(photos: photos, selection: $index, imageLoader: .kingfisher())
     /// ```
-    /// - Parameter options: Kingfisher へ渡すオプション群。
+    /// - Parameter options: The options to pass to Kingfisher.
     static func kingfisher(options: KingfisherOptionsInfo = []) -> KingfisherImageLoader {
         KingfisherImageLoader(options: options)
     }

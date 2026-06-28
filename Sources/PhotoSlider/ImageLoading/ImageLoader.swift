@@ -5,32 +5,32 @@
 
 import Foundation
 
-/// 画像取得を差し替え可能にするプロトコル。
+/// A protocol that makes image fetching pluggable.
 ///
-/// デフォルト実装として ``DefaultImageLoader``（`URLSession` ベース、Kingfisher 非依存）を提供します。
-/// Kingfisher を使いたい場合は別ターゲット `PhotoSliderKingfisher` の `KingfisherImageLoader` を利用してください。
+/// The default implementation is ``DefaultImageLoader`` (`URLSession`-based, with no Kingfisher dependency).
+/// To use Kingfisher, use `KingfisherImageLoader` from the separate `PhotoSliderKingfisher` target.
 ///
 /// ```swift
 /// PhotoSliderView(photos: photos, selection: $index, imageLoader: .default)
 /// ```
 public protocol ImageLoader: Sendable {
 
-    /// 指定 URL から画像を読み込みます。
+    /// Loads an image from the given URL.
     ///
-    /// - Parameter url: 取得対象の URL。
-    /// - Returns: 読み込み済みの ``PlatformImage``。
-    /// - Throws: 取得・デコードに失敗した場合のエラー。
+    /// - Parameter url: The URL to fetch.
+    /// - Returns: The loaded ``PlatformImage``.
+    /// - Throws: An error if fetching or decoding fails.
     func loadImage(from url: URL) async throws -> PlatformImage
 
-    /// 進捗付きで画像を読み込みます。
+    /// Loads an image with progress reporting.
     ///
-    /// デフォルト実装は `onProgress` を無視して ``loadImage(from:)`` に委譲します。
-    /// 進捗を提供したい実装はこのメソッドをオーバーライドしてください。
+    /// The default implementation ignores `onProgress` and delegates to ``loadImage(from:)``.
+    /// Override this method in implementations that want to report progress.
     ///
     /// - Parameters:
-    ///   - url: 取得対象の URL。
-    ///   - onProgress: 0.0...1.0 の進捗値で（メインアクター上で）呼び出されるクロージャ。
-    /// - Returns: 読み込み済みの ``PlatformImage``。
+    ///   - url: The URL to fetch.
+    ///   - onProgress: A closure called (on the main actor) with a progress value in 0.0...1.0.
+    /// - Returns: The loaded ``PlatformImage``.
     func loadImage(
         from url: URL,
         onProgress: @escaping @MainActor @Sendable (Double) -> Void
@@ -39,7 +39,7 @@ public protocol ImageLoader: Sendable {
 
 public extension ImageLoader {
 
-    /// `onProgress` を無視して ``loadImage(from:)`` に委譲するデフォルト実装。
+    /// Default implementation that ignores `onProgress` and delegates to ``loadImage(from:)``.
     func loadImage(
         from url: URL,
         onProgress: @escaping @MainActor @Sendable (Double) -> Void

@@ -7,10 +7,10 @@ import Foundation
 import Kingfisher
 import PhotoSlider
 
-/// Kingfisher を利用した ``ImageLoader`` 実装。
+/// An ``ImageLoader`` implementation that uses Kingfisher.
 ///
-/// `PhotoSlider` 本体は Kingfisher に依存しません。このローダーを使うときだけ、
-/// `PhotoSliderKingfisher` プロダクトを取り込み、`import Kingfisher` を別途行ってください。
+/// `PhotoSlider` itself has no Kingfisher dependency. Only when you use this loader,
+/// add the `PhotoSliderKingfisher` product and `import Kingfisher` separately.
 ///
 /// ```swift
 /// import PhotoSlider
@@ -22,7 +22,7 @@ public struct KingfisherImageLoader: ImageLoader {
 
     private let options: KingfisherOptionsInfo
 
-    /// - Parameter options: Kingfisher へ渡すオプション群。
+    /// - Parameter options: The options to pass to Kingfisher.
     public init(options: KingfisherOptionsInfo = []) {
         self.options = options
     }

@@ -5,18 +5,18 @@
 
 import UIKit
 
-/// 1 枚の写真のソース種別。
+/// The source kind for a single photo.
 ///
-/// PhotoSlider はこの値を見て、`ImageLoader` 経由で取得するか、
-/// メモリ上の画像をそのまま表示するかを切り替えます。
+/// PhotoSlider inspects this value to decide whether to fetch the image via
+/// `ImageLoader` or to display an in-memory image directly.
 public enum PhotoSource: Hashable, Sendable {
 
-    /// リモート URL。``ImageLoader`` 経由で非同期に取得します。
+    /// A remote URL. Fetched asynchronously via ``ImageLoader``.
     case remote(URL)
 
-    /// すでにメモリ上にある `UIImage`。同期的に表示されます。
+    /// A `UIImage` already in memory. Displayed synchronously.
     case uiImage(UIImage)
 
-    /// メモリ上のバイナリデータ。`UIImage(data:)` でデコードして表示します。
+    /// Binary data in memory. Decoded with `UIImage(data:)` for display.
     case data(Data)
 }

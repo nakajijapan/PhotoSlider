@@ -5,10 +5,10 @@
 
 import Foundation
 
-/// PhotoSlider が表示する 1 枚の写真を表す不変モデル。
+/// An immutable model representing a single photo displayed by PhotoSlider.
 ///
-/// `id` は `init` 時に新規発行される `UUID` です。同じ画像でも別インスタンスは別 ID を持ちます。
-/// 並び替えや差分更新で同一性を保ちたい場合は、生成した `PhotoItem` を呼び出し側で保持してください。
+/// `id` is a `UUID` newly issued at `init` time. Even for the same image, separate instances have separate IDs.
+/// To preserve identity across reordering or diff updates, hold onto the created `PhotoItem` on the caller side.
 ///
 /// ```swift
 /// let photos: [PhotoItem] = [
@@ -18,20 +18,20 @@ import Foundation
 /// ```
 public struct PhotoItem: Identifiable, Hashable, Sendable {
 
-    /// 一意な識別子。`init` 時に自動採番されます。
+    /// A unique identifier. Assigned automatically at `init` time.
     public let id: UUID
 
-    /// 画像のソース。
+    /// The image source.
     public var source: PhotoSource
 
-    /// 画像下部に表示するキャプション。`nil` の場合は当該ページでキャプションを表示しません。
+    /// A caption shown at the bottom of the image. When `nil`, no caption is shown for that page.
     public var caption: String?
 
-    /// 写真を生成します。
+    /// Creates a photo.
     ///
     /// - Parameters:
-    ///   - source: 画像のソース。
-    ///   - caption: 画像下部に表示するキャプション。省略時は `nil`（非表示）。
+    ///   - source: The image source.
+    ///   - caption: A caption shown at the bottom of the image. Defaults to `nil` (hidden).
     public init(source: PhotoSource, caption: String? = nil) {
         self.id = UUID()
         self.source = source

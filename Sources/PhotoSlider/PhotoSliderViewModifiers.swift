@@ -69,23 +69,24 @@ private struct PhotoSliderPresentationModifier: ViewModifier {
 
 public extension View {
 
-    /// `isPresented` が `true` の間 PhotoSlider をフルスクリーンカバーで表示します。
+    /// Presents PhotoSlider in a full-screen cover while `isPresented` is `true`.
     ///
-    /// 提示・解除はクロスフェードで行われます。サムネイル ⇄ 全画面のヒーロー(ズーム)遷移が
-    /// 必要な場合は、`sourceFrame` 付きの
+    /// Presentation and dismissal use a cross-fade. If you need a thumbnail ⇄ full-screen
+    /// hero (zoom) transition, use
     /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:sourceFrame:)``
-    /// を使ってください。
+    /// with a `sourceFrame`.
     ///
-    /// このビューに付与した ``photoSliderCallbacks(_:)`` や個別コールバック modifier は、
-    /// カバー内の PhotoSlider にそのまま引き継がれます。これらは環境値として読み取られるため、
-    /// **この modifier より後（=外側）に付けてください**（前＝内側に付けると提示パスへ伝播しません）。
+    /// The ``photoSliderCallbacks(_:)`` and individual callback modifiers attached to this view
+    /// carry over to the PhotoSlider inside the cover. Because they are read from the environment,
+    /// **attach them after (i.e. outside) this modifier** (attaching them before / inside means
+    /// they do not propagate to the presentation path).
     ///
     /// - Parameters:
-    ///   - isPresented: 表示状態を制御する Binding。
-    ///   - photos: 表示する写真の配列。
-    ///   - selection: 現在ページの Binding。
-    ///   - configuration: 構成オプション。省略時は ``PhotoSliderConfiguration/default``。
-    ///   - imageLoader: 画像ローダー。省略時は ``ImageLoader/default``。
+    ///   - isPresented: A Binding that controls the presentation state.
+    ///   - photos: The array of photos to display.
+    ///   - selection: A Binding to the current page.
+    ///   - configuration: Configuration options. Defaults to ``PhotoSliderConfiguration/default``.
+    ///   - imageLoader: The image loader. Defaults to ``ImageLoader/default``.
     func photoSlider(
         isPresented: Binding<Bool>,
         photos: [PhotoItem],
@@ -104,35 +105,37 @@ public extension View {
         )
     }
 
-    /// `isPresented` が `true` の間 PhotoSlider をフルスクリーン表示し、
-    /// サムネイル ⇄ 全画面のヒーロー(ズーム)遷移で提示・解除します。
+    /// Presents PhotoSlider full-screen while `isPresented` is `true`, presenting and dismissing
+    /// with a thumbnail ⇄ full-screen hero (zoom) transition.
     ///
-    /// `sourceFrame` は「指定 index のサムネイルが**画面座標 (`.global`)** で占める矩形」を返すクロージャです。
-    /// SwiftUI 側では `GeometryReader { proxy in ... proxy.frame(in: .global) }` で取得した値を渡してください。
+    /// `sourceFrame` is a closure that returns the rectangle the thumbnail at the given index occupies
+    /// in **screen coordinates (`.global`)**. On the SwiftUI side, pass the value obtained from
+    /// `GeometryReader { proxy in ... proxy.frame(in: .global) }`.
     ///
-    /// - 提示時: 現在ページ (`selection`) の `sourceFrame` から全画面へ画像が拡大移動します。
-    /// - 解除時: その時点の現在ページ (`selection`) の `sourceFrame` へ画像が縮小移動して戻ります
-    ///   （ビューア内で別ページにスワイプ済みなら、戻り先もそのページのサムネ位置になります）。
+    /// - On present: The image scales up from the current page's (`selection`) `sourceFrame` to full screen.
+    /// - On dismiss: The image shrinks back to the `sourceFrame` of the current page (`selection`) at that moment
+    ///   (if you have already swiped to a different page in the viewer, it returns to that page's thumbnail position).
     ///
-    /// `sourceFrame(index)` が `nil`・空矩形・画面外の矩形を返した場合、その提示/解除は
-    /// 従来のクロスフェード提示にフォールバックします（クラッシュしません）。
-    /// ヒーロー遷移が不要な場合は、`sourceFrame` 引数を持たない
-    /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:)`` を使ってください。
+    /// If `sourceFrame(index)` returns `nil`, an empty rectangle, or an off-screen rectangle, that present/dismiss
+    /// falls back to the conventional cross-fade presentation (it does not crash).
+    /// If you don't need a hero transition, use
+    /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:)`` without the `sourceFrame` argument.
     ///
-    /// このビューに付与した ``photoSliderCallbacks(_:)`` や個別コールバック modifier は、
-    /// ヒーロー提示パスにもそのまま引き継がれます。これらは環境値として読み取られるため、
-    /// **この modifier より後（=外側）に付けてください**（前＝内側に付けると提示パスへ伝播しません）。
+    /// The ``photoSliderCallbacks(_:)`` and individual callback modifiers attached to this view also
+    /// carry over to the hero presentation path. Because they are read from the environment,
+    /// **attach them after (i.e. outside) this modifier** (attaching them before / inside means
+    /// they do not propagate to the presentation path).
     ///
-    /// ## 使用例
+    /// ## Example
     ///
-    /// 各サムネイルが画面座標 (`.global`) で占めるフレームを記録し、それを `sourceFrame` から返します。
+    /// Record the frame each thumbnail occupies in screen coordinates (`.global`) and return it from `sourceFrame`.
     ///
     /// ```swift
     /// struct CarouselScreen: View {
     ///     let photos: [PhotoItem]
     ///     @State private var selection = 0
     ///     @State private var isPresented = false
-    ///     // 各 index のサムネが画面座標で占めるフレームを記録する。
+    ///     // Record the frame each index's thumbnail occupies in screen coordinates.
     ///     @State private var frames: [Int: CGRect] = [:]
     ///
     ///     var body: some View {
@@ -158,20 +161,20 @@ public extension View {
     ///             isPresented: $isPresented,
     ///             photos: photos,
     ///             selection: $selection,
-    ///             sourceFrame: { index in frames[index] } // nil を返せばフェードにフォールバック
+    ///             sourceFrame: { index in frames[index] } // return nil to fall back to a fade
     ///         )
     ///     }
     /// }
     /// ```
     ///
     /// - Parameters:
-    ///   - isPresented: 表示状態を制御する Binding。
-    ///   - photos: 表示する写真の配列。
-    ///   - selection: 現在ページの Binding。提示・解除の両方でヒーロー対象ページの**真実源**になります。
-    ///   - configuration: 構成オプション。省略時は ``PhotoSliderConfiguration/default``。
-    ///   - imageLoader: 画像ローダー。省略時は ``ImageLoader/default``。
-    ///   - sourceFrame: index → サムネイルの画面座標フレーム（`CGRect?`）を返す provider。
-    ///     `.global` 座標空間で返してください。
+    ///   - isPresented: A Binding that controls the presentation state.
+    ///   - photos: The array of photos to display.
+    ///   - selection: A Binding to the current page. It is the **source of truth** for the hero target page on both present and dismiss.
+    ///   - configuration: Configuration options. Defaults to ``PhotoSliderConfiguration/default``.
+    ///   - imageLoader: The image loader. Defaults to ``ImageLoader/default``.
+    ///   - sourceFrame: A provider returning the thumbnail's screen-coordinate frame (`CGRect?`) for an index.
+    ///     Return it in the `.global` coordinate space.
     func photoSlider(
         isPresented: Binding<Bool>,
         photos: [PhotoItem],
@@ -197,9 +200,9 @@ public extension View {
 
 public extension View {
 
-    /// PhotoSlider のイベント群を一括で購読します。
+    /// Subscribes to PhotoSlider's events in bulk.
     ///
-    /// 同一ビューツリー内で複数回呼び出した場合は後勝ち（上書き）です。
+    /// If called multiple times within the same view tree, the last one wins (it overwrites).
     func photoSliderCallbacks(_ callbacks: PhotoSliderCallbacks) -> some View {
         #if DEBUG
         PhotoSliderCallbackRegistry.didRegisterAnyCallback = true
@@ -207,7 +210,7 @@ public extension View {
         return environment(\.photoSliderCallbacks, callbacks)
     }
 
-    /// ページが変更されたときに呼び出されるクロージャを登録します。
+    /// Registers a closure called when the page changes.
     func onPhotoSliderPageChanged(
         _ action: @escaping @MainActor @Sendable (Int) -> Void
     ) -> some View {
@@ -217,7 +220,7 @@ public extension View {
         return transformEnvironment(\.photoSliderCallbacks) { $0.onPageChanged = action }
     }
 
-    /// dismiss 直前に呼び出されるクロージャを登録します。
+    /// Registers a closure called just before dismissal.
     func onPhotoSliderWillDismiss(
         _ action: @escaping @MainActor @Sendable () -> Void
     ) -> some View {
@@ -227,7 +230,7 @@ public extension View {
         return transformEnvironment(\.photoSliderCallbacks) { $0.onWillDismiss = action }
     }
 
-    /// dismiss 完了後に呼び出されるクロージャを登録します。
+    /// Registers a closure called after dismissal completes.
     func onPhotoSliderDidDismiss(
         _ action: @escaping @MainActor @Sendable () -> Void
     ) -> some View {
@@ -237,7 +240,7 @@ public extension View {
         return transformEnvironment(\.photoSliderCallbacks) { $0.onDidDismiss = action }
     }
 
-    /// 共有ボタンタップ時に呼び出されるクロージャを登録します。
+    /// Registers a closure called when the share button is tapped.
     func onPhotoSliderShare(
         _ action: @escaping @MainActor @Sendable (PhotoItem) -> Void
     ) -> some View {
@@ -247,7 +250,7 @@ public extension View {
         return transformEnvironment(\.photoSliderCallbacks) { $0.onShare = action }
     }
 
-    /// 削除要求時に呼び出される async クロージャを登録します。`true` 返却で削除確定扱いです。
+    /// Registers an async closure called when deletion is requested. Returning `true` is treated as confirming the deletion.
     func onPhotoSliderRequestDelete(
         _ action: @escaping @MainActor @Sendable (PhotoItem) async -> Bool
     ) -> some View {
@@ -257,40 +260,40 @@ public extension View {
         return transformEnvironment(\.photoSliderCallbacks) { $0.onRequestDelete = action }
     }
 
-    /// ヒーロー(ズーム)遷移中に、呼び出し側の元サムネイルの可視状態を切り替えるためのクロージャを登録します。
+    /// Registers a closure to toggle the visibility of the caller's source thumbnail during the hero (zoom) transition.
     ///
-    /// ヒーロー遷移では、タップしたサムネイルの位置から全画面ビューアへ画像が拡大移動します。
-    /// このとき呼び出し側の元サムネイル（カルーセルのページ画像など）は画面に残ったままなので、
-    /// 移動中のヒーロー画像と重なって**二重表示**になります。この modifier はその「隠す/戻す」べき
-    /// タイミングを通知し、実際の可視切替え（`opacity` 等）は呼び出し側に委ねます。
+    /// In a hero transition, the image scales up from the tapped thumbnail's position to the full-screen viewer.
+    /// At that moment the caller's source thumbnail (such as a carousel's page image) stays on screen, so it
+    /// overlaps the moving hero image and produces a **double image**. This modifier signals the timing for when
+    /// to "hide / restore", and leaves the actual visibility toggle (`opacity`, etc.) to the caller.
     ///
-    /// - present のズーム拡大の**前（提示開始時）**に `(index, isHidden: true)` が **1 回**呼ばれます。
-    ///   こうすることで、ヒーロー画像は最初から空のサムネ位置から拡大していき、拡大の途中で元サムネが
-    ///   ヒーロー画像の下から覗いて二重表示になることを防ぎます。
-    /// - dismiss 完了後（縮小アニメが戻り切った後）に `(index, isHidden: false)` が **1 回**呼ばれます。
-    ///   この `index` は present 時に隠したのと**同じ index** です。ビューア内で別ページにスワイプして
-    ///   閉じても、最初に隠したサムネが必ず再表示されます（隠れっぱなしになりません）。
+    /// - `(index, isHidden: true)` is called **once**, **before the present zoom-in (at the start of presentation)**.
+    ///   This way the hero image scales up from an empty thumbnail position from the start, preventing the source
+    ///   thumbnail from peeking out beneath the hero image mid-scale and producing a double image.
+    /// - `(index, isHidden: false)` is called **once**, after dismissal completes (after the shrink animation has fully returned).
+    ///   This `index` is the **same index** that was hidden at present time. Even if the viewer is closed after
+    ///   swiping to a different page, the originally hidden thumbnail is always restored (it never stays hidden).
     ///
-    /// `sourceFrame` 付きの
-    /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:sourceFrame:)``
-    /// でヒーロー経路が成立したときのみ発火します。`sourceFrame` を持たない
-    /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:)`` のクロスフェード提示や、
-    /// `sourceFrame(index)` が `nil`・空矩形・画面外でフェードへフォールバックした提示では
-    /// **呼ばれません**（ヒーロー画像が存在せず二重表示が起きないため）。
+    /// It fires only when the hero path is established via
+    /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:sourceFrame:)`` with a `sourceFrame`.
+    /// It is **not called** for the cross-fade presentation of
+    /// ``photoSlider(isPresented:photos:selection:configuration:imageLoader:)`` without `sourceFrame`, or for a
+    /// presentation that fell back to a fade because `sourceFrame(index)` was `nil`, an empty rectangle, or off-screen
+    /// (because no hero image exists and no double image occurs).
     ///
-    /// 登録は任意（オプトイン）です。登録しなくても提示・解除の挙動は変わりません
-    /// （その場合は遷移中の二重表示が残ります）。
+    /// Registration is optional (opt-in). Present/dismiss behavior is unchanged if you don't register it
+    /// (in that case the double image during the transition remains).
     ///
-    /// > Important: この modifier は `photoSlider(...)` より**後**に付けてください。
-    /// > `transformEnvironment` で設定した環境値は「付与したビューの**子孫**」にしか流れません。
-    /// > `photoSlider(...)` は内部に提示ホスト（環境値からこのコールバックを読む）を持つため、
-    /// > この modifier を `photoSlider(...)` より**前**（=内側）に付けると提示ホストはコールバックを
-    /// > 自身の**祖先**から読みに行き `nil` になります（コールバックが一度も発火しません）。
-    /// > `photoSlider(...)` より**後**（=外側）に付けると提示ホストの祖先になり、正しく伝播します。
+    /// > Important: Attach this modifier **after** `photoSlider(...)`.
+    /// > An environment value set with `transformEnvironment` only flows to the **descendants** of the view it is attached to.
+    /// > Because `photoSlider(...)` internally holds a presentation host (which reads this callback from the environment),
+    /// > attaching this modifier **before** (i.e. inside) `photoSlider(...)` makes the presentation host look up the
+    /// > callback from its own **ancestor**, where it is `nil` (so the callback never fires).
+    /// > Attaching it **after** (i.e. outside) `photoSlider(...)` makes it an ancestor of the presentation host, so it propagates correctly.
     ///
-    /// ## 使用例
+    /// ## Example
     ///
-    /// 単一の `hiddenIndex` State を `isHidden ? index : nil` で切り替え、対象ページのサムネを透明にします。
+    /// Toggle a single `hiddenIndex` State with `isHidden ? index : nil` to make the target page's thumbnail transparent.
     ///
     /// ```swift
     /// struct CarouselScreen: View {
@@ -298,20 +301,20 @@ public extension View {
     ///     @State private var selection = 0
     ///     @State private var isPresented = false
     ///     @State private var frames: [Int: CGRect] = [:]
-    ///     // ヒーロー遷移中に隠すページ index（隠す対象が無ければ nil）。
+    ///     // The page index to hide during the hero transition (nil if there is nothing to hide).
     ///     @State private var hiddenIndex: Int?
     ///
     ///     var body: some View {
     ///         TabView(selection: $selection) {
     ///             ForEach(Array(photos.enumerated()), id: \.element.id) { index, photo in
     ///                 Button {
-    ///                     // タップ即・同期でこのページを隠す（ズーム拡大の前に確実に消える）。
+    ///                     // Hide this page immediately and synchronously on tap (so it reliably disappears before the zoom-in).
     ///                     hiddenIndex = index
     ///                     isPresented = true
     ///                 } label: {
     ///                     thumbnail(for: photo)
     ///                 }
-    ///                 // 遷移中はこのページのサムネを透明にして二重表示を防ぐ。
+    ///                 // Make this page's thumbnail transparent during the transition to prevent a double image.
     ///                 .opacity(hiddenIndex == index ? 0 : 1)
     ///                 .tag(index)
     ///             }
@@ -323,21 +326,22 @@ public extension View {
     ///             selection: $selection,
     ///             sourceFrame: { index in frames[index] }
     ///         )
-    ///         // photoSlider(...) より後に付ける（提示ホストの祖先になり伝播する）。
+    ///         // Attach after photoSlider(...) (so it becomes an ancestor of the presentation host and propagates).
     ///         .onPhotoSliderSourceVisibilityChange { _, isHidden in
-    ///             // dismiss 完了: (index, false) で戻す（隠すのはタップ時に済ませてある）。
+    ///             // Dismiss complete: restore with (index, false) (hiding was already done on tap).
     ///             if !isHidden { hiddenIndex = nil }
     ///         }
     ///     }
     /// }
     /// ```
     ///
-    /// > Note: 隠すのは**タップ時に自分で同期**して行い、ライブラリの `(index, isHidden: false)` で再表示するのが
-    /// > 推奨です（CarouselDemoView と同じ）。`(index, isHidden: true)` は present 直前（タップの次 tick）に届くため、
-    /// > これに頼って隠すと隠れるまでに 1 フレーム遅れ、その間サムネとヒーロー画像が**二重表示**になりえます。
+    /// > Note: It is recommended to hide **synchronously yourself on tap** and restore with the library's
+    /// > `(index, isHidden: false)` (same as CarouselDemoView). `(index, isHidden: true)` arrives just before present
+    /// > (the tick after the tap), so relying on it to hide is delayed by one frame, during which the thumbnail and
+    /// > hero image can show a **double image**.
     ///
-    /// - Parameter action: 可視状態を切り替えるクロージャ。第 1 引数は対象サムネイルの index、
-    ///   第 2 引数 `isHidden` は `true` のとき隠す（present のズーム拡大の前）、`false` のとき再表示する（dismiss 完了後）。
+    /// - Parameter action: A closure that toggles the visibility state. The first argument is the target thumbnail's index;
+    ///   the second argument `isHidden` hides when `true` (before the present zoom-in) and restores when `false` (after dismissal completes).
     func onPhotoSliderSourceVisibilityChange(
         _ action: @escaping @MainActor @Sendable (_ index: Int, _ isHidden: Bool) -> Void
     ) -> some View {

@@ -10,7 +10,7 @@ private struct PhotoSliderCallbacksKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
-    /// PhotoSlider のイベントコールバック群。`.photoSliderCallbacks(_:)` / 個別 modifier で設定します。
+    /// PhotoSlider's event callbacks. Set via `.photoSliderCallbacks(_:)` or the individual modifiers.
     var photoSliderCallbacks: PhotoSliderCallbacks {
         get { self[PhotoSliderCallbacksKey.self] }
         set { self[PhotoSliderCallbacksKey.self] = newValue }

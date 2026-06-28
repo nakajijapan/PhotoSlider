@@ -5,59 +5,61 @@
 
 import Foundation
 
-/// PhotoSlider のイベント購読用構造体（旧 `PhotoSliderDelegate` 相当）。
+/// A struct for subscribing to PhotoSlider events (the equivalent of the former `PhotoSliderDelegate`).
 ///
-/// ``SwiftUICore/View/photoSliderCallbacks(_:)`` 経由でビューツリーに注入するか、
-/// 個別 modifier（``SwiftUICore/View/onPhotoSliderPageChanged(_:)`` など）を使って登録します。
+/// Inject it into the view tree via ``SwiftUICore/View/photoSliderCallbacks(_:)``, or register
+/// individual callbacks with the per-event modifiers (such as ``SwiftUICore/View/onPhotoSliderPageChanged(_:)``).
 public struct PhotoSliderCallbacks: Sendable {
 
-    /// dismiss が始まる直前に呼ばれます（スライドアウトアニメーションの前）。
+    /// Called just before dismissal begins (before the slide-out animation).
     public var onWillDismiss: (@MainActor @Sendable () -> Void)?
 
-    /// dismiss が完了した直後に呼ばれます。
+    /// Called right after dismissal completes.
     public var onDidDismiss: (@MainActor @Sendable () -> Void)?
 
-    /// 表示ページが変わったときに、新しいページインデックスとともに呼ばれます。
+    /// Called with the new page index when the displayed page changes.
     public var onPageChanged: (@MainActor @Sendable (Int) -> Void)?
 
-    /// 共有ボタンがタップされたときに、対象の ``PhotoItem`` とともに呼ばれます。
+    /// Called with the corresponding ``PhotoItem`` when the share button is tapped.
     public var onShare: (@MainActor @Sendable (PhotoItem) -> Void)?
 
-    /// 削除が要求されたときに呼ばれます。戻り値 `true` で「削除を確定する」ことを表します。
+    /// Called when deletion is requested. Returning `true` indicates that the deletion is confirmed.
     ///
-    /// PhotoSlider 側は「ユーザーが削除を要求した」シグナルを送るだけで、`photos` 配列自体は更新しません。
-    /// 実際の配列更新は呼び出し側の責務です。
+    /// PhotoSlider only sends the "user requested deletion" signal; it does not update the `photos`
+    /// array itself. Updating the array is the caller's responsibility.
     public var onRequestDelete: (@MainActor @Sendable (PhotoItem) async -> Bool)?
 
-    /// ヒーロー(ズーム)遷移に伴い、呼び出し側の元サムネイルの可視状態を切り替えるべきタイミングで呼ばれます。
+    /// Called when the caller's source thumbnail should toggle its visibility during the hero (zoom) transition.
     ///
-    /// ヒーロー遷移中はタップしたサムネイル位置から全画面へ画像が移動するため、呼び出し側の元サムネを
-    /// 隠さないと移動中のヒーロー画像と重なって**二重表示**になります。このコールバックはその「隠す/戻す」
-    /// タイミングだけを通知し、実際の可視切替え（`opacity` または `isHidden`）は呼び出し側の責務です。
+    /// During the hero transition the image moves from the tapped thumbnail's position to full screen,
+    /// so unless the caller's source thumbnail is hidden, it overlaps the moving hero image and produces
+    /// a **double image**. This callback only signals the timing to "hide / restore"; performing the actual
+    /// visibility toggle (`opacity` or `isHidden`) is the caller's responsibility.
     ///
-    /// - 第 1 引数 `index`: 対象サムネイルの index。
-    ///   - `isHidden == true`（隠す）のとき: 提示したヒーロー対象ページ（present のフレーム解決に使った `selection`）。
-    ///   - `isHidden == false`（戻す）のとき: present 時に隠した index（= 隠す通知で渡したのと同じ値）。
-    ///     ビューア内で別ページにスワイプして閉じても、最初に隠したサムネが必ず再表示されるようこの値を渡します。
-    /// - 第 2 引数 `isHidden`: `true` のとき隠す（present のズーム拡大の**前**＝提示開始時に 1 回。
-    ///   こうすることで、ヒーロー画像は最初から空のサムネ位置から拡大していき、拡大の途中で元サムネが
-    ///   ヒーロー画像の下から覗いて二重表示になることを防ぎます）、
-    ///   `false` のとき再表示する（dismiss 完了後＝縮小アニメが戻り切った後に 1 回）。
-    ///   縦スワイプ閉じでも dismiss 完了後に必ず `false` が通知されます。
+    /// - First argument `index`: The index of the target thumbnail.
+    ///   - When `isHidden == true` (hide): The presented hero target page (the `selection` used to resolve the present frame).
+    ///   - When `isHidden == false` (restore): The index hidden at present time (the same value passed in the hide notification).
+    ///     This value is passed so that the originally hidden thumbnail is always restored, even if the viewer was closed after swiping to a different page.
+    /// - Second argument `isHidden`: When `true`, hide (once, **before** the present zoom-in, i.e. at the start of presentation.
+    ///   This way the hero image scales up from an empty thumbnail position from the start, preventing the source
+    ///   thumbnail from peeking out beneath the hero image mid-scale and producing a double image).
+    ///   When `false`, restore (once, after dismissal completes, i.e. after the shrink animation has fully returned).
+    ///   `false` is always delivered after dismissal completes, even for a vertical-swipe close.
     ///
-    /// 呼び出し側はこの index のサムネの `opacity`（または `isHidden`）をこの値に従って切り替えてください。
-    /// `sourceFrame` 無しのクロスフェード提示や、`sourceFrame` が nil でフェードへフォールバックした提示では
-    /// **呼ばれません**（その場合は二重表示が起きないため隠す必要がありません）。
+    /// The caller should toggle the `opacity` (or `isHidden`) of this index's thumbnail according to this value.
+    /// It is **not called** for cross-fade presentation without `sourceFrame`, or for presentation that fell back
+    /// to a fade because `sourceFrame` was nil (in those cases no double image occurs, so nothing needs to be hidden).
     ///
-    /// 個別 modifier ``SwiftUICore/View/onPhotoSliderSourceVisibilityChange(_:)`` でも登録できます。
-    /// 発火するのは ``SwiftUICore/View/photoSlider(isPresented:photos:selection:configuration:imageLoader:sourceFrame:)``
-    /// のヒーロー提示パスのみです。
+    /// It can also be registered via the individual modifier ``SwiftUICore/View/onPhotoSliderSourceVisibilityChange(_:)``.
+    /// It fires only on the hero presentation path of
+    /// ``SwiftUICore/View/photoSlider(isPresented:photos:selection:configuration:imageLoader:sourceFrame:)``.
     ///
-    /// 隠すのは**タップ時に自分で同期**して行い、ライブラリの `isHidden: false`（再表示）通知だけに頼るのが推奨です。
-    /// `isHidden: true` は present 直前（タップの次 tick）に届くため、これに頼って隠すと 1 フレーム二重表示が起こりえます。
+    /// It is recommended to hide **synchronously yourself on tap** and rely only on the library's `isHidden: false`
+    /// (restore) notification. `isHidden: true` arrives just before present (the tick after the tap), so relying on it
+    /// to hide can cause a one-frame double image.
     public var onSourceVisibilityChange: (@MainActor @Sendable (_ index: Int, _ isHidden: Bool) -> Void)?
 
-    /// 全フィールドを `nil` で初期化します。
+    /// Initializes every field to `nil`.
     public init(
         onWillDismiss: (@MainActor @Sendable () -> Void)? = nil,
         onDidDismiss: (@MainActor @Sendable () -> Void)? = nil,
@@ -74,7 +76,7 @@ public struct PhotoSliderCallbacks: Sendable {
         self.onSourceVisibilityChange = onSourceVisibilityChange
     }
 
-    /// すべてのクロージャが `nil`（=どのコールバックも登録されていない）なら `true`。
+    /// `true` if every closure is `nil` (i.e. no callback is registered).
     var isEmpty: Bool {
         onWillDismiss == nil
             && onDidDismiss == nil

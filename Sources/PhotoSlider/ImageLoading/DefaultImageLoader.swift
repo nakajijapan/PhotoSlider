@@ -5,27 +5,27 @@
 
 import UIKit
 
-/// ``DefaultImageLoader`` が投げるエラー。
+/// Errors thrown by ``DefaultImageLoader``.
 public enum DefaultImageLoaderError: Error, Sendable, Equatable {
-    /// HTTP ステータスコードが 2xx 以外だった。
+    /// The HTTP status code was not in the 2xx range.
     case badStatus(Int)
-    /// 取得したデータを画像としてデコードできなかった。
+    /// The fetched data could not be decoded as an image.
     case decodingFailed
 }
 
-/// `URLSession` + `URLCache` ベースの標準 ``ImageLoader`` 実装。
+/// The standard ``ImageLoader`` implementation, based on `URLSession` + `URLCache`.
 ///
-/// Kingfisher には依存しません。プロセスごとに 1 インスタンス（``default`` / ``shared``）を
-/// 共有することを推奨します。
+/// It has no Kingfisher dependency. Sharing a single instance per process
+/// (``default`` / ``shared``) is recommended.
 public struct DefaultImageLoader: ImageLoader {
 
-    /// 共有インスタンス。内部に画像向けの `URLCache` を持つ `URLSession` を使います。
+    /// The shared instance. Uses a `URLSession` backed by an image-oriented `URLCache`.
     public static let shared = DefaultImageLoader(session: DefaultImageLoader.makeDefaultSession())
 
     private let session: URLSession
 
-    /// 独自の `URLSession` で初期化します。
-    /// - Parameter session: 利用するセッション。省略時は `URLSession.shared`。
+    /// Initializes with a custom `URLSession`.
+    /// - Parameter session: The session to use. Defaults to `URLSession.shared`.
     public init(session: URLSession = .shared) {
         self.session = session
     }
@@ -91,6 +91,6 @@ public struct DefaultImageLoader: ImageLoader {
 }
 
 public extension ImageLoader where Self == DefaultImageLoader {
-    /// `URLSession` ベースのデフォルトローダー。
+    /// The default `URLSession`-based loader.
     static var `default`: DefaultImageLoader { DefaultImageLoader.shared }
 }

@@ -5,8 +5,8 @@
 
 import UIKit
 
-/// プラットフォーム共通の画像型。iOS では `UIImage` のエイリアスです。
+/// A cross-platform image type. On iOS it is an alias for `UIImage`.
 ///
-/// 将来 macOS / tvOS へ展開する際の差し替え点として用意していますが、
-/// PhotoSlider 2.0 は iOS 専用です。
+/// It exists as a substitution point for a future macOS / tvOS expansion,
+/// but PhotoSlider 2.0 is iOS-only.
 public typealias PlatformImage = UIImage

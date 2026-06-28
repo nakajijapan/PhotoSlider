@@ -5,15 +5,15 @@
 
 import SwiftUI
 
-/// 複数枚の写真をフルスクリーンでページングして表示する SwiftUI ビュー。
+/// A SwiftUI view that displays multiple photos full-screen with paging.
 ///
-/// 横スワイプでページ遷移、縦スワイプでフルスクリーンを閉じる、ピンチ／ダブルタップでズーム、
-/// という操作は v1.5.0 (UIKit) とまったく同じ操作感です（内部で実績ある `UIScrollView`
-/// エンジンを再利用しています）。
+/// Horizontal swipe to page, vertical swipe to dismiss full-screen, and pinch / double-tap to
+/// zoom feel exactly like v1.5.0 (UIKit) — internally it reuses the proven `UIScrollView`
+/// engine.
 ///
-/// 自前の `.fullScreenCover` / `.sheet` の中に直接置くか、
+/// Place it directly inside your own `.fullScreenCover` / `.sheet`, or present it using the
 /// ``SwiftUICore/View/photoSlider(isPresented:photos:selection:configuration:imageLoader:)``
-/// modifier を使って表示してください。
+/// modifier.
 ///
 /// ```swift
 /// .photoSlider(isPresented: $isPresented, photos: photos, selection: $index)
@@ -29,13 +29,13 @@ public struct PhotoSliderView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.photoSliderCallbacks) private var callbacks
 
-    /// PhotoSlider を構築します。
+    /// Creates a PhotoSlider.
     ///
     /// - Parameters:
-    ///   - photos: 表示する写真の配列。空配列でも初期化は成功しますが、ビューは空表示になります。
-    ///   - selection: 現在表示中のページインデックス。範囲外の値は最も近い有効インデックスに丸められます。
-    ///   - configuration: 見た目と挙動のオプション。省略時は ``PhotoSliderConfiguration/default``。
-    ///   - imageLoader: 画像取得を行うローダー。省略時は ``ImageLoader/default``（`URLSession` ベース）。
+    ///   - photos: The array of photos to display. An empty array still initializes successfully, but the view renders empty.
+    ///   - selection: The index of the currently displayed page. Out-of-range values are clamped to the nearest valid index.
+    ///   - configuration: Appearance and behavior options. Defaults to ``PhotoSliderConfiguration/default``.
+    ///   - imageLoader: The loader that fetches images. Defaults to ``ImageLoader/default`` (`URLSession`-based).
     public init(
         photos: [PhotoItem],
         selection: Binding<Int>,
