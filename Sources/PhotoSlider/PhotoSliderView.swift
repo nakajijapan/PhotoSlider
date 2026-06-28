@@ -49,15 +49,23 @@ public struct PhotoSliderView: View {
     }
 
     public var body: some View {
-        PhotoSliderControllerRepresentable(
-            items: photos,
-            selection: $selection,
-            configuration: configuration,
-            imageLoader: imageLoader,
-            callbacks: callbacks,
-            onRequestDismiss: { dismiss() }
-        )
-        .ignoresSafeArea()
+        // Lay an opaque backdrop *behind* the viewer. The VC's own view is `UIColor.clear`,
+        // so when callers place `PhotoSliderView` directly inside a `.sheet` /
+        // `.fullScreenCover`, the host's default white background would otherwise show
+        // through and flash white as the cover presents / dismisses. Making the view itself
+        // opaque keeps the present / dismiss black instead of flashing white.
+        ZStack {
+            configuration.backgroundColor.ignoresSafeArea()
+            PhotoSliderControllerRepresentable(
+                items: photos,
+                selection: $selection,
+                configuration: configuration,
+                imageLoader: imageLoader,
+                callbacks: callbacks,
+                onRequestDismiss: { dismiss() }
+            )
+            .ignoresSafeArea()
+        }
         .statusBarHidden(true)
     }
 }
