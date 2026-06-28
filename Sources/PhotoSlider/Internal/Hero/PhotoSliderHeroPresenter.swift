@@ -181,7 +181,15 @@ struct PhotoSliderHeroPresenter: UIViewRepresentable {
             // read it, and lets UIKit run the custom hero transition cleanly outside the layout
             // pass. `latestSourceFrame`/`latestSelection` are kept current by every `update(...)`.
             DispatchQueue.main.async { [weak self, weak viewer, weak window] in
-                guard let self, let viewer, let window else { return }
+                guard let self else { return }
+                // The present was superseded before this deferred tick ran (the viewer was
+                // dismissed / torn down, or the window detached). Reset the in-flight flag so a
+                // later present is not permanently blocked -- `isPresenting` is otherwise only
+                // cleared in the present-completion below, which would never run on this path.
+                guard let viewer, let window, self.presentedViewer === viewer else {
+                    self.isPresenting = false
+                    return
+                }
                 let sourceFrame = self.latestSourceFrame ?? sourceFrame
                 let page = self.latestSelection ?? selection
 
