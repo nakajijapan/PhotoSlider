@@ -22,5 +22,12 @@ DerivedData
 # Bundler
 .bundle
 
-# Carthage
-Carthage/Build
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+**/xcshareddata/swiftpm/
+
+# Claude Code
+.claude/
