@@ -62,3 +62,30 @@ enum DemoData {
         }
     }
 }
+
+/// Loads grid thumbnails through the library's ``ImageLoader`` abstraction, caching by URL.
+///
+/// Shared by the Remote (`.default`) and Kingfisher (`.kingfisher()`) demos — they differ
+/// only by the injected loader, so the load/cache logic lives in one place.
+@MainActor
+@Observable
+final class ThumbnailStore {
+
+    private(set) var images: [URL: UIImage] = [:]
+    private let loader: any ImageLoader
+
+    init(loader: any ImageLoader) {
+        self.loader = loader
+    }
+
+    /// Loads any not-yet-cached URLs concurrently; each image is published as it finishes.
+    func load(_ urls: [URL]) {
+        for url in urls where images[url] == nil {
+            Task { [loader] in
+                if let image = try? await loader.loadImage(from: url) {
+                    self.images[url] = image
+                }
+            }
+        }
+    }
+}
