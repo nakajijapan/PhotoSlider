@@ -279,6 +279,10 @@ final class PhotoSliderViewController: UIViewController {
         guard items.indices.contains(currentPage) else { return }
         onShare?(items[currentPage])
 
+        // When the caller opts out of the built-in sheet, `onShare` is the only hand-off:
+        // don't present the system `UIActivityViewController` ourselves.
+        guard configuration.usesBuiltInShareSheet else { return }
+
         let activityItems = shareActivityItems(for: currentPage)
         guard !activityItems.isEmpty else { return }
 

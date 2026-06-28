@@ -22,7 +22,8 @@ public struct PhotoSliderConfiguration: Sendable, Equatable {
 
     /// 共有ボタンを表示するか。デフォルト `false`。
     ///
-    /// タップ時は ``PhotoSliderCallbacks/onShare`` が発火します（ライブラリは独自に共有シートを出しません）。
+    /// タップで既定のシステム共有シートを表示し（``PhotoSliderConfiguration/usesBuiltInShareSheet`` 参照）、
+    /// ``PhotoSliderCallbacks/onShare`` も発火します。
     public var showsShareButton: Bool
 
     /// キャプションを表示するか。デフォルト `true`。
@@ -44,6 +45,12 @@ public struct PhotoSliderConfiguration: Sendable, Equatable {
     /// この距離に満たなくても、十分な速度でフリックすれば閉じます（速度しきい値は内部固定）。
     public var dismissProgressThreshold: CGFloat
 
+    /// 共有ボタンタップ時に内蔵のシステム共有シートを表示するか。デフォルト `true`。
+    ///
+    /// `true`（既定）で共有ボタンタップ時に現在画像のシステム共有シート（`UIActivityViewController`）を
+    /// 表示します。`false` にすると内蔵シートを出さず、共有は ``PhotoSliderCallbacks/onShare`` で自前処理します。
+    public var usesBuiltInShareSheet: Bool
+
     /// すべてのパラメータを明示して初期化します。引数順は宣言順と一致します。
     public init(
         backgroundColor: Color = .black,
@@ -54,7 +61,8 @@ public struct PhotoSliderConfiguration: Sendable, Equatable {
         enableSwipeToDismiss: Bool = true,
         enablePinchToZoom: Bool = true,
         maxZoomScale: CGFloat = 3.0,
-        dismissProgressThreshold: CGFloat = 0.4
+        dismissProgressThreshold: CGFloat = 0.4,
+        usesBuiltInShareSheet: Bool = true
     ) {
         self.backgroundColor = backgroundColor
         self.showsPageIndicator = showsPageIndicator
@@ -65,6 +73,7 @@ public struct PhotoSliderConfiguration: Sendable, Equatable {
         self.enablePinchToZoom = enablePinchToZoom
         self.maxZoomScale = maxZoomScale
         self.dismissProgressThreshold = dismissProgressThreshold
+        self.usesBuiltInShareSheet = usesBuiltInShareSheet
     }
 
     /// デフォルト構成。
