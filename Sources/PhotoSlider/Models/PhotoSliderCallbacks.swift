@@ -52,6 +52,9 @@ public struct PhotoSliderCallbacks: Sendable {
     /// 個別 modifier ``SwiftUICore/View/onPhotoSliderSourceVisibilityChange(_:)`` でも登録できます。
     /// 発火するのは ``SwiftUICore/View/photoSlider(isPresented:photos:selection:configuration:imageLoader:sourceFrame:)``
     /// のヒーロー提示パスのみです。
+    ///
+    /// 隠すのは**タップ時に自分で同期**して行い、ライブラリの `isHidden: false`（再表示）通知だけに頼るのが推奨です。
+    /// `isHidden: true` は present 直前（タップの次 tick）に届くため、これに頼って隠すと 1 フレーム二重表示が起こりえます。
     public var onSourceVisibilityChange: (@MainActor @Sendable (_ index: Int, _ isHidden: Bool) -> Void)?
 
     /// 全フィールドを `nil` で初期化します。
@@ -69,5 +72,15 @@ public struct PhotoSliderCallbacks: Sendable {
         self.onShare = onShare
         self.onRequestDelete = onRequestDelete
         self.onSourceVisibilityChange = onSourceVisibilityChange
+    }
+
+    /// すべてのクロージャが `nil`（=どのコールバックも登録されていない）なら `true`。
+    var isEmpty: Bool {
+        onWillDismiss == nil
+            && onDidDismiss == nil
+            && onPageChanged == nil
+            && onShare == nil
+            && onRequestDelete == nil
+            && onSourceVisibilityChange == nil
     }
 }

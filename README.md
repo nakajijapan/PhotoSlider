@@ -152,19 +152,21 @@ lands on whatever page is showing when the viewer closes.
 
 During a hero transition the image zooms from the source thumbnail, but **your original
 thumbnail stays on screen** — so for a moment the same photo is visible twice (the moving
-hero image *and* the thumbnail underneath it). Use
-`onPhotoSliderSourceVisibilityChange` to hide your thumbnail while the viewer is up and
-show it again once the close animation finishes.
+hero image *and* the thumbnail underneath it). The recommended pattern is to **hide your
+thumbnail synchronously in the tap action** (set `hiddenIndex = index` right where you set
+`isPresented = true`) and use `onPhotoSliderSourceVisibilityChange` only to **restore** it
+when the close animation finishes. Hiding on tap guarantees the thumbnail is already gone
+before the zoom grows; the library's `(index, isHidden: true)` arrives the tick *after* the
+tap, so relying on it to hide can leave one frame of double-display.
 
-The closure is called with `(index, isHidden: true)` once the present zoom has reached the
-centre (transition complete), and `(index, isHidden: false)` only **after** the dismiss
-animation has fully zoomed back down — so the thumbnail never re-appears while the image is
-still shrinking toward it. The `index` passed back on restore is the same one you hid, so
-even if the user swiped to another page inside the viewer the right thumbnail is always
-restored. The callback fires **only** on the hero (`sourceFrame:`) path; it is never called
-for the cross-fade present or when `sourceFrame` falls back to a fade. Add it **after**
-`photoSlider(...)` — the callback flows down to the presentation host via the environment,
-so the modifier has to wrap (be an ancestor of) `.photoSlider(...)`, not precede it.
+The restore call, `(index, isHidden: false)`, fires only **after** the dismiss animation has
+fully zoomed back down — so the thumbnail never re-appears while the image is still shrinking
+toward it. The `index` passed back on restore is the same one you hid, so even if the user
+swiped to another page inside the viewer the right thumbnail is always restored. The callback
+fires **only** on the hero (`sourceFrame:`) path; it is never called for the cross-fade
+present or when `sourceFrame` falls back to a fade. Add it **after** `photoSlider(...)` — the
+callback flows down to the presentation host via the environment, so the modifier has to wrap
+(be an ancestor of) `.photoSlider(...)`, not precede it.
 
 ```swift
 struct CarouselScreen: View {
@@ -178,7 +180,11 @@ struct CarouselScreen: View {
     var body: some View {
         TabView(selection: $selection) {
             ForEach(Array(photos.enumerated()), id: \.element.id) { index, photo in
-                Button { isPresented = true } label: {
+                Button {
+                    // Hide synchronously on tap, before the zoom grows — no double-display.
+                    hiddenIndex = index
+                    isPresented = true
+                } label: {
                     thumbnail(for: photo)
                 }
                 // Hide this page's thumbnail while it's the hero source.
@@ -194,9 +200,9 @@ struct CarouselScreen: View {
             sourceFrame: { index in frames[index] }
         )
         // Must come after `.photoSlider(...)`.
-        .onPhotoSliderSourceVisibilityChange { index, isHidden in
-            // present complete: (index, true) → hide / dismiss done: (index, false) → restore
-            hiddenIndex = isHidden ? index : nil
+        .onPhotoSliderSourceVisibilityChange { _, isHidden in
+            // dismiss done: (index, false) → restore (hiding was already done on tap).
+            if !isHidden { hiddenIndex = nil }
         }
     }
 }

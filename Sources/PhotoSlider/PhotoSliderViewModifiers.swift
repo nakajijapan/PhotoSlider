@@ -5,6 +5,31 @@
 
 import SwiftUI
 
+#if DEBUG
+/// DEBUG-only, process-wide registry used to surface a common ordering mistake: attaching an
+/// `.onPhotoSlider*` callback modifier *before* `.photoSlider(...)`. Because the callbacks ride
+/// the environment (`transformEnvironment`), a modifier placed before the presentation host is
+/// the host's *ancestor's* sibling, never propagates down, and the callback silently never fires.
+///
+/// `didRegisterAnyCallback` flips `true` the first time *any* callback modifier runs anywhere in
+/// the app. If a slider is then presented with an *empty* callback set, the registration must have
+/// landed in the wrong place — so we warn once. Genuine callback-free usage never trips this
+/// (nothing flips the flag), so it does not mis-warn.
+@MainActor
+enum PhotoSliderCallbackRegistry {
+    static var didRegisterAnyCallback = false
+    static var didWarnAboutOrder = false
+
+    /// Emits the ordering warning at most once per process, only when a callback was registered
+    /// *somewhere* yet the presented slider sees none of them (the tell-tale of mis-ordering).
+    static func warnIfCallbacksLikelyMisordered(presentedCallbacks: PhotoSliderCallbacks) {
+        guard didRegisterAnyCallback, presentedCallbacks.isEmpty, !didWarnAboutOrder else { return }
+        didWarnAboutOrder = true
+        print("[PhotoSlider] Presented with no callbacks, but .onPhotoSlider* modifiers were used elsewhere — attach them AFTER .photoSlider(...) so they propagate via the environment.")
+    }
+}
+#endif
+
 // MARK: - Presentation
 
 private struct PhotoSliderPresentationModifier: ViewModifier {
@@ -18,7 +43,12 @@ private struct PhotoSliderPresentationModifier: ViewModifier {
     @Environment(\.photoSliderCallbacks) private var callbacks
 
     func body(content: Content) -> some View {
-        content.fullScreenCover(isPresented: $isPresented) {
+        #if DEBUG
+        if isPresented {
+            PhotoSliderCallbackRegistry.warnIfCallbacksLikelyMisordered(presentedCallbacks: callbacks)
+        }
+        #endif
+        return content.fullScreenCover(isPresented: $isPresented) {
             PhotoSliderView(
                 photos: photos,
                 selection: $selection,
@@ -171,42 +201,60 @@ public extension View {
     ///
     /// 同一ビューツリー内で複数回呼び出した場合は後勝ち（上書き）です。
     func photoSliderCallbacks(_ callbacks: PhotoSliderCallbacks) -> some View {
-        environment(\.photoSliderCallbacks, callbacks)
+        #if DEBUG
+        PhotoSliderCallbackRegistry.didRegisterAnyCallback = true
+        #endif
+        return environment(\.photoSliderCallbacks, callbacks)
     }
 
     /// ページが変更されたときに呼び出されるクロージャを登録します。
     func onPhotoSliderPageChanged(
         _ action: @escaping @MainActor @Sendable (Int) -> Void
     ) -> some View {
-        transformEnvironment(\.photoSliderCallbacks) { $0.onPageChanged = action }
+        #if DEBUG
+        PhotoSliderCallbackRegistry.didRegisterAnyCallback = true
+        #endif
+        return transformEnvironment(\.photoSliderCallbacks) { $0.onPageChanged = action }
     }
 
     /// dismiss 直前に呼び出されるクロージャを登録します。
     func onPhotoSliderWillDismiss(
         _ action: @escaping @MainActor @Sendable () -> Void
     ) -> some View {
-        transformEnvironment(\.photoSliderCallbacks) { $0.onWillDismiss = action }
+        #if DEBUG
+        PhotoSliderCallbackRegistry.didRegisterAnyCallback = true
+        #endif
+        return transformEnvironment(\.photoSliderCallbacks) { $0.onWillDismiss = action }
     }
 
     /// dismiss 完了後に呼び出されるクロージャを登録します。
     func onPhotoSliderDidDismiss(
         _ action: @escaping @MainActor @Sendable () -> Void
     ) -> some View {
-        transformEnvironment(\.photoSliderCallbacks) { $0.onDidDismiss = action }
+        #if DEBUG
+        PhotoSliderCallbackRegistry.didRegisterAnyCallback = true
+        #endif
+        return transformEnvironment(\.photoSliderCallbacks) { $0.onDidDismiss = action }
     }
 
     /// 共有ボタンタップ時に呼び出されるクロージャを登録します。
     func onPhotoSliderShare(
         _ action: @escaping @MainActor @Sendable (PhotoItem) -> Void
     ) -> some View {
-        transformEnvironment(\.photoSliderCallbacks) { $0.onShare = action }
+        #if DEBUG
+        PhotoSliderCallbackRegistry.didRegisterAnyCallback = true
+        #endif
+        return transformEnvironment(\.photoSliderCallbacks) { $0.onShare = action }
     }
 
     /// 削除要求時に呼び出される async クロージャを登録します。`true` 返却で削除確定扱いです。
     func onPhotoSliderRequestDelete(
         _ action: @escaping @MainActor @Sendable (PhotoItem) async -> Bool
     ) -> some View {
-        transformEnvironment(\.photoSliderCallbacks) { $0.onRequestDelete = action }
+        #if DEBUG
+        PhotoSliderCallbackRegistry.didRegisterAnyCallback = true
+        #endif
+        return transformEnvironment(\.photoSliderCallbacks) { $0.onRequestDelete = action }
     }
 
     /// ヒーロー(ズーム)遷移中に、呼び出し側の元サムネイルの可視状態を切り替えるためのクロージャを登録します。
@@ -284,11 +332,18 @@ public extension View {
     /// }
     /// ```
     ///
+    /// > Note: 隠すのは**タップ時に自分で同期**して行い、ライブラリの `(index, isHidden: false)` で再表示するのが
+    /// > 推奨です（CarouselDemoView と同じ）。`(index, isHidden: true)` は present 直前（タップの次 tick）に届くため、
+    /// > これに頼って隠すと隠れるまでに 1 フレーム遅れ、その間サムネとヒーロー画像が**二重表示**になりえます。
+    ///
     /// - Parameter action: 可視状態を切り替えるクロージャ。第 1 引数は対象サムネイルの index、
-    ///   第 2 引数 `isHidden` は `true` のとき隠す（present のズーム完了後）、`false` のとき再表示する（dismiss 完了後）。
+    ///   第 2 引数 `isHidden` は `true` のとき隠す（present のズーム拡大の前）、`false` のとき再表示する（dismiss 完了後）。
     func onPhotoSliderSourceVisibilityChange(
         _ action: @escaping @MainActor @Sendable (_ index: Int, _ isHidden: Bool) -> Void
     ) -> some View {
-        transformEnvironment(\.photoSliderCallbacks) { $0.onSourceVisibilityChange = action }
+        #if DEBUG
+        PhotoSliderCallbackRegistry.didRegisterAnyCallback = true
+        #endif
+        return transformEnvironment(\.photoSliderCallbacks) { $0.onSourceVisibilityChange = action }
     }
 }

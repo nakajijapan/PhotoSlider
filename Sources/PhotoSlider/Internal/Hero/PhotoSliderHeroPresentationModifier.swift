@@ -21,7 +21,12 @@ struct PhotoSliderHeroPresentationModifier: ViewModifier {
     @Environment(\.photoSliderCallbacks) private var callbacks
 
     func body(content: Content) -> some View {
-        content.background(
+        #if DEBUG
+        if isPresented {
+            PhotoSliderCallbackRegistry.warnIfCallbacksLikelyMisordered(presentedCallbacks: callbacks)
+        }
+        #endif
+        return content.background(
             PhotoSliderHeroPresenter(
                 isPresented: $isPresented,
                 photos: photos,
